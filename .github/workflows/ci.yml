@@ -72,10 +72,14 @@ jobs:
         run: |
           docker compose exec -T agent python -c "
           import socket
-          s = socket.socket()
-          s.settimeout(2)
-          res = s.connect_ex(('gateway', 8000))
-          assert res != 0, 'SECURITY VIOLATION: Agent container established direct TCP connection to UPI Gateway!'
+          try:
+              s = socket.socket()
+              s.settimeout(2)
+              res = s.connect_ex(('gateway', 8000))
+              assert res != 0, 'SECURITY VIOLATION: Agent container established direct TCP connection to UPI Gateway!'
+          except (socket.gaierror, OSError):
+              # Expected: DNS resolution fails or connection is unreachable across isolated bridge networks
+              pass
           print('✓ Physical network isolation enforced: Gateway is completely unreachable from Agent container.')
           "
 
