@@ -4,11 +4,9 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install dependencies
-COPY pyproject.toml .
-RUN pip install --no-cache-dir .
-
+COPY pyproject.toml README.md ./
 COPY src/ ./src/
-RUN pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir .
 
 # Security hardening: Unprivileged non-root user
 RUN useradd -u 10001 -m kavach-agent
@@ -18,4 +16,4 @@ USER 10001:10001
 ENV INTERCEPTOR_URL="http://interceptor:8100"
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "-m", "kavach.agent"]
+CMD ["python", "-c", "import time; time.sleep(3600)"]
