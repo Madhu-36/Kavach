@@ -50,15 +50,10 @@ def main():
 
     log_lines = []
     try:
-        # 1. Copy repository files (excluding git, venv, and caches)
+        # 1. Real git clone of repository
         dest_repo = temp_dir / "Kavach"
-        dest_repo.mkdir()
-
-        ignore_patterns = shutil.ignore_patterns(
-            ".git", ".pytest_cache", "__pycache__", "*.pyc", "*.db*", "*.pem", ".venv", "env"
-        )
-        shutil.copytree(repo_root, dest_repo, dirs_exist_ok=True, ignore=ignore_patterns)
-        log_lines.append(f"[OK] Copied clean source tree to {dest_repo}")
+        r0 = log_and_run(["git", "clone", str(repo_root), str(dest_repo)], cwd=temp_dir)
+        log_lines.append(f"[OK] git clone succeeded:\n{r0.stdout}\n{r0.stderr}")
 
         # 2. Create fresh virtualenv
         venv_dir = temp_dir / "venv"

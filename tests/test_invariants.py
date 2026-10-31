@@ -637,6 +637,7 @@ uvicorn.run(app, host="127.0.0.1", port={port1}, log_level="warning")
             # Kill the real interceptor service process with TerminateProcess
             proc1.kill()
             proc1.wait()
+            time.sleep(0.5)
 
             # Verify in persistent ledger that spent is 0 and count is 0
             ledger = SqliteLedger(db_path)
@@ -888,6 +889,7 @@ uvicorn.run(app, host="127.0.0.1", port={port_interceptor}, log_level="warning")
             # KILL the real interceptor service process with TerminateProcess
             proc.kill()
             proc.wait()
+            time.sleep(0.5)
 
             # Step D: Verify crash state in persistent ledger
             recovered_ledger = SqliteLedger(db_path)

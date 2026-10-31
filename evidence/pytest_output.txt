@@ -150,4 +150,4 @@ tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_at
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 - generated xml file: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach\evidence\pytest_report.xml -
-======================= 134 passed, 1 warning in 21.33s =======================
+======================= 134 passed, 1 warning in 19.69s =======================

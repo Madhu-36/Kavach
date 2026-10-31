@@ -43,8 +43,15 @@ class SqliteLedger:
             timeout=30.0,
             check_same_thread=False,
         )
-        conn.execute("PRAGMA journal_mode=WAL;")
-        conn.execute("PRAGMA busy_timeout=5000;")
+        for attempt in range(15):
+            try:
+                conn.execute("PRAGMA journal_mode=WAL;")
+                conn.execute("PRAGMA busy_timeout=5000;")
+                break
+            except sqlite3.OperationalError:
+                if attempt == 14:
+                    raise
+                time.sleep(0.1)
         return conn
 
     def _init_db(self) -> None:
