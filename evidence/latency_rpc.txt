@@ -1,0 +1,30 @@
+KAVACH MULTI-PROCESS HTTP RPC LATENCY BENCHMARK REPORT
+======================================================
+Total Samples (N): 100
+Environment: Windows 11 loopback HTTP (127.0.0.1)
+Architecture: Client -> Interceptor (:8100) -> Gateway (:8000)
+
+1. Interceptor RPC Hop (:8100) [HTTP + Ed25519 Verify + SQLite BEGIN IMMEDIATE + Ed25519 Ticket Sign]:
+   p50:  4.05 ms
+   p90:  5.22 ms
+   p99:  7.88 ms
+   Mean: 4.12 ms
+
+2. Gateway RPC Hop (:8000) [HTTP + Single-Use Nonce Check + Ed25519 Ticket Verify + Settlement]:
+   p50:  2.77 ms
+   p90:  4.29 ms
+   p99:  8.67 ms
+   Mean: 3.12 ms
+
+3. Full End-to-End Two-Hop Loop:
+   p50:  7.08 ms
+   p90:  9.22 ms
+   p99:  12.30 ms
+   Mean: 7.25 ms
+   Min:  5.05 ms
+   Max:  12.30 ms
+
+Key Observation:
+Local OS loopback HTTP RPC overhead dominates in-process cryptography (which is ~1.5ms).
+The complete two-hop authorization and settlement completes in ~10-25ms locally,
+which is an order of magnitude faster than standard production UPI inter-bank latency (~200-500ms).

@@ -11,6 +11,7 @@ Formally tests the guarantees defined in docs/INVARIANTS.md:
 
 from __future__ import annotations
 
+import os
 import tempfile
 import time
 import uuid
@@ -21,6 +22,11 @@ import hypothesis.strategies as st
 import pytest
 from fastapi.testclient import TestClient
 from hypothesis import HealthCheck, given, settings
+
+settings.register_profile("ci", max_examples=1000, deadline=None)
+settings.register_profile("dev", max_examples=50)
+settings.load_profile(os.getenv("HYPOTHESIS_PROFILE", "dev"))
+
 
 from kavach.audit import AuditLog
 from kavach.client import KavachClient
@@ -439,3 +445,72 @@ class TestInvariant6CrashResilience:
         assert result.success is False
         assert result.txn_id is None
         assert "interceptor" in result.message.lower() or "connection" in result.message.lower()
+
+    def test_i6_real_subprocess_crash_zero_leaked_budget(self, tmp_path):
+        """Spawn real subprocess, kill it with TerminateProcess/SIGKILL during reservation, verify recovery."""
+        import subprocess
+        import sys
+
+        db_path = tmp_path / "crash_test.db"
+        jti = "mandate-crash-test"
+
+        worker_code = f"""
+import sys, time
+from kavach.ledger_db import SqliteLedger
+
+ledger = SqliteLedger(r"{db_path}")
+ok, msg = ledger.reserve(
+    jti="{jti}",
+    amount_paise=50000,
+    max_budget_paise=100000,
+    max_txn_count=5,
+    idempotency_key="crash-idemp-1"
+)
+sys.stdout.write("RESERVED\\n")
+sys.stdout.flush()
+time.sleep(30)
+"""
+        proc = subprocess.Popen(
+            [sys.executable, "-c", worker_code],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+
+        try:
+            line = proc.stdout.readline().strip()
+            assert line == "RESERVED"
+
+            # Forcefully kill process with TerminateProcess / SIGKILL
+            proc.kill()
+            proc.wait()
+
+            # Restart / re-open ledger in parent process
+            recovered_ledger = SqliteLedger(db_path)
+
+            # Assert zero committed spend leaked
+            assert recovered_ledger.get_spent(jti) == 0
+            assert recovered_ledger.get_count(jti) == 0
+
+            # Recover from the abandoned reservation
+            recovered_count = recovered_ledger.recover_from_crash()
+            assert recovered_count == 1
+
+            # Assert full original budget is immediately available for next valid payment
+            ok_next, msg_next = recovered_ledger.reserve(
+                jti=jti,
+                amount_paise=100000,
+                max_budget_paise=100000,
+                max_txn_count=5,
+                idempotency_key="clean-idemp-2",
+            )
+            assert ok_next is True
+            assert msg_next == "RESERVED"
+            assert recovered_ledger.commit("clean-idemp-2") is True
+            assert recovered_ledger.get_spent(jti) == 100000
+            assert recovered_ledger.get_count(jti) == 1
+        finally:
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+

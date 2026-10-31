@@ -15,6 +15,7 @@ import pytest
 
 from kavach.consent import (
     EscalationChallenge,
+    check_step_up_required,
     generate_mandate_preview,
     issue_escalation_ticket,
     verify_escalation_ticket,
@@ -166,3 +167,74 @@ class TestStepUpEscalation:
         )
         assert ok is False
         assert "Signature has expired" in msg or "invalid" in msg
+
+    def test_ticket_replay_explicit_rejection(self, user_keys):
+        user_priv, user_pub = user_keys
+        used_tickets: set[str] = set()
+
+        challenge = EscalationChallenge(
+            challenge_id="chal-005",
+            amount_paise=150_000,
+            payee_vpa="ondc-grocer@upi",
+            reason="Step up test",
+            exp=int(time.time()) + 60,
+        )
+        ticket = issue_escalation_ticket(user_priv, challenge)
+
+        # First use succeeds
+        ok1, msg1 = verify_escalation_ticket(
+            ticket=ticket,
+            user_public_key=user_pub,
+            expected_payee="ondc-grocer@upi",
+            expected_amount_paise=150_000,
+            used_ticket_ids=used_tickets,
+        )
+        assert ok1 is True
+
+        # Second use fails immediately
+        ok2, msg2 = verify_escalation_ticket(
+            ticket=ticket,
+            user_public_key=user_pub,
+            expected_payee="ondc-grocer@upi",
+            expected_amount_paise=150_000,
+            used_ticket_ids=used_tickets,
+        )
+        assert ok2 is False
+        assert "already used" in msg2
+
+    def test_self_approval_prevention_unreachable_channel(self, user_keys):
+        """Attacker/Agent attempting to self-authorize fails closed."""
+        _, user_pub = user_keys
+        agent_priv, _ = generate_keypair()
+        used_tickets: set[str] = set()
+
+        challenge = EscalationChallenge(
+            challenge_id="chal-006",
+            amount_paise=500_000,
+            payee_vpa="attacker@upi",
+            reason="Malicious self-escalation",
+            exp=int(time.time()) + 60,
+        )
+        # Agent signs ticket with its own key, trying to simulate user authorization
+        fake_ticket = issue_escalation_ticket(agent_priv, challenge)
+
+        ok, msg = verify_escalation_ticket(
+            ticket=fake_ticket,
+            user_public_key=user_pub,
+            expected_payee="attacker@upi",
+            expected_amount_paise=500_000,
+            used_ticket_ids=used_tickets,
+        )
+        assert ok is False
+        assert "invalid" in msg.lower() or "signature" in msg.lower()
+
+    def test_exact_threshold_boundaries(self):
+        """Strict boundary testing: <= threshold requires no escalation, > threshold requires step-up."""
+        threshold = 100_000  # ₹1,000
+
+        # Boundary checks
+        assert check_step_up_required(threshold - 1, threshold) is False
+        assert check_step_up_required(threshold, threshold) is False
+        assert check_step_up_required(threshold + 1, threshold) is True
+        assert check_step_up_required(250_000, threshold) is True
+

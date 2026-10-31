@@ -48,7 +48,7 @@ from kavach.mock_ondc import search_store
 from kavach.mock_upi import MockUPIGateway
 from kavach.models import Decision, MandateSpec, PaymentRequest, ReasonCode
 
-console = Console()
+console = Console(record=True)
 app = typer.Typer(add_completion=False)
 
 
@@ -518,13 +518,15 @@ def main(
     pace: float = typer.Option(1.0, "--pace", "-p", help="Pace multiplier (e.g. 1.0, 0.3)"),
     fast: bool = typer.Option(False, "--fast", "-f", help="Fast mode for rapid automated testing (~5s)"),
     video: bool = typer.Option(False, "--video", help="3-minute video mode (~2m 40s total runtime)"),
+    record: bool = typer.Option(False, "--record", help="Export Rich terminal recording to evidence/demo_output.txt and evidence/demo_output.svg"),
+    export_dir: str = typer.Option("evidence", "--export-dir", help="Directory to export recorded terminal output"),
 ) -> None:
     """Run the Kavach demo — 4 scenes + bonus for the hackathon video."""
     start_time = time.time()
     if fast:
         active_pace = 0.2
     elif video:
-        active_pace = 4.2  # Calibrated for ~2m 40s total runtime (ideal for 3-minute video recording)
+        active_pace = 6.4  # Calibrated for 2m 40s (160s) total runtime (ideal for 3-minute video recording)
     else:
         active_pace = pace
 
@@ -611,6 +613,18 @@ def main(
         border_style="cyan",
         padding=(1, 2),
     ))
+
+    if record:
+        out_dir = Path(export_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        txt_path = out_dir / "demo_output.txt"
+        svg_path = out_dir / "demo_output.svg"
+        console.save_text(str(txt_path))
+        try:
+            console.save_svg(str(svg_path), title="Kavach Terminal Demo")
+        except Exception as e:
+            console.print(f"[dim]SVG export warning: {e}[/dim]")
+        console.print(f"\n[dim]Recorded output exported to {txt_path} and {svg_path}[/dim]")
 
 
 if __name__ == "__main__":

@@ -47,6 +47,8 @@ class KavachInterceptor:
         audit_log: Optional[AuditLog] = None,
         revoked_jtis: Optional[frozenset[str]] = None,
         interceptor_private_key: Optional[Ed25519PrivateKey] = None,
+        root_mandate_token: Optional[str] = None,
+        root_user_public_key: Optional[Ed25519PublicKey] = None,
     ) -> None:
         self._public_key = public_key
         self._mandate_token = mandate_token
@@ -55,6 +57,8 @@ class KavachInterceptor:
         self._revoked_jtis = revoked_jtis or frozenset()
         self._used_nonces: set[str] = set()
         self._interceptor_private_key = interceptor_private_key
+        self._root_mandate_token = root_mandate_token
+        self._root_user_public_key = root_user_public_key
 
     @property
     def mandate_token(self) -> str:
@@ -73,8 +77,28 @@ class KavachInterceptor:
         claims: Optional[MandateClaims] = None
         idempotency_key = request.idempotency_key or request.nonce or str(uuid.uuid4())
         reservation_made = False
+        child_payload: Optional[dict] = None
+        parent_idempotency_key: Optional[str] = None
+        parent_reservation_made = False
 
         try:
+            # 0. Delegation chain verification if root token provided
+            if self._root_mandate_token and self._root_user_public_key:
+                from kavach.delegation import verify_delegation_chain
+                ok_del, err_del, child_payload = verify_delegation_chain(
+                    child_token=self._mandate_token,
+                    root_token=self._root_mandate_token,
+                    user_public_key=self._root_user_public_key,
+                    parent_public_key=self._public_key,
+                )
+                if not ok_del:
+                    decision = Decision.deny(
+                        ReasonCode.DELEGATION_INVALID,
+                        f"Delegation chain validation failed: {err_del}",
+                    )
+                    self._log(request, decision, "delegated_child")
+                    return decision, None
+
             # 1. Signature + algorithm pinning
             err, claims = check_signature_and_algorithm(self._mandate_token, self._public_key)
             if err:
@@ -163,6 +187,37 @@ class KavachInterceptor:
                     return decision, claims
                 reservation_made = True
 
+                # Dual Drawdown: If delegated, also reserve against parent root mandate
+                if child_payload and "parent_jti" in child_payload and self._root_mandate_token:
+                    import jwt
+                    parent_jti = child_payload["parent_jti"]
+                    parent_idempotency_key = f"parent_{idempotency_key}"
+                    root_raw = jwt.decode(self._root_mandate_token, options={"verify_signature": False})
+                    root_mandate = root_raw["mandate"]
+                    p_ok, p_msg = self._ledger.reserve(
+                        jti=parent_jti,
+                        amount_paise=request.amount_paise,
+                        max_budget_paise=root_mandate["total_budget_paise"],
+                        max_txn_count=root_mandate["max_txn_count"],
+                        idempotency_key=parent_idempotency_key,
+                    )
+                    if not p_ok:
+                        # Rollback child reservation
+                        self._ledger.rollback(idempotency_key)
+                        reservation_made = False
+                        rc = (
+                            ReasonCode.BUDGET_EXHAUSTED
+                            if p_msg == "BUDGET_EXHAUSTED"
+                            else ReasonCode.TXN_COUNT_EXCEEDED
+                        )
+                        decision = Decision.deny(
+                            rc,
+                            f"Payment of {request.amount_paise} paise exceeds root parent budget.",
+                        )
+                        self._log(request, decision, claims.jti)
+                        return decision, claims
+                    parent_reservation_made = True
+
             # All checks passed — generate signed approval ticket if private key available
             approval_ticket: Optional[str] = None
             ticket_id: Optional[str] = None
@@ -189,8 +244,12 @@ class KavachInterceptor:
             # Commit the transaction
             if isinstance(self._ledger, SqliteLedger):
                 self._ledger.commit(idempotency_key)
+                if parent_reservation_made and parent_idempotency_key:
+                    self._ledger.commit(parent_idempotency_key)
             else:
                 self._ledger.record_txn(claims.jti, request.amount_paise)
+                if child_payload and "parent_jti" in child_payload:
+                    self._ledger.record_txn(child_payload["parent_jti"], request.amount_paise)
 
             if request.nonce:
                 self._used_nonces.add(request.nonce)
@@ -202,6 +261,8 @@ class KavachInterceptor:
             # FAIL CLOSED
             if reservation_made and isinstance(self._ledger, SqliteLedger):
                 self._ledger.rollback(idempotency_key)
+            if parent_reservation_made and parent_idempotency_key and isinstance(self._ledger, SqliteLedger):
+                self._ledger.rollback(parent_idempotency_key)
 
             decision = Decision.deny(
                 ReasonCode.INTERNAL_ERROR,

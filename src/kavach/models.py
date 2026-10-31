@@ -29,6 +29,7 @@ class MandateClaims(BaseModel):
     iss: str
     sub: str  # agent_id
     jti: str  # unique mandate id
+    parent_jti: Optional[str] = None  # Link to parent mandate if delegated
     iat: int
     nbf: int
     exp: int
@@ -57,6 +58,8 @@ class ReasonCode(str, enum.Enum):
     AUDIT_LOG_TAMPERED = "AUDIT_LOG_TAMPERED"
     APPROVAL_TICKET_INVALID = "APPROVAL_TICKET_INVALID"
     EXTRA_ARGUMENTS_FORBIDDEN = "EXTRA_ARGUMENTS_FORBIDDEN"
+    DELEGATION_INVALID = "DELEGATION_INVALID"
+    STEP_UP_REQUIRED = "STEP_UP_REQUIRED"
 
 
 class Decision(BaseModel):

@@ -125,7 +125,7 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 
-# 3. Run complete test suite (82 tests passing)
+# 3. Run complete test suite (132 tests passing)
 python -m pytest tests/ -v
 
 # 4. Run interactive Rich terminal demo (Fast mode)
@@ -155,6 +155,8 @@ def buy_groceries(amount_paise: int, payee_vpa: str, note: str = ""):
 
 ## 📚 Deep-Dive Documentation
 
+- [Verified Claims Matrix & Truth Audit](docs/CLAIMS.md)
+- [System & Environment Status](docs/STATUS.md)
 - [Formal Security Invariants (I1 - I6)](docs/INVARIANTS.md)
 - [OS & Network-Level Container Isolation](docs/DOCKER_ISOLATION.md)
 - [Comparative Analysis & Related Work](docs/RELATED_WORK.md)
@@ -163,3 +165,12 @@ def buy_groceries(amount_paise: int, payee_vpa: str, note: str = ""):
 - [Evaluation Results & Methodology](eval/RESULTS.md)
 - [Submission Form & Video Script](SUBMISSION.md)
 - [Verification Evidence Directory](evidence/)
+
+---
+
+## ⚠️ Honest Limitations & Design Boundaries
+
+1. **Docker Container Network Isolation**: Marked as **DESIGN-ONLY** because the Docker Desktop daemon is stopped on this local Windows development host. Process-level isolation via separate local ports (`:8000` for gateway, `:8100` for interceptor, isolated agent stub) is verified.
+2. **In-Mandate Price Poisoning**: Mitigated currently via strict per-transaction and total budget caps. Merchant-signed quote verification remains **DESIGN-ONLY** (`docs/MERCHANT_QUOTES.md`).
+3. **UPI Latency Context**: Local interceptor evaluation is sub-millisecond to ~4ms; production UPI inter-bank settlement across NPCI switches introduces 200–500ms network latency.
+

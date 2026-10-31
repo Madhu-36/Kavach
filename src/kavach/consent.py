@@ -122,3 +122,9 @@ def verify_escalation_ticket(
 
     used_ticket_ids.add(ticket_id)
     return True, "User step-up consent verified ✓"
+
+
+def check_step_up_required(amount_paise: int, threshold_paise: int) -> bool:
+    """Return True if amount strictly exceeds threshold."""
+    return amount_paise > threshold_paise
+

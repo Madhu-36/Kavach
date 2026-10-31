@@ -44,3 +44,21 @@ National Payments Corporation of India (NPCI) introduced UPI AutoPay for recurri
 - **Strengths**: Trusted regulatory framework approved by the Reserve Bank of India (RBI); high adoption across 350+ banks.
 - **Limitations**: Designed for fixed, predictable recurring subscriptions (e.g., ₹499 deducted on the 5th of every month). It cannot handle dynamic, autonomous micro-spending workflows required by AI agents (e.g., "spend up to ₹2,000 across any combination of 3 ONDC grocery merchants over the next 48 hours, capped at ₹800 per order").
 - **How Kavach Differs**: Kavach adapts the trusted UPI e-Mandate paradigm into **dynamic, cryptographically verifiable micro-mandates**. By pairing asymmetric user authorization with sub-millisecond policy verification, Kavach delivers the missing security primitives needed to bring autonomous AI agents onto India's Digital Public Infrastructure (DPI).
+
+---
+
+## 3. Authoritative References & External Citations
+
+1. **NPCI UPI AutoPay & Recurring Mandates Specification**:  
+   [https://www.npci.org.in/what-we-do/upi/autopay](https://www.npci.org.in/what-we-do/upi/autopay)
+2. **Reserve Bank of India (RBI) e-Mandate Processing Directive**:  
+   [https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11668](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11668)
+3. **Macaroons: Cookies with Contextual Caveats for Decentralized Authorization in the Cloud** (Birgisson, Politz, Erlingsson, Taly, NDSS 2014):  
+   [https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/](https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/)
+4. **Biscuit Cryptographic Authorization Token Specification**:  
+   [https://www.biscuitsec.org/](https://www.biscuitsec.org/)
+5. **EMVCo Payment Tokenisation Specification (Technical Framework v2.3)**:  
+   [https://www.emvco.com/emv-technologies/payment-tokenisation/](https://www.emvco.com/emv-technologies/payment-tokenisation/)
+6. **Open Network for Digital Commerce (ONDC) Protocol Specifications**:  
+   [https://ondc.org/](https://ondc.org/)
+

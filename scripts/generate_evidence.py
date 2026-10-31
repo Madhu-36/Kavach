@@ -76,10 +76,10 @@ def main():
     secret_txt = evidence_dir / "secret_scan.txt"
     run_and_save([sys.executable, "-c", scan_script], secret_txt, root)
 
-    # 3. Demo Timing Measurement
+    # 3. Demo Timing Measurement & Recording (Rich text + SVG)
     demo_txt = evidence_dir / "demo_timing.txt"
     t0 = time.time()
-    res_demo = run_and_save([sys.executable, "demo.py", "--fast"], demo_txt, root)
+    res_demo = run_and_save([sys.executable, "demo.py", "--fast", "--record"], demo_txt, root)
     elapsed = time.time() - t0
     with open(demo_txt, "a", encoding="utf-8") as f:
         f.write(f"\n\nMeasured Wall-Clock Execution Time: {elapsed:.2f} seconds\n")
@@ -92,15 +92,26 @@ def main():
     adaptive_txt = evidence_dir / "adaptive_attacker.txt"
     run_and_save([sys.executable, "eval/run_adaptive_attacker.py"], adaptive_txt, root)
 
-    # 6. Latency Profiling (1,000 requests)
+    # 6. In-Process Latency Profiling (1,000 requests)
     latency_txt = evidence_dir / "latency.txt"
     run_and_save([sys.executable, "scripts/profile_latency.py"], latency_txt, root)
+
+    # 7. Multi-Process Real HTTP RPC Latency Profiling (100 requests)
+    rpc_latency_txt = evidence_dir / "latency_rpc_log.txt"
+    run_and_save([sys.executable, "scripts/profile_rpc_latency.py"], rpc_latency_txt, root)
 
     # Copy results.json into evidence/
     results_src = root / "eval" / "results.json"
     if results_src.exists():
         results_dest = evidence_dir / "eval_benchmark.json"
         results_dest.write_text(results_src.read_text(encoding="utf-8"), encoding="utf-8")
+
+    # 8. Automated Walkthrough Generation & SHA-256 Manifest
+    print("\n[generate_evidence] > Building walkthrough artifact and SHA-256 manifest...")
+    res_wt = subprocess.run([sys.executable, "tools/build_walkthrough.py"], cwd=root, capture_output=True, text=True)
+    print(res_wt.stdout)
+    if res_wt.returncode != 0:
+        print(f"[ERROR] Walkthrough builder failed:\n{res_wt.stderr}")
 
     print(f"\n[SUCCESS] All evidence artifacts generated in {evidence_dir}")
 

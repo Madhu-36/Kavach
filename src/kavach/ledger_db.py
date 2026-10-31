@@ -9,6 +9,7 @@ from __future__ import annotations
 import sqlite3
 import threading
 import time
+import uuid
 from pathlib import Path
 from typing import Optional
 
@@ -18,8 +19,8 @@ class SqliteLedger:
 
     def __init__(self, db_path: Optional[Path | str] = None) -> None:
         if db_path is None or db_path == ":memory:":
-            # In-memory shared across threads using URI
-            self._db_path = f"file:kavach_ledger_{id(self)}?mode=memory&cache=shared"
+            # In-memory shared across threads using unique URI per instance
+            self._db_path = f"file:kavach_ledger_{uuid.uuid4().hex}?mode=memory&cache=shared"
             self._is_uri = True
             self._keepalive_conn = sqlite3.connect(
                 self._db_path,
@@ -218,6 +219,22 @@ class SqliteLedger:
         except Exception:
             conn.rollback()
             return False
+        finally:
+            conn.close()
+
+    def recover_from_crash(self, max_age_seconds: float = 0.0) -> int:
+        """Mark stale or abandoned uncommitted reservations as ROLLED_BACK."""
+        conn = self._get_connection()
+        try:
+            conn.execute("BEGIN IMMEDIATE")
+            cutoff = time.time() - max_age_seconds
+            cur = conn.execute(
+                "UPDATE reservations SET status = 'ROLLED_BACK' WHERE status = 'RESERVED' AND created_at <= ?",
+                (cutoff,),
+            )
+            count = cur.rowcount
+            conn.commit()
+            return count
         finally:
             conn.close()
 
