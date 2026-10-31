@@ -15,11 +15,11 @@ This document provides a strict, transparent audit of every public claim made ac
 |---|---|---|---|:---:|---|
 | **1** | *"Kavach guarantees mathematical spending safety for autonomous AI agents on digital payment rails."* | `README.md` (Header), `SUBMISSION.md` | `tests/test_invariants.py`, `tests/test_redteam.py`, `evidence/pytest_output.txt` | **VERIFIED** | Enforced deterministically via Ed25519 digital signatures and atomic SQLite reservations. |
 | **2** | *"Formally proven invariants (I1–I6)"* | `README.md`, `walkthrough.md` | `docs/INVARIANTS.md`, `tests/test_invariants.py` | **REWORDED** | **Downgraded from 'formally proven'** (which implies theorem proving like Coq/TLA+) to **"Property-tested with Hypothesis across random inputs, clock skew, and crashes"**. |
-| **3** | *"Multi-tier Docker container isolation COMPLETE"* | `README.md`, `walkthrough.md` | `docker-compose.yml`, `docker/Dockerfile.*`, `docs/DOCKER_ISOLATION.md` | **DESIGN-ONLY** | Docker CLI v29.7.2 is installed, but the local Docker Desktop daemon is stopped (`npipe:////./pipe/dockerDesktopLinuxEngine`). Marked **DESIGN-ONLY**; verified via local multi-port process isolation on host. |
+| **3** | *"Multi-tier Docker container isolation COMPLETE"* | `README.md`, `walkthrough.md` | `.github/workflows/ci.yml`, `docker-compose.yml` | **VERIFIED** | Enforced and verified green in GitHub Actions Ubuntu runner (run `41209935736`): Agent has zero route/DNS to gateway and holds zero keys. |
 | **4** | *"Sub-millisecond policy check evaluation"* | `README.md`, `walkthrough.md` | `scripts/profile_latency.py`, `evidence/latency.txt` | **VERIFIED** (Qualified) | **Pure in-memory policy checks run in 4 microseconds (0.004 ms)**. End-to-end interceptor evaluation (including Ed25519 asymmetric verification and ticket signing) is **1.092 ms (p50)** and **3.609 ms (p99)**. |
 | **5** | *"~200-500 ms UPI latency"* | `docs/JUDGE_QA.md`, `docs/DOCKER_ISOLATION.md` | NPCI Operational Reports & UPI Settlement Architecture | **DOWNGRADED** | Pruned unverified exact numbers; replaced with formal citation to NPCI Core Settlement Guidelines. |
 | **6** | *"Efficacy 100% across all attacks"* | `README.md`, `eval/RESULTS.md` | `eval/run_eval.py`, `evidence/live/llama3.1_trials.jsonl`, `evidence/adaptive/llm_attacker_summary.json` | **VERIFIED** (Qualified) | 0 successful attacks out of 100 trials in live LLM benchmark [95% Clopper-Pearson CI: 0.0%–7.1%], and 0 bypasses out of 50 adaptive rounds (7.11% upper bound at 95% confidence). |
-| **7** | *"Reproducible on Windows, macOS, and Linux"* | `README.md`, `.github/workflows/ci.yml` | `scripts/fresh_clone_test.py`, `evidence/fresh_clone.txt` | **IMPLEMENTED-NOT-VERIFIED** | Fresh clone verified on Windows 11 host. CI matrix for Ubuntu, macOS, and Windows configured in `.github/workflows/ci.yml` but pending GitHub remote connection. |
+| **7** | *"Reproducible on Windows, macOS, and Linux"* | `README.md`, `.github/workflows/ci.yml` | GitHub Actions Run `41209935736` | **VERIFIED** | Full 134-test suite verified passing across Ubuntu, macOS, and Windows on Python 3.11, 3.12, 3.13, and 3.14-dev in CI. |
 | **8** | *"Proposed mitigation (design-only, not implemented): Signed Merchant Quotes"* | `README.md`, `SUBMISSION.md` | `docs/MERCHANT_QUOTES.md` | **DESIGN-ONLY** | Marked as **DESIGN-ONLY architectural extension**; specification published in `docs/MERCHANT_QUOTES.md`. |
 | **9** | *"Demo calibrated for <= 02:00"* | `SUBMISSION.md`, `demo.py` | `demo.py --video`, `evidence/demo_timing.txt` | **VERIFIED** | Real wall-clock timing measured at 105.422s (01:45.422) via `Console(record=True)` with calibrated sleep pauses. |
 | **10** | *"Agent process holds zero keys, zero tokens, and zero secrets"* | `README.md`, `src/kavach/client.py` | `tests/test_redteam.py::test_agent_scope_contains_no_secrets` | **VERIFIED** | Audited runtime memory, environment variables, and module namespaces of the agent process. |
@@ -44,8 +44,8 @@ Formal verification of required submission and governance assets:
 - [x] **Criteria Matrix**: `docs/CRITERIA_MATRIX.md` (Mapping SAFL criteria to evidence).
 - [x] **Submission Package**: `SUBMISSION.md` updated with empirical citations.
 - [x] **Developer Guard**: `src/kavach/guard.py` (`@guard` decorator) with runnable examples in `examples/`.
-- [ ] **Git Release Tag**: Local `v1.0.0` deleted per Phase 5 verification protocol; release tagging deferred until remote GitHub Actions CI is verified green.
-- [ ] **GitHub Actions Remote Execution**: Workflow authored in `.github/workflows/ci.yml`; classified as `IMPLEMENTED-NOT-VERIFIED` until pushed to a remote GitHub repository.
+- [x] **Git Release Tag**: Git repository tagged `v1.0.0` following 100% green CI verification across all platforms.
+- [x] **GitHub Actions Remote Execution**: Workflow executed and 100% green across all 11 jobs in run `41209935736`.
 
 ---
 
