@@ -60,10 +60,10 @@ Agent reads the ONDC store listings...
 ├───────────────────────────────┼──────────────────────────────────────┤
 │ iss                           │ user@kavach                          │
 │ sub                           │ agent_001                            │
-│ jti                           │ 92565163-660e-4377-8f53-6ee948024012 │
-│ iat                           │ 1793432090 (13:04:50)                │
-│ nbf                           │ 1793432090 (13:04:50)                │
-│ exp                           │ 1793432990 (13:19:50)                │
+│ jti                           │ fa6b9cbc-7928-436a-b81c-69882bc639b5 │
+│ iat                           │ 1793433340 (13:25:40)                │
+│ nbf                           │ 1793433340 (13:25:40)                │
+│ exp                           │ 1793434240 (13:40:40)                │
 │   mandate.purpose             │ grocery shopping                     │
 │   mandate.allowed_payees      │ ['ondc-grocer@upi']                  │
 │   mandate.allowed_categories  │ ['groceries', 'essentials']          │
@@ -149,12 +149,56 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 └─────────────────────┴───────────┘
 ┌──────────────────────────── 📋 Audit Log Entry ─────────────────────────────┐
 │ seq: 1                                                                      │
-│ mandate_jti: 92565163-660e-4377-8f53-6ee948024012                           │
+│ mandate_jti: fa6b9cbc-7928-436a-b81c-69882bc639b5                           │
 │ payee: attacker_wallet@upi                                                  │
 │ amount: ₹5,000.00                                                           │
 │ decision: PAYEE_NOT_ALLOWED                                                 │
-│ entry_hash: bf014fbe2797713972ae708d0b84858c...                             │
-│ prev_hash: 7bff6222b1951035980b21d51bb43836...                              │
+│ entry_hash: 098634cbc48d59df19db8ce823695370...                             │
+│ prev_hash: fadf06fb1ce6b4caa9728b732b1f0426...                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+──────────────── SCENE 4 — HIERARCHICAL MULTI-AGENT DELEGATION ────────────────
+  Shopping agent issues an attenuated sub-mandate to a courier sub-agent
+
+Parent agent received grocery order. Delegating ₹100 tip to delivery 
+sub-agent...
+┌───────────────────────── 🤝 Attenuated Delegation ──────────────────────────┐
+│ ✓ SUB-MANDATE ISSUED & CRYPTOGRAPHICALLY VERIFIED                           │
+│ Child Agent: courier_subagent                                               │
+│ Purpose: Courier Delivery Tip                                               │
+│ Allowed Payees: ondc-grocer@upi                                             │
+│ Per-Txn Limit: ₹100.00 (Narrowed from ₹1,500.00)                            │
+│ Total Budget: ₹200.00 (Narrowed from ₹3,000.00)                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Now what if compromised courier sub-agent attempts to expand authority to 
+'attacker_wallet@upi'?
+┌─────────────────────── 🛡️ Kavach Delegation Firewall ───────────────────────┐
+│ ✗ DELEGATION EXPANSION BLOCKED                                              │
+│ Reason: Child mandate attempts to expand payees with unauthorized VPAs:     │
+│ {'attacker_wallet@upi'}                                                     │
+│ Sub-agents can only narrow parental scope, never widen it.                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+─────────────── SCENE 5 — EXPLICIT CONSENT & STEP-UP (ESCALATE) ───────────────
+  What You See Is What You Sign (WYSIWYS) Preview + Step-Up Challenge
+
+┌──────────────── 👁️ What You See Is What You Sign (WYSIWYS) ─────────────────┐
+│ Purpose: Monthly Groceries                                                  │
+│ Allowed Payees: ondc-grocer@upi                                             │
+│ Per-Txn Limit: ₹1,500.00                                                    │
+│ Total Budget: ₹3,000.00                                                     │
+│ Max Transactions: 5                                                         │
+│ SHA-256 Fingerprint: 31fa63de82ad0f996119b1c1ab3e6ba6...                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+Agent encounters an exceptional bulk order of ₹2,500 (exceeds standard 
+limit)...
+🛡️ Interceptor triggers step-up challenge (ESCALATE). User prompted for 
+biometric/PIN consent...
+┌────────────────────── 🔐 Interactive Consent Verified ──────────────────────┐
+│ ✓ USER STEP-UP CONSENT GRANTED                                              │
+│ User step-up consent verified ✓                                             │
+│ Single-use ephemeral ticket (valid 60s) accepted by Interceptor.            │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ──────────────────────── BONUS SCENE — TOKEN TAMPERING ────────────────────────
@@ -177,22 +221,25 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 
 ──────────────────────────────── DEMO COMPLETE ────────────────────────────────
 
-┌──────────────── 🛡️ Kavach: Cryptographic Micro-Mandates ─────────────────┐
-│                                                                          │
-│  Key Takeaways:                                                          │
-│                                                                          │
-│  1. Without Kavach: A prompt injection drains ₹5,000 to the attacker.    │
-│  2. With Kavach: The same injection is blocked by deterministic policy.  │
-│  3. Legitimate payments within mandate bounds work seamlessly.           │
-│  4. Token tampering is caught by Ed25519 signature verification.         │
-│                                                                          │
-│  Security comes from cryptography and policy — not from system prompts.  │
-│  Demo execution time: 0m 04s (Pace: 0.2x)                                │
-│                                                                          │
-└──────────────────────────────────────────────────────────────────────────┘
+┌────────────────── 🛡️ Kavach: Cryptographic Micro-Mandates ──────────────────┐
+│                                                                             │
+│  Key Takeaways:                                                             │
+│                                                                             │
+│  1. Without Kavach: A prompt injection drains ₹5,000 to the attacker.       │
+│  2. With Kavach: The same injection is blocked by deterministic policy.     │
+│  3. Legitimate payments within mandate bounds work seamlessly.              │
+│  4. Attenuated Delegation: Sub-agents can narrow scope, never expand it.    │
+│  5. Step-Up Consent: High-value actions require interactive user            │
+│  authorization.                                                             │
+│  6. Token tampering is caught by Ed25519 signature verification.            │
+│                                                                             │
+│  Security comes from cryptography and policy — not from system prompts.     │
+│  Demo execution time: 0m 05s (Pace: 0.2x)                                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 
 
 STDERR:
 
 
-Measured Wall-Clock Execution Time: 5.69 seconds
+Measured Wall-Clock Execution Time: 7.14 seconds

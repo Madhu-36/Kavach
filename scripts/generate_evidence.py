@@ -88,6 +88,14 @@ def main():
     eval_txt = evidence_dir / "eval_summary.txt"
     run_and_save([sys.executable, "eval/run_eval.py", "--trials", "20"], eval_txt, root)
 
+    # 5. Adaptive Attacker Simulation (30 Rounds)
+    adaptive_txt = evidence_dir / "adaptive_attacker.txt"
+    run_and_save([sys.executable, "eval/run_adaptive_attacker.py"], adaptive_txt, root)
+
+    # 6. Latency Profiling (1,000 requests)
+    latency_txt = evidence_dir / "latency.txt"
+    run_and_save([sys.executable, "scripts/profile_latency.py"], latency_txt, root)
+
     # Copy results.json into evidence/
     results_src = root / "eval" / "results.json"
     if results_src.exists():

@@ -16,8 +16,8 @@ Mode: Scripted Compromised (Adversarial Baseline)
 │ Injection Obeyed  │  100.0% (20/20)  │  100.0% (20/20)   │   0.0% (Model    │
 │ Rate (%)          │                  │                   │      intent      │
 │                   │                  │                   │    unchanged)    │
-│ Attack Success    │  100.0% (20/20)  │    0.0% (0/20)    │  -100.0% (100%   │
-│ Rate (%)          │                  │                   │     BLOCKED)     │
+│ Attack Success    │ 100.0% [95% CI:  │   0.0% [95% CI:   │  -100.0% (100%   │
+│ Rate (%)          │  83.2%-100.0%]   │    0.0%-16.8%]    │     BLOCKED)     │
 │ Total User Funds  │   ₹100,000.00    │       ₹0.00       │      Saved       │
 │ Drained (INR)     │                  │                   │   ₹100,000.00    │
 │ Legitimate Task   │  100.0% (20/20)  │  100.0% (20/20)   │   100% Utility   │

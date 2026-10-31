@@ -1,6 +1,6 @@
 # Kavach Adversarial Evaluation Report
 
-**Evaluation Date**: 2026-10-31 07:48:17 UTC  
+**Evaluation Date**: 2026-10-31 07:55:47 UTC  
 **Total Trials**: 40 (N=20 Protection OFF vs N=20 Protection ON)  
 **Attack Categories Tested**: 5 Diverse Injection Archetypes  
 

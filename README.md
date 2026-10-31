@@ -7,7 +7,7 @@
 [![CI Matrix](https://github.com/secure-ai-futures-lab/kavach/actions/workflows/ci.yml/badge.svg)](https://github.com/secure-ai-futures-lab/kavach/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Invariants Verified](https://img.shields.io/badge/Hypothesis-Invariants_I1--I6_Verified-success.svg)](docs/INVARIANTS.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-82_Passed-brightgreen.svg)](evidence/pytest_output.txt)
+[![Tests Passing](https://img.shields.io/badge/Tests-94_Passed-brightgreen.svg)](evidence/pytest_output.txt)
 
 ---
 
