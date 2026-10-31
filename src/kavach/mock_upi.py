@@ -92,6 +92,10 @@ class MockUPIGateway:
         self._used_tickets.add(payload.jti)
         return True, "Ticket verified"
 
+    def is_ticket_settled(self, ticket_id: str) -> bool:
+        """Check if an approval ticket or transaction nonce was settled."""
+        return ticket_id in self._used_tickets
+
     def process_payment(
         self,
         payer_vpa: str,
@@ -174,4 +178,12 @@ def create_app(
     def balance(vpa: str) -> BalanceResponse:
         return BalanceResponse(vpa=vpa, balance_paise=_gw.get_balance(vpa))
 
+    @app.get("/ticket/{ticket_id}/status")
+    def ticket_status(ticket_id: str):
+        return {"ticket_id": ticket_id, "settled": _gw.is_ticket_settled(ticket_id)}
+
     return app
+
+
+# Default module-level FastAPI app for uvicorn
+app = create_app(gateway=gateway)

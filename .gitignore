@@ -9,6 +9,7 @@
 *.db-wal
 *.db-shm
 *.jsonl
+!evidence/**/*.jsonl
 
 # Python cache & testing
 __pycache__/

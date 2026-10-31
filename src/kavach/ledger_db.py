@@ -65,10 +65,15 @@ class SqliteLedger:
                     jti TEXT NOT NULL,
                     amount_paise INTEGER NOT NULL,
                     status TEXT NOT NULL,  -- 'RESERVED', 'COMMITTED', 'ROLLED_BACK'
-                    created_at REAL NOT NULL
+                    created_at REAL NOT NULL,
+                    ticket_id TEXT
                 );
                 """
             )
+            try:
+                conn.execute("ALTER TABLE reservations ADD COLUMN ticket_id TEXT;")
+            except Exception:
+                pass
 
     def reserve(
         self,
@@ -205,6 +210,21 @@ class SqliteLedger:
         finally:
             conn.close()
 
+    def set_ticket_id(self, idempotency_key: str, ticket_id: str) -> bool:
+        """Associate issued approval ticket ID with an active reservation."""
+        conn = self._get_connection()
+        try:
+            conn.execute(
+                "UPDATE reservations SET ticket_id = ? WHERE idempotency_key = ?",
+                (ticket_id, idempotency_key),
+            )
+            conn.commit()
+            return True
+        except Exception:
+            return False
+        finally:
+            conn.close()
+
     def rollback(self, idempotency_key: str) -> bool:
         """Roll back an uncommitted reservation (e.g. gateway error)."""
         conn = self._get_connection()
@@ -222,19 +242,62 @@ class SqliteLedger:
         finally:
             conn.close()
 
-    def recover_from_crash(self, max_age_seconds: float = 0.0) -> int:
-        """Mark stale or abandoned uncommitted reservations as ROLLED_BACK."""
+    def recover_from_crash(
+        self,
+        max_age_seconds: float = 0.0,
+        gateway_reconciler: Optional[any] = None,
+    ) -> int:
+        """Reconcile uncommitted reservations against gateway settlement status.
+
+        If a payment was already settled by the gateway (gateway_reconciler returns True),
+        the reservation is COMMITTED to prevent double-spending and ledger drift.
+        If not settled (or no reconciler provided), stale reservations are ROLLED_BACK.
+        """
         conn = self._get_connection()
         try:
             conn.execute("BEGIN IMMEDIATE")
             cutoff = time.time() - max_age_seconds
             cur = conn.execute(
-                "UPDATE reservations SET status = 'ROLLED_BACK' WHERE status = 'RESERVED' AND created_at <= ?",
+                "SELECT idempotency_key, ticket_id, jti, amount_paise FROM reservations WHERE status = 'RESERVED' AND created_at <= ?",
                 (cutoff,),
             )
-            count = cur.rowcount
+            rows = cur.fetchall()
+            recovered_count = 0
+            for row in rows:
+                idemp_key, ticket_id, jti, amt = row
+                settled = False
+                if gateway_reconciler and (ticket_id or idemp_key):
+                    key_to_check = ticket_id or idemp_key
+                    try:
+                        settled = bool(gateway_reconciler(key_to_check))
+                    except Exception:
+                        settled = False
+
+                if settled:
+                    # Gateway already settled this payment! Commit to prevent double-spend & ledger drift
+                    conn.execute(
+                        """
+                        INSERT INTO mandate_totals (jti, spent_paise, txn_count)
+                        VALUES (?, ?, 1)
+                        ON CONFLICT(jti) DO UPDATE SET
+                            spent_paise = spent_paise + excluded.spent_paise,
+                            txn_count = txn_count + 1;
+                        """,
+                        (jti, amt),
+                    )
+                    conn.execute(
+                        "UPDATE reservations SET status = 'COMMITTED' WHERE idempotency_key = ?",
+                        (idemp_key,),
+                    )
+                else:
+                    # Not settled by gateway; safe to roll back
+                    conn.execute(
+                        "UPDATE reservations SET status = 'ROLLED_BACK' WHERE idempotency_key = ?",
+                        (idemp_key,),
+                    )
+                recovered_count += 1
             conn.commit()
-            return count
+            return recovered_count
         finally:
             conn.close()
 

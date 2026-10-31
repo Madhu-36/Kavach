@@ -526,7 +526,7 @@ def main(
     if fast:
         active_pace = 0.2
     elif video:
-        active_pace = 5.5  # Calibrated for 2m 40s (160s) total runtime (ideal for 3-minute video recording)
+        active_pace = 3.6  # Calibrated for <= 2:00 total runtime (leaves room for pitch intro & outro in 3:00 limit)
     else:
         active_pace = pace
 

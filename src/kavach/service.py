@@ -32,6 +32,10 @@ class ServiceConfig(BaseModel):
     interceptor_private_key_pem: Optional[str] = None
 
 
+class CommitRequest(BaseModel):
+    idempotency_key: str
+
+
 class InterceptorServer:
     """Manages interceptor lifecycle in a dedicated process."""
 
@@ -73,10 +77,10 @@ class InterceptorServer:
             self.interceptor_private_key = interceptor_key
         self._rebuild()
 
-    def evaluate(self, req: PaymentRequest) -> Decision:
+    def evaluate(self, req: PaymentRequest, auto_commit: bool = True) -> Decision:
         if not self._interceptor:
             return Decision.deny("INTERNAL_ERROR", "Interceptor not configured with mandate token")
-        decision, _ = self._interceptor.evaluate(req)
+        decision, _ = self._interceptor.evaluate(req, auto_commit=auto_commit)
         return decision
 
 
@@ -92,7 +96,24 @@ def create_service_app(srv: Optional[InterceptorServer] = None) -> FastAPI:
         return {"status": "ok", "configured": _srv._interceptor is not None}
 
     @app.post("/evaluate", response_model=Decision)
-    def evaluate(req: PaymentRequest) -> Decision:
-        return _srv.evaluate(req)
+    def evaluate(req: PaymentRequest, auto_commit: bool = True) -> Decision:
+        return _srv.evaluate(req, auto_commit=auto_commit)
+
+    @app.post("/commit")
+    def commit_payment(req: CommitRequest):
+        # Test-only hook: gated strictly by KAVACH_TEST_HOOK_CRASH_AFTER_SETTLEMENT environment variable
+        if os.getenv("KAVACH_TEST_HOOK_CRASH_AFTER_SETTLEMENT") == "1":
+            import sys
+            import time
+
+            sys.stdout.write("CRASH_AFTER_SETTLEMENT_BEFORE_COMMIT\n")
+            sys.stdout.flush()
+            time.sleep(30)
+        ok = _srv.ledger.commit(req.idempotency_key)
+        return {"committed": ok, "idempotency_key": req.idempotency_key}
 
     return app
+
+
+# Default module-level FastAPI app for uvicorn
+app = create_service_app(server)

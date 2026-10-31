@@ -44,3 +44,49 @@ jobs:
       - name: Verify interactive demo
         run: |
           python demo.py --fast
+
+  docker-isolation:
+    name: Docker Network & Containment Isolation (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build and start isolated 3-tier container topology
+        run: |
+          docker compose build
+          docker compose up -d
+
+      - name: Verify interceptor is running and reachable from agent
+        run: |
+          docker compose exec -T agent python -c "
+          import urllib.request
+          req = urllib.request.Request('http://interceptor:8100/health')
+          with urllib.request.urlopen(req, timeout=10) as resp:
+              assert resp.status == 200, f'Interceptor health check failed: {resp.status}'
+          print('✓ Agent -> Interceptor (:8100) reachable')
+          "
+
+      - name: Assert gateway is physically unreachable from agent container
+        run: |
+          docker compose exec -T agent python -c "
+          import socket
+          s = socket.socket()
+          s.settimeout(2)
+          res = s.connect_ex(('gateway', 8000))
+          assert res != 0, 'SECURITY VIOLATION: Agent container established direct TCP connection to UPI Gateway!'
+          print('✓ Physical network isolation enforced: Gateway is completely unreachable from Agent container.')
+          "
+
+      - name: Assert zero cryptographic keys in agent container
+        run: |
+          docker compose exec -T agent python -c "
+          import os
+          for k, v in os.environ.items():
+              assert 'PRIVATE KEY' not in v, f'Found private key in agent env: {k}'
+          print('✓ Process containment verified: Zero keys in agent environment.')
+          "
+
+      - name: Tear down topology
+        if: always()
+        run: docker compose down -v

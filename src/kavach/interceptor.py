@@ -68,7 +68,9 @@ class KavachInterceptor:
         """Update the revocation list."""
         self._revoked_jtis = revoked
 
-    def evaluate(self, request: PaymentRequest) -> tuple[Decision, Optional[MandateClaims]]:
+    def evaluate(
+        self, request: PaymentRequest, auto_commit: bool = True
+    ) -> tuple[Decision, Optional[MandateClaims]]:
         """Run the full check chain. Returns (decision, claims_if_parsed).
 
         Evaluates all independent policy checks to record every violated reason code.
@@ -235,21 +237,24 @@ class KavachInterceptor:
 
                 ticket_payload = jwt.decode(approval_ticket, options={"verify_signature": False})
                 ticket_id = ticket_payload.get("jti")
+                if isinstance(self._ledger, SqliteLedger) and ticket_id:
+                    self._ledger.set_ticket_id(idempotency_key, ticket_id)
 
             decision = Decision.approve(
                 message=f"Payment of {request.amount_paise} paise to {request.payee_vpa} approved",
                 approval_ticket=approval_ticket,
             )
 
-            # Commit the transaction
-            if isinstance(self._ledger, SqliteLedger):
-                self._ledger.commit(idempotency_key)
-                if parent_reservation_made and parent_idempotency_key:
-                    self._ledger.commit(parent_idempotency_key)
-            else:
-                self._ledger.record_txn(claims.jti, request.amount_paise)
-                if child_payload and "parent_jti" in child_payload:
-                    self._ledger.record_txn(child_payload["parent_jti"], request.amount_paise)
+            # Commit the transaction if auto_commit is requested
+            if auto_commit:
+                if isinstance(self._ledger, SqliteLedger):
+                    self._ledger.commit(idempotency_key)
+                    if parent_reservation_made and parent_idempotency_key:
+                        self._ledger.commit(parent_idempotency_key)
+                else:
+                    self._ledger.record_txn(claims.jti, request.amount_paise)
+                    if child_payload and "parent_jti" in child_payload:
+                        self._ledger.record_txn(child_payload["parent_jti"], request.amount_paise)
 
             if request.nonce:
                 self._used_nonces.add(request.nonce)

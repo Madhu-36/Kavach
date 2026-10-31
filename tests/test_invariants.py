@@ -190,8 +190,8 @@ class TestInvariant3TxnCountCeiling:
 
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     @given(
-        max_count=st.integers(min_value=1, max_value=5),
-        payment_attempts=st.integers(min_value=1, max_value=12),
+        max_count=st.integers(min_value=1, max_value=50),
+        payment_attempts=st.integers(min_value=1, max_value=100),
     )
     def test_i3_approved_count_never_exceeds_max_txn_count(
         self, user_keys, interceptor_keys, max_count, payment_attempts
@@ -727,5 +727,230 @@ uvicorn.run(app, host="127.0.0.1", port={port2}, log_level="warning")
             if proc1.poll() is None:
                 proc1.kill()
                 proc1.wait()
+
+    def test_i6_crash_after_settlement_reconciles_and_prevents_double_spend(self, tmp_path):
+        """Kill interceptor service after gateway settles but before ledger commit.
+        
+        Verify recovery reconciles against gateway:
+        - Commits the settled payment (does NOT roll it back).
+        - Prevents double-spend on retry.
+        - Ensures zero leaked reservations.
+        - Verifies ledger and gateway balance/spent strictly agree.
+        """
+        import os
+        import socket
+        import subprocess
+        import sys
+        import threading
+        import time
+        import httpx
+        import jwt
+
+        from kavach.issuer import (
+            generate_keypair,
+            load_private_key,
+            load_public_key,
+            save_keypair,
+            sign_mandate,
+        )
+        from kavach.ledger_db import SqliteLedger
+        from kavach.mock_upi import MockUPIGateway, create_app as create_gateway_app
+        from kavach.models import MandateSpec
+
+        db_path = tmp_path / "settlement_crash.db"
+
+        # 1. Setup Keys and Mandate (₹1,000 budget, max 5 txns)
+        user_priv, user_pub = generate_keypair()
+        interceptor_priv, interceptor_pub = generate_keypair()
+        _, user_pub_path = save_keypair(user_priv, user_pub, tmp_path, prefix="user_sc")
+        interceptor_priv_path, _ = save_keypair(interceptor_priv, interceptor_pub, tmp_path, prefix="interceptor_sc")
+
+        spec = MandateSpec(
+            purpose="Settlement Crash Reconciliation Test",
+            allowed_payees=["ondc-grocer@upi"],
+            allowed_categories=["groceries"],
+            per_txn_limit_paise=100_000,
+            total_budget_paise=100_000,
+            max_txn_count=5,
+        )
+        token = sign_mandate(user_priv, "agent_crash_settle", spec, validity_seconds=3600)
+        jti = jwt.decode(token, options={"verify_signature": False})["jti"]
+
+        def get_free_port():
+            s = socket.socket()
+            s.bind(("127.0.0.1", 0))
+            p = s.getsockname()[1]
+            s.close()
+            return p
+
+        port_interceptor = get_free_port()
+
+        # 2. Setup Mock UPI Gateway on background thread
+        gateway = MockUPIGateway(interceptor_public_key=interceptor_pub)
+        gateway.set_balance("user@upi", 100_000)      # ₹1,000
+        gateway.set_balance("ondc-grocer@upi", 0)
+
+        from fastapi.testclient import TestClient
+        gw_client = TestClient(create_gateway_app(gw=gateway))
+
+        # 3. Launch Interceptor Service Subprocess with Test Hook Activated
+        worker_code = f'''
+import os, sys, uvicorn
+from pathlib import Path
+from kavach.service import InterceptorServer, create_service_app
+from kavach.issuer import load_public_key, load_private_key
+
+user_pub = load_public_key(Path(r"{user_pub_path}"))
+interceptor_priv = load_private_key(Path(r"{interceptor_priv_path}"))
+
+srv = InterceptorServer(
+    public_key=user_pub,
+    mandate_token="{token}",
+    interceptor_private_key=interceptor_priv,
+    db_path=r"{db_path}",
+)
+app = create_service_app(srv)
+uvicorn.run(app, host="127.0.0.1", port={port_interceptor}, log_level="warning")
+'''
+        env = os.environ.copy()
+        env["KAVACH_TEST_HOOK_CRASH_AFTER_SETTLEMENT"] = "1"
+        env["PYTHONUTF8"] = "1"
+        env["PYTHONIOENCODING"] = "utf-8"
+
+        proc = subprocess.Popen(
+            [sys.executable, "-u", "-c", worker_code],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=env,
+        )
+
+        try:
+            http_client = httpx.Client(timeout=5.0)
+            for _ in range(50):
+                try:
+                    r = http_client.get(f"http://127.0.0.1:{port_interceptor}/health")
+                    if r.status_code == 200:
+                        break
+                except Exception:
+                    time.sleep(0.1)
+
+            # Step A: Interceptor evaluates and reserves 50,000 paise (auto_commit=False)
+            eval_resp = http_client.post(
+                f"http://127.0.0.1:{port_interceptor}/evaluate?auto_commit=false",
+                json={
+                    "amount_paise": 50000,
+                    "payee_vpa": "ondc-grocer@upi",
+                    "category": "groceries",
+                    "nonce": "settle-nonce-1",
+                    "idempotency_key": "settle-idemp-1",
+                },
+            )
+            assert eval_resp.status_code == 200
+            eval_data = eval_resp.json()
+            assert eval_data["allowed"] is True
+            approval_ticket = eval_data["approval_ticket"]
+            assert approval_ticket is not None
+
+            # Step B: Gateway settles the payment
+            pay_resp = gw_client.post(
+                "/pay",
+                json={
+                    "payer_vpa": "user@upi",
+                    "payee_vpa": "ondc-grocer@upi",
+                    "amount_paise": 50000,
+                    "txn_id": "txn-settle-1",
+                },
+                headers={"x-kavach-approval-ticket": approval_ticket},
+            )
+            assert pay_resp.status_code == 200
+            assert pay_resp.json()["success"] is True
+            assert gateway.get_balance("user@upi") == 50000
+            assert gateway.get_balance("ondc-grocer@upi") == 50000
+
+            # Step C: Client calls /commit on Interceptor; Test Hook triggers crash halt!
+            def call_commit():
+                try:
+                    http_client.post(
+                        f"http://127.0.0.1:{port_interceptor}/commit",
+                        json={"idempotency_key": "settle-idemp-1"},
+                    )
+                except Exception:
+                    pass
+
+            t_commit = threading.Thread(target=call_commit, daemon=True)
+            t_commit.start()
+
+            # Wait for test hook to flush before commit
+            line = proc.stdout.readline().strip()
+            assert line == "CRASH_AFTER_SETTLEMENT_BEFORE_COMMIT"
+
+            # KILL the real interceptor service process with TerminateProcess
+            proc.kill()
+            proc.wait()
+
+            # Step D: Verify crash state in persistent ledger
+            recovered_ledger = SqliteLedger(db_path)
+            # Before recovery, committed spent is still 0 (reservation was uncommitted)
+            assert recovered_ledger.get_spent(jti) == 0
+
+            # Step E: Recovery with gateway reconciliation (The Bug Fix!)
+            # If naive recovery ran, it would mark it ROLLED_BACK (leaking money and enabling double-spend).
+            # With gateway reconciliation, it discovers the gateway already settled the payment!
+            recovered_count = recovered_ledger.recover_from_crash(
+                gateway_reconciler=gateway.is_ticket_settled
+            )
+            assert recovered_count == 1
+
+            # Step F: Assert Ledger & Gateway Agreement & No Double Spend
+            # 1. Budget reflects the settled payment
+            assert recovered_ledger.get_spent(jti) == 50000
+            assert recovered_ledger.get_count(jti) == 1
+
+            # 2. Gateway and Ledger agree on amounts
+            assert gateway.get_balance("user@upi") == 50000
+            assert recovered_ledger.get_spent(jti) == 50000
+
+            # 3. No double-spend on retry (idempotency key returns ALREADY_COMMITTED)
+            ok_retry, msg_retry = recovered_ledger.reserve(
+                jti=jti,
+                amount_paise=50000,
+                max_budget_paise=100000,
+                max_txn_count=5,
+                idempotency_key="settle-idemp-1",
+            )
+            assert ok_retry is True
+            assert msg_retry == "ALREADY_COMMITTED"
+            # Committed spend has NOT doubled!
+            assert recovered_ledger.get_spent(jti) == 50000
+
+            # 4. Subsequent payments can spend remaining budget (₹500), but not more
+            ok_next, _ = recovered_ledger.reserve(
+                jti=jti,
+                amount_paise=50000,
+                max_budget_paise=100000,
+                max_txn_count=5,
+                idempotency_key="clean-next-2",
+            )
+            assert ok_next is True
+            assert recovered_ledger.commit("clean-next-2") is True
+            assert recovered_ledger.get_spent(jti) == 100000
+
+            # Further spend is blocked
+            ok_over, msg_over = recovered_ledger.reserve(
+                jti=jti,
+                amount_paise=1000,
+                max_budget_paise=100000,
+                max_txn_count=5,
+                idempotency_key="blocked-over-3",
+            )
+            assert ok_over is False
+            assert msg_over == "BUDGET_EXHAUSTED"
+
+        finally:
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+
 
 
