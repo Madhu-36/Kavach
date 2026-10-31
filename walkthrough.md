@@ -2,7 +2,7 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `f4fbdab85ebb7e29145b82db75aad0ede37a6bf6`  
+**Git Commit**: `97f486c05a6b21d92a7c56bb299516a8340c8b0e`  
 **Environment**: win32 (nt) | Python 3.14.6  
 **Total Unit/Integration/Property Tests**: 133 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
