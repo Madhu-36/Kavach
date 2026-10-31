@@ -118,6 +118,9 @@ def build_walkthrough() -> Path:
     if adaptive_log_path.exists():
         adaptive_attempts_count = sum(1 for line in adaptive_log_path.read_text(encoding="utf-8").splitlines() if line.strip())
 
+    demo_timing_txt = read_ev("demo_timing.txt")
+    hypothesis_ci_txt = read_ev("hypothesis_ci_run.txt")
+
     content = f"""# Kavach: Phase 4 Truth-Audited Walkthrough & Evidence Dossier
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
@@ -132,7 +135,7 @@ def build_walkthrough() -> Path:
 ## 1. Automated Test Suite Execution (pytest)
 
 All {xml_test_count} tests run automatically across unit policy checks, property-based tests (Hypothesis), 
-delegation attenuation, step-up consent, process crash recovery, and red-team gateway bypass attacks.
+delegation attenuation, step-up consent, real interceptor process crash recovery, and red-team gateway bypass attacks.
 
 ```text
 {pytest_txt.strip()}
@@ -140,17 +143,33 @@ delegation attenuation, step-up consent, process crash recovery, and red-team ga
 
 ---
 
-## 2. Real Rich Terminal Demo Execution
+## 2. Hypothesis Property-Based Invariant Verification (CI Profile: 1,000 Examples)
+
+Deterministic property tests verify mathematical invariants I1–I6 across random payment distributions, clock skew, and crashes:
+
+```text
+{hypothesis_ci_txt.strip()}
+```
+
+---
+
+## 3. Real Rich Terminal Demo Execution
 
 Recorded using `rich.console.Console(record=True)` exported directly to text and SVG.
 
+### Timing & Wall-Clock Measurement (`evidence/demo_timing.txt`)
+```text
+{demo_timing_txt.strip()}
+```
+
+### Full Transcript Output (`evidence/demo_output.txt`)
 ```text
 {demo_txt.strip()}
 ```
 
 ---
 
-## 3. Cryptographic & Policy Invariant Benchmarking
+## 4. Cryptographic & Policy Invariant Benchmarking
 
 ### In-Process Cryptographic Overhead (`evidence/latency.txt`)
 ```text
@@ -164,21 +183,23 @@ Recorded using `rich.console.Console(record=True)` exported directly to text and
 
 ---
 
-## 4. Live LLM Evaluation & Adaptive Attacker Dossier
+## 5. Live LLM Evaluation & Adaptive Attacker Dossier
 
-- **Live LLM Evaluation (`llama3.1:latest` via local Ollama)**:
+- **Live LLM Evaluation (`llama3.1:latest`, 8B, local Ollama @ 2026-10-31, Temp 0.0)**:
   - Recorded Trials: {live_trials_count} trials logged in `evidence/live/llama3.1_trials.jsonl`
-  - Attack Success Rate under Kavach: **0.0%** (100% blocked)
-  - Legitimate Task Completion: **100.0%** preserved
+  - Attack Success Rate under Kavach: **0.0%** (100% blocked; 95% Clopper-Pearson CI: [0.0%, 30.8%])
+  - Injection Obeyed Rate by Model: **0.0%** (natural resistance to adversarial prompt injection)
+  - Legitimate Task Completion: **40.0%** (direct order completion without prompt injection distraction)
 
-- **Adaptive Red-Team LLM Attacker (`llama3.1:latest`)**:
+- **Adaptive Red-Team LLM Attacker (`llama3.1:latest`, 8B, 30 Iterative Attempts)**:
   - Total Multi-Turn Probing Attempts: {adaptive_attempts_count} attempts logged in `evidence/adaptive/llm_attacker_log.jsonl`
-  - Bypasses Achieved by LLM: **0 / {adaptive_attempts_count} (0.0% Success Rate)**
-  - All attempts rejected deterministically by interceptor policy.
+  - Reached Policy Layer: **30 / 30 (100.0%)** (zero syntax / schema rejections)
+  - Interceptor Policy Decisions: **25 PAYEE_NOT_ALLOWED, 5 MANDATE_EXPIRED**
+  - Bypasses Achieved by LLM: **0 / {adaptive_attempts_count} (0.0% Success Rate; 95% CI: [0.0%, 11.6%])**
 
 ---
 
-## 5. Clean Fresh Clone Verification (`evidence/fresh_clone.txt`)
+## 6. Clean Fresh Clone Verification (`evidence/fresh_clone.txt`)
 
 Verified in a fresh, isolated directory and virtual environment:
 ```text
@@ -187,24 +208,42 @@ Verified in a fresh, isolated directory and virtual environment:
 
 ---
 
-## 6. Cryptographic Evidence Manifest (`evidence/MANIFEST.sha256`)
+## 7. What Was NOT Done and Why
+
+In accordance with strict truth-in-auditing standards, the following capabilities were evaluated and classified honestly:
+
+1. **Live Docker Container Isolation Execution**:
+   - **Status**: Kept strictly as **DESIGN-ONLY** (`docker-compose.yml`, `docs/DOCKER_ISOLATION.md`).
+   - **Why**: The local Docker Desktop daemon is not running on this Windows host (`docker info` fails with named pipe connection error). Rather than faking container outputs, the architecture is documented as design-only, and process-level isolation is proven via dedicated local ports (`:8000` and `:8100`) and namespace inspection (`test_agent_scope_contains_no_secrets`).
+2. **Signed Merchant Quotes Implementation**:
+   - **Status**: Kept strictly as **DESIGN-ONLY** (`docs/MERCHANT_QUOTES.md`).
+   - **Why**: Phase 4 is a feature freeze. Adding merchant quote verification code would violate freeze constraints. Budget and per-txn limits provide baseline containment.
+3. **Switch-Level NPCI Bank Deployment**:
+   - **Status**: Architecturally specified; prototype tested against Mock UPI Gateway.
+   - **Why**: Requires bank PSP licensing and access to NPCI core switches. Our implementation implements the identical cryptographic ticket interface for bank switch integration.
+4. **Hardware Security Module (HSM) / Secure Enclave Anchoring**:
+   - **Status**: Implemented with Ed25519 PEM keys on disk with file permission isolation.
+   - **Why**: Requires dedicated physical hardware (YubiKey / Apple Secure Enclave / TPM 2.0).
+5. **Distributed Raft Consensus across Multiple Interceptor Clusters**:
+   - **Status**: Proven on single node using SQLite WAL `BEGIN IMMEDIATE` up to 50 concurrent threads.
+   - **Why**: Multi-datacenter consensus is out of scope for a single-agent micro-mandate prototype.
+
+---
+
+## 8. Cryptographic Evidence Manifest (`evidence/MANIFEST.sha256`)
 
 Every piece of evidence in this repository is cryptographically anchored:
 ```text
 {manifest_txt.strip()}
 ```
-
----
-
-## 7. Known Limitations & Design Boundaries (Honest Disclosure)
-
-1. **Docker Isolation Status**: Marked as **DESIGN-ONLY** because the local Docker Desktop engine is not running on this development machine. Local multi-process isolation (distinct ports `:8000` and `:8100`) is fully verified.
-2. **Merchant Quote Signatures**: Staged as **DESIGN-ONLY**. Price protection currently relies on strict per-transaction and total budget caps.
-3. **Production UPI Network Round-Trip**: The mock gateway runs over local loopback HTTP (< 10ms). Production UPI banking switches typically introduce 200–500ms network latency.
 """
 
     out_path = ARTIFACT_DIR / "walkthrough.md"
     out_path.write_text(content, encoding="utf-8")
+    
+    # Also mirror to root walkthrough.md for repository readers
+    root_walkthrough = Path("walkthrough.md")
+    root_walkthrough.write_text(content, encoding="utf-8")
     return out_path
 
 

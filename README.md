@@ -125,7 +125,7 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 
-# 3. Run complete test suite (132 tests passing)
+# 3. Run complete test suite (133 tests passing)
 python -m pytest tests/ -v
 
 # 4. Run interactive Rich terminal demo (Fast mode)
@@ -170,7 +170,13 @@ def buy_groceries(amount_paise: int, payee_vpa: str, note: str = ""):
 
 ## ⚠️ Honest Limitations & Design Boundaries
 
-1. **Docker Container Network Isolation**: Marked as **DESIGN-ONLY** because the Docker Desktop daemon is stopped on this local Windows development host. Process-level isolation via separate local ports (`:8000` for gateway, `:8100` for interceptor, isolated agent stub) is verified.
-2. **In-Mandate Price Poisoning**: Mitigated currently via strict per-transaction and total budget caps. Merchant-signed quote verification remains **DESIGN-ONLY** (`docs/MERCHANT_QUOTES.md`).
-3. **UPI Latency Context**: Local interceptor evaluation is sub-millisecond to ~4ms; production UPI inter-bank settlement across NPCI switches introduces 200–500ms network latency.
+Kavach enforces deterministic cryptographic limits at the payment boundary, but real-world deployment entails specific boundaries:
+
+1. **In-Mandate Abuse**: An attacker or misaligned agent cannot pay unauthorized payees, but could trigger unneeded or wasteful purchases to an authorized merchant up to the mandate's total budget limit.
+2. **Compromised Allowed Seller (Merchant Collusion)**: If an allowed seller's listing or infrastructure is compromised, fraudulent price inflation within the authorized limits cannot be caught by payment-level checks alone (mitigated architecturally by signed merchant quotes; see [`docs/MERCHANT_QUOTES.md`](docs/MERCHANT_QUOTES.md) - DESIGN-ONLY).
+3. **Liveness & Denial of Service**: A runaway or compromised agent could rapidly consume the mandate's transaction count or total budget on small purchases, exhausting the mandate and starving legitimate tasks.
+4. **Ledger Sync Across Distributed Hosts**: SQLite `BEGIN IMMEDIATE` with WAL mode provides robust concurrency safety on a single node. Scaling interceptors horizontally across distributed clusters requires an external consensus store (e.g. distributed Raft or Spanner/Postgres) to avoid split-brain budget exhaustion.
+5. **Revocation Latency & Propagation**: While local revocation check is instantaneous ($O(1)$ lookup in memory/database), propagating a revocation event across distributed offline agents or partitioned network edges carries network propagation latency.
+6. **Key Storage & Hardware Root of Trust**: Keys in this prototype are Ed25519 PEM files. Production banking deployments must anchor user and interceptor private keys in Hardware Security Modules (HSM), TPM 2.0, or device Secure Enclaves (FIDO2 / WebAuthn) rather than OS filesystem storage.
+7. **Client-Side vs. Switch-Level Enforcement**: Kavach runs as an isolated local proxy service (`:8100`) between the agent and UPI gateway (`:8000`). For absolute unbypassability in open wild environments, the bank's UPI switch or payment gateway itself must reject settlement of any transaction lacking an authentic, single-use Kavach approval ticket.
 

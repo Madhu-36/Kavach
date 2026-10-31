@@ -25,7 +25,8 @@ from hypothesis import HealthCheck, given, settings
 
 settings.register_profile("ci", max_examples=1000, deadline=None)
 settings.register_profile("dev", max_examples=50)
-settings.load_profile(os.getenv("HYPOTHESIS_PROFILE", "dev"))
+if "HYPOTHESIS_PROFILE" in os.environ:
+    settings.load_profile(os.environ["HYPOTHESIS_PROFILE"])
 
 
 from kavach.audit import AuditLog
@@ -105,7 +106,7 @@ def make_interceptor(
 class TestInvariant1Budget:
     """Hypothesis tests for Invariant 1: Total Budget Invariance."""
 
-    @settings(max_examples=50, suppress_health_check=[HealthCheck.function_scoped_fixture])
+    @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     @given(amounts=st.lists(st.integers(min_value=-500, max_value=120_000), max_size=20))
     def test_i1_cumulative_spend_never_exceeds_total_budget(self, user_keys, interceptor_keys, amounts):
         total_budget = 50_000  # ₹500
@@ -151,7 +152,7 @@ class TestInvariant1Budget:
 class TestInvariant2PayeeContainment:
     """Hypothesis tests for Invariant 2: Strict Payee Containment."""
 
-    @settings(max_examples=60, suppress_health_check=[HealthCheck.function_scoped_fixture])
+    @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     @given(candidate_payee=st.text(min_size=1, max_size=60))
     def test_i2_no_unauthorized_payee_can_ever_be_approved(self, user_keys, interceptor_keys, candidate_payee):
         allowed = ["grocer@upi", "merchant@upi"]
@@ -187,7 +188,7 @@ class TestInvariant2PayeeContainment:
 class TestInvariant3TxnCountCeiling:
     """Hypothesis tests for Invariant 3: Transaction Count Ceiling."""
 
-    @settings(max_examples=40, suppress_health_check=[HealthCheck.function_scoped_fixture])
+    @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     @given(
         max_count=st.integers(min_value=1, max_value=5),
         payment_attempts=st.integers(min_value=1, max_value=12),
@@ -236,7 +237,7 @@ class TestInvariant3TxnCountCeiling:
 class TestInvariant4TemporalValidity:
     """Hypothesis tests for Invariant 4: Temporal Validity and Non-Revocation."""
 
-    @settings(max_examples=40, suppress_health_check=[HealthCheck.function_scoped_fixture])
+    @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     @given(offset_seconds=st.integers(min_value=-600, max_value=1200))
     def test_i4_temporal_validity_boundaries(
         self, user_keys, interceptor_keys, offset_seconds
@@ -513,4 +514,218 @@ time.sleep(30)
             if proc.poll() is None:
                 proc.kill()
                 proc.wait()
+
+    def test_i6_real_interceptor_service_process_crash_recovery(self, tmp_path):
+        """Kill the real Interceptor HTTP service process between reserve and commit, restart, verify zero double-spend."""
+        import socket
+        import subprocess
+        import sys
+        import threading
+        import time
+        import httpx
+        import jwt
+
+        from kavach.issuer import (
+            generate_keypair,
+            load_private_key,
+            load_public_key,
+            save_keypair,
+            sign_mandate,
+        )
+        from kavach.ledger_db import SqliteLedger
+        from kavach.models import MandateSpec
+
+        db_path = tmp_path / "service_crash_test.db"
+
+        # 1. Generate keys and mandate
+        user_priv, user_pub = generate_keypair()
+        interceptor_priv, interceptor_pub = generate_keypair()
+        _, user_pub_path = save_keypair(user_priv, user_pub, tmp_path, prefix="user")
+        interceptor_priv_path, _ = save_keypair(interceptor_priv, interceptor_pub, tmp_path, prefix="interceptor")
+
+        spec = MandateSpec(
+            purpose="Service Process Crash Test",
+            allowed_payees=["ondc-grocer@upi"],
+            allowed_categories=["groceries"],
+            per_txn_limit_paise=100_000,
+            total_budget_paise=100_000,
+            max_txn_count=5,
+        )
+        token = sign_mandate(user_priv, "crash_agent", spec, validity_seconds=3600)
+        jti = jwt.decode(token, options={"verify_signature": False})["jti"]
+
+        # Helper to get a free TCP port
+        def get_free_port():
+            s = socket.socket()
+            s.bind(("127.0.0.1", 0))
+            p = s.getsockname()[1]
+            s.close()
+            return p
+
+        port1 = get_free_port()
+
+        # 2. Worker code that runs the real FastAPI interceptor service and halts between reserve and commit
+        worker_code_crash = f'''
+import sys, time, uvicorn
+from pathlib import Path
+from kavach.service import InterceptorServer, create_service_app
+from kavach.issuer import load_public_key, load_private_key
+
+user_pub = load_public_key(Path(r"{user_pub_path}"))
+interceptor_priv = load_private_key(Path(r"{interceptor_priv_path}"))
+
+srv = InterceptorServer(
+    public_key=user_pub,
+    mandate_token="{token}",
+    interceptor_private_key=interceptor_priv,
+    db_path=r"{db_path}",
+)
+
+orig_reserve = srv.ledger.reserve
+def hooked_reserve(*args, **kwargs):
+    res = orig_reserve(*args, **kwargs)
+    sys.stdout.write("RESERVED_BEFORE_COMMIT\\n")
+    sys.stdout.flush()
+    time.sleep(30)
+    return res
+
+srv.ledger.reserve = hooked_reserve
+app = create_service_app(srv)
+uvicorn.run(app, host="127.0.0.1", port={port1}, log_level="warning")
+'''
+
+        proc1 = subprocess.Popen(
+            [sys.executable, "-u", "-c", worker_code_crash],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+
+        try:
+            # Wait for service 1 to become healthy
+            client = httpx.Client(timeout=5.0)
+            for _ in range(50):
+                try:
+                    r = client.get(f"http://127.0.0.1:{port1}/health")
+                    if r.status_code == 200:
+                        break
+                except Exception:
+                    time.sleep(0.1)
+
+            # Fire payment request in background thread
+            def send_req():
+                try:
+                    client.post(
+                        f"http://127.0.0.1:{port1}/evaluate",
+                        json={
+                            "amount_paise": 50000,
+                            "payee_vpa": "ondc-grocer@upi",
+                            "category": "groceries",
+                            "nonce": "crash-req-1",
+                        },
+                    )
+                except Exception:
+                    pass
+
+            t = threading.Thread(target=send_req, daemon=True)
+            t.start()
+
+            # Wait for real service to signal reservation completed before commit
+            line = proc1.stdout.readline().strip()
+            assert line == "RESERVED_BEFORE_COMMIT"
+
+            # Kill the real interceptor service process with TerminateProcess
+            proc1.kill()
+            proc1.wait()
+
+            # Verify in persistent ledger that spent is 0 and count is 0
+            ledger = SqliteLedger(db_path)
+            assert ledger.get_spent(jti) == 0
+            assert ledger.get_count(jti) == 0
+
+            # Recover uncommitted in-flight reservation
+            recovered = ledger.recover_from_crash()
+            assert recovered == 1
+
+            # 3. Restart real interceptor service on persistent ledger
+            port2 = get_free_port()
+            worker_code_clean = f'''
+import sys, time, uvicorn
+from pathlib import Path
+from kavach.service import InterceptorServer, create_service_app
+from kavach.issuer import load_public_key, load_private_key
+
+user_pub = load_public_key(Path(r"{user_pub_path}"))
+interceptor_priv = load_private_key(Path(r"{interceptor_priv_path}"))
+
+srv = InterceptorServer(
+    public_key=user_pub,
+    mandate_token="{token}",
+    interceptor_private_key=interceptor_priv,
+    db_path=r"{db_path}",
+)
+app = create_service_app(srv)
+uvicorn.run(app, host="127.0.0.1", port={port2}, log_level="warning")
+'''
+            proc2 = subprocess.Popen(
+                [sys.executable, "-u", "-c", worker_code_clean],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+            try:
+                for _ in range(50):
+                    try:
+                        r = client.get(f"http://127.0.0.1:{port2}/health")
+                        if r.status_code == 200:
+                            break
+                    except Exception:
+                        time.sleep(0.1)
+
+                # Execute full budget payment (100,000 paise) against restarted service
+                resp = client.post(
+                    f"http://127.0.0.1:{port2}/evaluate",
+                    json={
+                        "amount_paise": 100000,
+                        "payee_vpa": "ondc-grocer@upi",
+                        "category": "groceries",
+                        "nonce": "clean-req-2",
+                    },
+                )
+                assert resp.status_code == 200
+                data = resp.json()
+                assert data["allowed"] is True
+                assert data["reason_code"] == "APPROVED"
+                assert data.get("approval_ticket") is not None
+
+                # Verify committed ledger state: exactly 100,000 paise spent, count is 1
+                assert ledger.get_spent(jti) == 100000
+                assert ledger.get_count(jti) == 1
+
+                # Verify that any further spend is rejected
+                resp_over = client.post(
+                    f"http://127.0.0.1:{port2}/evaluate",
+                    json={
+                        "amount_paise": 1000,
+                        "payee_vpa": "ondc-grocer@upi",
+                        "category": "groceries",
+                        "nonce": "clean-req-3",
+                    },
+                )
+                assert resp_over.status_code == 200
+                data_over = resp_over.json()
+                assert data_over["allowed"] is False
+                assert "BUDGET_EXHAUSTED" in data_over["reason_codes"]
+
+            finally:
+                if proc2.poll() is None:
+                    proc2.kill()
+                    proc2.wait()
+
+        finally:
+            if proc1.poll() is None:
+                proc1.kill()
+                proc1.wait()
+
 

@@ -46,3 +46,18 @@ Formal verification of required submission and governance assets:
 - [x] **Developer Guard**: `src/kavach/guard.py` (`@guard` decorator) with runnable examples in `examples/`.
 - [x] **Git Release Tag**: Git repository initialized and tagged `v1.0.0`.
 - [ ] **GitHub Actions Remote Execution**: Workflow authored in `.github/workflows/ci.yml`; classified as `IMPLEMENTED-NOT-VERIFIED` until pushed to a remote GitHub repository.
+
+---
+
+## 3. System Limitations & Boundaries Ledger
+
+| # | Limitation Boundary | Threat Class | Status / Resolution | Evidence / Reference |
+|---|---|---|---|---|
+| **L1** | **In-Mandate Abuse** | Authorized Payee Over-Spend | **KNOWN LIMITATION / MITIGATED VIA CAPS** | Mitigated via strict `per_txn_limit_paise` and `total_budget_paise`. Documented in `README.md` and `SUBMISSION.md`. |
+| **L2** | **Compromised Allowed Seller** | Merchant Collusion & Price Gouging | **DESIGN-ONLY EXTENSION** | Requires Signed Merchant Quotes (`docs/MERCHANT_QUOTES.md`). |
+| **L3** | **Liveness / Service Denial** | Micro-Payment Spooling & Exhaustion | **KNOWN LIMITATION** | Rapid exhaustion of `max_txn_count` blocks further spend. Requires rate-limiting extensions. |
+| **L4** | **Distributed Ledger Synchronization** | Multi-Host Split-Brain Double-Spend | **KNOWN LIMITATION (Single Node Verified)** | SQLite WAL `BEGIN IMMEDIATE` guarantees node-local safety (`test_atomic_concurrency_stress`). Multi-cluster requires Raft/CockroachDB. |
+| **L5** | **Revocation Latency Across Edges** | Network Partition Spend Window | **KNOWN BOUNDARY** | In-memory/DB revocation is $O(1)$ (`test_i4_revocation_immediately_blocks_all_spend`). Offline edge propagation subject to network SLA. |
+| **L6** | **Hardware Root of Trust** | Host OS Memory & File Compromise | **PROTOTYPE BOUNDARY** | Prototype uses Ed25519 PEM keys. Production deployment requires HSM/TPM 2.0 / Apple Secure Enclave. |
+| **L7** | **Client-Side vs. Switch-Level Enforcement** | OS Host Bypass | **ARCHITECTURAL BOUNDARY** | Verified as isolated local RPC proxy (`test_agent_scope_contains_no_secrets`). Absolute containment requires NPCI switch-level verification. |
+

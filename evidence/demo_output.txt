@@ -56,10 +56,10 @@ Agent reads the ONDC store listings...
 ├───────────────────────────────┼──────────────────────────────────────┤
 │ iss                           │ user@kavach                          │
 │ sub                           │ agent_001                            │
-│ jti                           │ 1cb16717-cae9-4e81-aef9-8675cf8f70f1 │
-│ iat                           │ 1793436762 (14:22:42)                │
-│ nbf                           │ 1793436762 (14:22:42)                │
-│ exp                           │ 1793437662 (14:37:42)                │
+│ jti                           │ 4b119060-26cb-4ad4-afcd-bbe9ee3d84f9 │
+│ iat                           │ 1793437582 (14:36:22)                │
+│ nbf                           │ 1793437582 (14:36:22)                │
+│ exp                           │ 1793438482 (14:51:22)                │
 │   mandate.purpose             │ grocery shopping                     │
 │   mandate.allowed_payees      │ ['ondc-grocer@upi']                  │
 │   mandate.allowed_categories  │ ['groceries', 'essentials']          │
@@ -145,12 +145,12 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 └─────────────────────┴───────────┘
 ┌──────────────────────────── 📋 Audit Log Entry ─────────────────────────────┐
 │ seq: 1                                                                      │
-│ mandate_jti: 1cb16717-cae9-4e81-aef9-8675cf8f70f1                           │
+│ mandate_jti: 4b119060-26cb-4ad4-afcd-bbe9ee3d84f9                           │
 │ payee: attacker_wallet@upi                                                  │
 │ amount: ₹5,000.00                                                           │
 │ decision: PAYEE_NOT_ALLOWED                                                 │
-│ entry_hash: 799c26a4c17227ae472dd72cb60eaf29...                             │
-│ prev_hash: 18dd08c9708cf6b501b4ed879faadd98...                              │
+│ entry_hash: 68dc358d0d9a47f5500ceb88d9fd6dbb...                             │
+│ prev_hash: 5e81da5abd40e98024b97695b46e423c...                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ──────────────── SCENE 4 — HIERARCHICAL MULTI-AGENT DELEGATION ────────────────
@@ -230,6 +230,6 @@ biometric/PIN consent...
 │  6. Token tampering is caught by Ed25519 signature verification.            │
 │                                                                             │
 │  Security comes from cryptography and policy — not from system prompts.     │
-│  Demo execution time: 0m 05s (Pace: 0.2x)                                   │
+│  Demo execution time: 2m 39s (Pace: 5.5x)                                   │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
