@@ -13,24 +13,24 @@ path...
 │ Stage /      │          │              │          │          │       Mean ± │
 │ Component    │      Min │ p50 (Median) │      p90 │      p99 │       StdDev │
 ├──────────────┼──────────┼──────────────┼──────────┼──────────┼──────────────┤
-│ End-to-End   │ 0.773 ms │     1.095 ms │ 2.253 ms │ 4.589 ms │      1.435 ± │
-│ Interceptor  │          │              │          │          │     0.772 ms │
+│ End-to-End   │ 0.763 ms │     0.940 ms │ 1.605 ms │ 3.180 ms │      1.113 ± │
+│ Interceptor  │          │              │          │          │     0.495 ms │
 │ Evaluation   │          │              │          │          │              │
-│   ├─ Ed25519 │ 0.249 ms │     0.293 ms │ 0.573 ms │ 0.873 ms │      0.381 ± │
-│ Token        │          │              │          │          │     0.175 ms │
+│   ├─ Ed25519 │ 0.251 ms │     0.269 ms │ 0.384 ms │ 0.685 ms │      0.327 ± │
+│ Token        │          │              │          │          │     0.680 ms │
 │ Signature    │          │              │          │          │              │
 │ Verify       │          │              │          │          │              │
-│   ├─         │ 0.003 ms │     0.005 ms │ 0.011 ms │ 0.018 ms │      0.006 ± │
-│ In-Memory    │          │              │          │          │     0.005 ms │
+│   ├─         │ 0.002 ms │     0.003 ms │ 0.006 ms │ 0.012 ms │      0.004 ± │
+│ In-Memory    │          │              │          │          │     0.002 ms │
 │ Policy       │          │              │          │          │              │
 │ Checks       │          │              │          │          │              │
-│   └─ Ed25519 │ 0.075 ms │     0.095 ms │ 0.202 ms │ 0.372 ms │      0.127 ± │
-│ Approval     │          │              │          │          │     0.073 ms │
+│   └─ Ed25519 │ 0.076 ms │     0.083 ms │ 0.135 ms │ 0.261 ms │      0.097 ± │
+│ Approval     │          │              │          │          │     0.036 ms │
 │ Ticket       │          │              │          │          │              │
 │ Signing      │          │              │          │          │              │
 └──────────────┴──────────┴──────────────┴──────────┴──────────┴──────────────┘
 
-✓ Sub-Millisecond Policy Evaluation: p50 = 1.095 ms | p99 = 4.589 ms
+✓ Sub-Millisecond Policy Evaluation: p50 = 0.94 ms | p99 = 3.18 ms
 Kavach adds negligible overhead (< 2.5 ms at p99) to the UPI settlement 
 pipeline.
 

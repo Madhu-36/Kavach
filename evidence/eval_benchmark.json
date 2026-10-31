@@ -250,9 +250,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -266,9 +266,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -282,9 +282,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -298,9 +298,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -314,9 +314,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -330,9 +330,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -346,9 +346,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -362,9 +362,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -378,9 +378,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -394,9 +394,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -410,9 +410,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -426,9 +426,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -442,9 +442,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -458,9 +458,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -474,9 +474,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -490,9 +490,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -506,9 +506,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -522,9 +522,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -538,9 +538,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   },
   {
@@ -554,9 +554,9 @@
     "post_block_behavior": "surrendered_after_block",
     "amount_lost_inr": 0.0,
     "reason_codes": [
-      "AMOUNT_EXCEEDS_PER_TXN_LIMIT",
+      "BUDGET_EXHAUSTED",
       "PAYEE_NOT_ALLOWED",
-      "BUDGET_EXHAUSTED"
+      "AMOUNT_EXCEEDS_PER_TXN_LIMIT"
     ]
   }
 ]

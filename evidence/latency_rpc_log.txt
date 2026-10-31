@@ -1,0 +1,31 @@
+Command: C:\Python314\python.exe scripts/profile_rpc_latency.py
+Exit Code: 0
+
+STDOUT:
+Profiling Kavach Real Multi-Process HTTP RPC Latency (N=100)...
+          Kavach Real HTTP RPC Latency Benchmark (N=100 transactions)          
+┌───────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+│ Path /    │          │          │          │     Mean │          │          │
+│ Hop       │ p50 (ms) │ p90 (ms) │ p99 (ms) │     (ms) │ Min (ms) │ Max (ms) │
+├───────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ Client -> │     3.41 │     4.61 │     5.42 │     3.64 │     2.86 │     5.42 │
+│ Intercep… │          │          │          │          │          │          │
+│ (:8100)   │          │          │          │          │          │          │
+│ [RPC +    │          │          │          │          │          │          │
+│ Crypto +  │          │          │          │          │          │          │
+│ SQLite]   │          │          │          │          │          │          │
+│ Client -> │     2.42 │     3.47 │     7.50 │     2.72 │     1.99 │     7.50 │
+│ Gateway   │          │          │          │          │          │          │
+│ (:8000)   │          │          │          │          │          │          │
+│ [RPC +    │          │          │          │          │          │          │
+│ Ticket    │          │          │          │          │          │          │
+│ Verifica… │          │          │          │          │          │          │
+│ Full      │     6.18 │     7.73 │    10.92 │     6.36 │     5.05 │    10.92 │
+│ End-to-E… │          │          │          │          │          │          │
+│ Loop (Two │          │          │          │          │          │          │
+│ RPC Hops) │          │          │          │          │          │          │
+└───────────┴──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+Saved real RPC latency evidence to evidence\latency_rpc.txt
+
+
+STDERR:

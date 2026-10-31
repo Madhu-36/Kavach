@@ -56,10 +56,10 @@ Agent reads the ONDC store listings...
 ├───────────────────────────────┼──────────────────────────────────────┤
 │ iss                           │ user@kavach                          │
 │ sub                           │ agent_001                            │
-│ jti                           │ 8bd2ed78-d441-4c6b-8b37-4e9f1c46340e │
-│ iat                           │ 1793434074 (13:37:54)                │
-│ nbf                           │ 1793434074 (13:37:54)                │
-│ exp                           │ 1793434974 (13:52:54)                │
+│ jti                           │ 1cb16717-cae9-4e81-aef9-8675cf8f70f1 │
+│ iat                           │ 1793436762 (14:22:42)                │
+│ nbf                           │ 1793436762 (14:22:42)                │
+│ exp                           │ 1793437662 (14:37:42)                │
 │   mandate.purpose             │ grocery shopping                     │
 │   mandate.allowed_payees      │ ['ondc-grocer@upi']                  │
 │   mandate.allowed_categories  │ ['groceries', 'essentials']          │
@@ -145,12 +145,12 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 └─────────────────────┴───────────┘
 ┌──────────────────────────── 📋 Audit Log Entry ─────────────────────────────┐
 │ seq: 1                                                                      │
-│ mandate_jti: 8bd2ed78-d441-4c6b-8b37-4e9f1c46340e                           │
+│ mandate_jti: 1cb16717-cae9-4e81-aef9-8675cf8f70f1                           │
 │ payee: attacker_wallet@upi                                                  │
 │ amount: ₹5,000.00                                                           │
 │ decision: PAYEE_NOT_ALLOWED                                                 │
-│ entry_hash: 8174a58a390b0b74d565813139ba4e56...                             │
-│ prev_hash: 1704d2570ef1a6d98cdf22465e8ac834...                              │
+│ entry_hash: 799c26a4c17227ae472dd72cb60eaf29...                             │
+│ prev_hash: 18dd08c9708cf6b501b4ed879faadd98...                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ──────────────── SCENE 4 — HIERARCHICAL MULTI-AGENT DELEGATION ────────────────

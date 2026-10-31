@@ -1,4 +1,4 @@
-Command: C:\Python314\python.exe demo.py --fast
+Command: C:\Python314\python.exe demo.py --fast --record
 Exit Code: 0
 
 STDOUT:
@@ -60,10 +60,10 @@ Agent reads the ONDC store listings...
 ├───────────────────────────────┼──────────────────────────────────────┤
 │ iss                           │ user@kavach                          │
 │ sub                           │ agent_001                            │
-│ jti                           │ fa6b9cbc-7928-436a-b81c-69882bc639b5 │
-│ iat                           │ 1793433340 (13:25:40)                │
-│ nbf                           │ 1793433340 (13:25:40)                │
-│ exp                           │ 1793434240 (13:40:40)                │
+│ jti                           │ 1cb16717-cae9-4e81-aef9-8675cf8f70f1 │
+│ iat                           │ 1793436762 (14:22:42)                │
+│ nbf                           │ 1793436762 (14:22:42)                │
+│ exp                           │ 1793437662 (14:37:42)                │
 │   mandate.purpose             │ grocery shopping                     │
 │   mandate.allowed_payees      │ ['ondc-grocer@upi']                  │
 │   mandate.allowed_categories  │ ['groceries', 'essentials']          │
@@ -149,12 +149,12 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 └─────────────────────┴───────────┘
 ┌──────────────────────────── 📋 Audit Log Entry ─────────────────────────────┐
 │ seq: 1                                                                      │
-│ mandate_jti: fa6b9cbc-7928-436a-b81c-69882bc639b5                           │
+│ mandate_jti: 1cb16717-cae9-4e81-aef9-8675cf8f70f1                           │
 │ payee: attacker_wallet@upi                                                  │
 │ amount: ₹5,000.00                                                           │
 │ decision: PAYEE_NOT_ALLOWED                                                 │
-│ entry_hash: 098634cbc48d59df19db8ce823695370...                             │
-│ prev_hash: fadf06fb1ce6b4caa9728b732b1f0426...                              │
+│ entry_hash: 799c26a4c17227ae472dd72cb60eaf29...                             │
+│ prev_hash: 18dd08c9708cf6b501b4ed879faadd98...                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ──────────────── SCENE 4 — HIERARCHICAL MULTI-AGENT DELEGATION ────────────────
@@ -238,8 +238,11 @@ biometric/PIN consent...
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 
+Recorded output exported to evidence\demo_output.txt and 
+evidence\demo_output.svg
+
 
 STDERR:
 
 
-Measured Wall-Clock Execution Time: 7.14 seconds
+Measured Wall-Clock Execution Time: 6.90 seconds
