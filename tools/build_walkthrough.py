@@ -25,8 +25,8 @@ ARTIFACT_DIR = Path(r"C:\Users\Asus\.gemini\antigravity\brain\2f3a66ca-7c4f-4d12
 EVIDENCE_DIR = Path("evidence")
 
 
-def get_git_info() -> tuple[str, int]:
-    """Return (commit_hash, commit_timestamp)."""
+def get_git_info() -> tuple[str, int, bool]:
+    """Return (commit_hash, commit_timestamp, is_dirty)."""
     try:
         commit_hash = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], text=True
@@ -36,9 +36,13 @@ def get_git_info() -> tuple[str, int]:
                 ["git", "log", "-1", "--format=%ct"], text=True
             ).strip()
         )
-        return commit_hash, commit_ts
+        status = subprocess.check_output(
+            ["git", "status", "--porcelain"], text=True
+        ).strip()
+        is_dirty = len(status) > 0
+        return commit_hash, commit_ts, is_dirty
     except Exception:
-        return "UNKNOWN_COMMIT", 0
+        return "UNKNOWN_COMMIT", 0, False
 
 
 def generate_sha256_manifest() -> dict[str, str]:
@@ -86,7 +90,7 @@ def validate_junit_nodeids() -> int:
 
 
 def build_walkthrough() -> Path:
-    commit_hash, commit_ts = get_git_info()
+    commit_hash, commit_ts, is_dirty = get_git_info()
     os_name = f"{sys.platform} ({os.name})"
     py_version = sys.version.split()[0]
 
@@ -160,7 +164,7 @@ def build_walkthrough() -> Path:
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `{commit_hash}`  
+**Git Commit**: `{commit_hash}` ({'DIRTY working tree' if is_dirty else 'CLEAN working tree'})  
 **Environment**: {os_name} | Python {py_version}  
 **Total Unit/Integration/Property Tests**: {xml_test_count} passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)

@@ -18,10 +18,10 @@ This document provides a strict, transparent audit of every public claim made ac
 | **3** | *"Multi-tier Docker container isolation COMPLETE"* | `README.md`, `walkthrough.md` | `.github/workflows/ci.yml`, `docker-compose.yml` | **VERIFIED** | Enforced and verified green in GitHub Actions Ubuntu runner (run `41209935736`): Agent has zero route/DNS to gateway and holds zero keys. |
 | **4** | *"Sub-millisecond policy check evaluation"* | `README.md`, `walkthrough.md` | `scripts/profile_latency.py`, `evidence/latency.txt` | **VERIFIED** (Qualified) | **Pure in-memory policy checks run in 4 microseconds (0.004 ms)**. End-to-end interceptor evaluation (including Ed25519 asymmetric verification and ticket signing) is **1.092 ms (p50)** and **3.609 ms (p99)**. |
 | **5** | *"~200-500 ms UPI latency"* | `docs/JUDGE_QA.md`, `docs/DOCKER_ISOLATION.md` | NPCI Operational Reports & UPI Settlement Architecture | **DOWNGRADED** | Pruned unverified exact numbers; replaced with formal citation to NPCI Core Settlement Guidelines. |
-| **6** | *"Efficacy 100% across all attacks"* | `README.md`, `eval/RESULTS.md` | `eval/run_eval.py`, `evidence/live/llama3.1_trials.jsonl`, `evidence/adaptive/llm_attacker_summary.json` | **VERIFIED** (Qualified) | 0 successful attacks out of 100 trials in live LLM benchmark [95% Clopper-Pearson CI: 0.0%–7.1%], and 0 bypasses out of 50 adaptive rounds (7.11% upper bound at 95% confidence). |
-| **7** | *"Reproducible on Windows, macOS, and Linux"* | `README.md`, `.github/workflows/ci.yml` | GitHub Actions Run `41209935736` | **VERIFIED** | Full 134-test suite verified passing across Ubuntu, macOS, and Windows on Python 3.11, 3.12, 3.13, and 3.14-dev in CI. |
-| **8** | *"Proposed mitigation (design-only, not implemented): Signed Merchant Quotes"* | `README.md`, `SUBMISSION.md` | `docs/MERCHANT_QUOTES.md` | **DESIGN-ONLY** | Marked as **DESIGN-ONLY architectural extension**; specification published in `docs/MERCHANT_QUOTES.md`. |
-| **9** | *"Demo calibrated for <= 02:00"* | `SUBMISSION.md`, `demo.py` | `demo.py --video`, `evidence/demo_timing.txt` | **VERIFIED** | Real wall-clock timing measured at 105.422s (01:45.422) via `Console(record=True)` with calibrated sleep pauses. |
+| **6** | *"Efficacy 100% across all attacks"* | `README.md`, `eval/RESULTS.md` | `eval/run_eval.py`, `evidence/live/llama3.1_trials.jsonl`, `evidence/adaptive/llm_attacker_summary.json` | **VERIFIED** (Qualified) | 0 successful attacks out of 100 trials in live LLM benchmark [95% Clopper-Pearson CI: 0.0%–7.1%], and 0 bypasses out of 70 adaptive attempts across 7 attack vectors (5.1% upper bound at 95% confidence). |
+| **7** | *"Reproducible on Windows, macOS, and Linux"* | `README.md`, `.github/workflows/ci.yml` | GitHub Actions CI matrix | **VERIFIED** | Full 137-test suite verified passing across Ubuntu, macOS, and Windows on Python 3.11, 3.12, 3.13, and 3.14 in CI. |
+| **8** | *"Proposed mitigation (design-only, not implemented): Signed Merchant Quotes"* | `README.md`, `SUBMISSION.md` | `docs/MERCHANT_QUOTES.md` | **DESIGN-ONLY** | Marked as **proposed mitigation (design-only, not implemented)**; architectural specification published in `docs/MERCHANT_QUOTES.md`. |
+| **9** | *"Demo calibrated for <= 02:00"* | `SUBMISSION.md`, `demo.py` | `demo.py --video`, `evidence/demo_timing.txt` | **VERIFIED** | Real wall-clock timing measured at 105.62s (01:45.62) via `Console(record=True)` with calibrated sleep pauses. |
 | **10** | *"Agent process holds zero keys, zero tokens, and zero secrets"* | `README.md`, `src/kavach/client.py` | `tests/test_redteam.py::test_agent_scope_contains_no_secrets` | **VERIFIED** | Audited runtime memory, environment variables, and module namespaces of the agent process. |
 | **11** | *"Zero shared secrets between interceptor and gateway"* | `src/kavach/mock_upi.py`, `src/kavach/interceptor.py` | `tests/test_mock_upi.py`, `tests/test_redteam.py` | **VERIFIED** | `LEGACY_GATEWAY_SECRET` completely purged; gateway strictly requires Ed25519 `ApprovalTicket` instances signed by interceptor. |
 | **12** | *"50-thread concurrency race condition defense"* | `README.md`, `src/kavach/ledger_db.py` | `tests/test_redteam.py::test_atomic_concurrency_stress` | **VERIFIED** | 50 concurrent threads against ₹1,000 budget settled exactly ₹1,000.00 with zero budget overshoot using SQLite WAL `BEGIN IMMEDIATE`. |
@@ -60,4 +60,20 @@ Formal verification of required submission and governance assets:
 | **L5** | **Revocation Latency Across Edges** | Network Partition Spend Window | **KNOWN BOUNDARY** | In-memory/DB revocation is $O(1)$ (`test_i4_revocation_immediately_blocks_all_spend`). Offline edge propagation subject to network SLA. |
 | **L6** | **Hardware Root of Trust** | Host OS Memory & File Compromise | **PROTOTYPE BOUNDARY** | Prototype uses Ed25519 PEM keys. Production deployment requires HSM/TPM 2.0 / Apple Secure Enclave. |
 | **L7** | **Client-Side vs. Switch-Level Enforcement** | OS Host Bypass | **ARCHITECTURAL BOUNDARY** | Verified as isolated local RPC proxy (`test_agent_scope_contains_no_secrets`). Absolute containment requires NPCI switch-level verification. |
+
+---
+
+## 4. What Was NOT Done and Why
+
+To maintain absolute transparency and prevent overclaiming, the following capabilities were deliberately excluded or categorized as design-only:
+
+1. **Signed Merchant Quotes (Proposed Mitigation, Design-Only, Not Implemented)**:
+   - *Why*: Mitigating price-gouging or fraud by a compromised merchant requires e-commerce stores (e.g. ONDC catalog sellers) to hold cryptographic keys and sign quotes for specific nonces. Because this requires cross-industry adoption beyond an agentic payment interceptor, we authored the complete specification in `docs/MERCHANT_QUOTES.md` rather than implementing a fake simulation.
+2. **Switch-Level NPCI Core Integration**:
+   - *Why*: Integration into the production Unified Payments Interface switch requires regulatory banking partner onboarding and core network protocol changes. Kavach proves the protocol using a strict `MockUPIGateway` with zero secret sharing, identical to bank sandbox environments.
+3. **Hardware HSM / TPM 2.0 Secure Enclave**:
+   - *Why*: Automated multi-OS CI matrix execution (Ubuntu, macOS, Windows) cannot access bare-metal TPM 2.0 or Apple Secure Enclave hardware. Standard software-backed Ed25519 cryptographic primitives were used.
+4. **Multi-Region Distributed Raft Consensus**:
+   - *Why*: Single-host agentic deployments are the primary threat surface. Single-node SQLite WAL with `BEGIN IMMEDIATE` provides provable atomic concurrency against 50-thread race conditions. Multi-region distributed consensus is a distributed systems infrastructure concern rather than an agent security protocol requirement.
+
 

@@ -1,5 +1,3 @@
-Command: python demo.py --video --record
-Wall-Clock Time: 105.422 seconds (01:45.422)
-Exit Code: 0
-Target Limit: <= 02:00 (for 3:00 total video including intro/outro)
-Status: MET
+Wall-clock runtime: 105.62s
+Mode: --video
+Return code: 0

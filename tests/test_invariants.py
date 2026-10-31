@@ -955,4 +955,179 @@ uvicorn.run(app, host="127.0.0.1", port={port_interceptor}, log_level="warning")
                 proc.wait()
 
 
+def test_i6_crash_between_ticket_generation_and_gateway_settlement(user_keys, interceptor_keys):
+    """Confirm crash between ticket generation and gateway settlement rolls back cleanly on restart."""
+    user_priv, user_pub = user_keys
+    interceptor_priv, interceptor_pub = interceptor_keys
+
+    spec = MandateSpec(
+        purpose="groceries",
+        allowed_payees=["ondc-grocer@upi"],
+        allowed_categories=["groceries"],
+        per_txn_limit_paise=50_000,
+        total_budget_paise=100_000,
+        max_txn_count=5,
+    )
+    token = sign_mandate(user_priv, "agent_1", spec)
+
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
+        db_path = str(Path(tmpdir) / "kavach_ledger.db")
+        gateway = MockUPIGateway(interceptor_public_key=interceptor_pub)
+        gateway.set_balance("user@upi", 100_000)
+        gateway.set_balance("ondc-grocer@upi", 0)
+
+        # 1. First run: interceptor evaluates and issues ticket, persisting reservation
+        ledger = SqliteLedger(db_path)
+        audit = AuditLog()
+        interceptor = KavachInterceptor(
+            public_key=user_pub,
+            mandate_token=token,
+            ledger=ledger,
+            audit_log=audit,
+            interceptor_private_key=interceptor_priv,
+        )
+
+        req = PaymentRequest(
+            amount_paise=40_000,
+            payee_vpa="ondc-grocer@upi",
+            category="groceries",
+            note="crash test before gateway",
+            idempotency_key="crash-pre-gw-1",
+        )
+        decision, claims = interceptor.evaluate(req, auto_commit=False)
+        assert decision.allowed is True
+        assert decision.approval_ticket is not None
+        jti = claims.jti
+
+        # Simulate CRASH before gateway call: no call to gateway /pay was made!
+        del interceptor
+        del ledger
+        import gc
+        gc.collect()
+
+        # 2. Restart and recover with gateway reconciliation
+        restarted_ledger = SqliteLedger(db_path)
+        assert restarted_ledger.get_spent(jti) == 0
+
+        # Gateway reports ticket was never settled
+        recovered = restarted_ledger.recover_from_crash(
+            gateway_reconciler=gateway.is_ticket_settled
+        )
+        assert recovered == 1
+
+        # Assert uncommitted reservation rolled back: spent is 0, count is 0
+        assert restarted_ledger.get_spent(jti) == 0
+        assert restarted_ledger.get_count(jti) == 0
+        assert gateway.get_balance("user@upi") == 100_000
+        assert gateway.get_balance("ondc-grocer@upi") == 0
+        del restarted_ledger
+        gc.collect()
+
+
+def test_i6_gateway_offline_during_restart_fails_closed(user_keys, interceptor_keys):
+    """Confirm recovery when gateway is offline during restart fails closed (preserves reservation)."""
+    user_priv, user_pub = user_keys
+    interceptor_priv, interceptor_pub = interceptor_keys
+
+    spec = MandateSpec(
+        purpose="groceries",
+        allowed_payees=["ondc-grocer@upi"],
+        allowed_categories=["groceries"],
+        per_txn_limit_paise=60_000,
+        total_budget_paise=100_000,
+        max_txn_count=5,
+    )
+    token = sign_mandate(user_priv, "agent_1", spec)
+
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
+        db_path = str(Path(tmpdir) / "kavach_ledger.db")
+
+        # 1. Make a reservation
+        ledger = SqliteLedger(db_path)
+        audit = AuditLog()
+        interceptor = KavachInterceptor(
+            public_key=user_pub,
+            mandate_token=token,
+            ledger=ledger,
+            audit_log=audit,
+            interceptor_private_key=interceptor_priv,
+        )
+
+        req = PaymentRequest(
+            amount_paise=60_000,
+            payee_vpa="ondc-grocer@upi",
+            category="groceries",
+            note="offline test",
+            idempotency_key="offline-res-1",
+        )
+        decision, claims = interceptor.evaluate(req, auto_commit=False)
+        assert decision.allowed is True
+        jti = claims.jti
+
+        del interceptor
+        del ledger
+        import gc
+        gc.collect()
+
+        # 2. Restart while gateway is OFFLINE (reconciler raises ConnectionError)
+        restarted_ledger = SqliteLedger(db_path)
+
+        def offline_gateway_reconciler(ticket_id: str):
+            raise ConnectionError("Gateway service unreachable: 503 Service Unavailable")
+
+        # Recovery should fail closed: 0 recovered, reservation stays active
+        recovered = restarted_ledger.recover_from_crash(
+            gateway_reconciler=offline_gateway_reconciler
+        )
+        assert recovered == 0
+
+        # Budget remains reserved: attempting to spend 50,000 (which exceeds remaining 40,000) is BLOCKED
+        ok_extra, msg_extra = restarted_ledger.reserve(
+            jti=jti,
+            amount_paise=50_000,
+            max_budget_paise=100_000,
+            max_txn_count=5,
+            idempotency_key="extra-spend-2",
+        )
+        assert ok_extra is False
+        assert msg_extra == "BUDGET_EXHAUSTED"
+        del restarted_ledger
+        gc.collect()
+
+
+def test_ticket_status_endpoint_authentication(interceptor_keys):
+    """Verify /ticket/{id}/status endpoint enforces cryptographic authentication."""
+    import base64
+    interceptor_priv, interceptor_pub = interceptor_keys
+    other_priv, _ = generate_keypair()
+
+    gw = MockUPIGateway(interceptor_public_key=interceptor_pub)
+    client = TestClient(create_app(gw=gw))
+
+    # 1. Unauthenticated request without header -> 403 Forbidden
+    resp = client.get("/ticket/tkt-1234/status")
+    assert resp.status_code == 403
+    assert "Unauthorized" in resp.json()["detail"]
+
+    # 2. Request signed by unauthorized / foreign key -> 403 Forbidden
+    foreign_sig = other_priv.sign(b"status:tkt-1234")
+    foreign_header = base64.b64encode(foreign_sig).decode("ascii")
+    resp_foreign = client.get(
+        "/ticket/tkt-1234/status",
+        headers={"x-kavach-interceptor-auth": foreign_header},
+    )
+    assert resp_foreign.status_code == 403
+
+    # 3. Request signed by authorized interceptor key -> 200 OK
+    auth_sig = interceptor_priv.sign(b"status:tkt-1234")
+    auth_header = base64.b64encode(auth_sig).decode("ascii")
+    resp_auth = client.get(
+        "/ticket/tkt-1234/status",
+        headers={"x-kavach-interceptor-auth": auth_header},
+    )
+    assert resp_auth.status_code == 200
+    assert resp_auth.json() == {"ticket_id": "tkt-1234", "settled": False}
+
+
+
 

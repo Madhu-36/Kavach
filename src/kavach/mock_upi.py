@@ -96,6 +96,21 @@ class MockUPIGateway:
         """Check if an approval ticket or transaction nonce was settled."""
         return ticket_id in self._used_tickets
 
+    def verify_reconciliation_auth(self, ticket_id: str, auth_token: str) -> bool:
+        """Verify reconciliation authorization from an authorized interceptor key."""
+        if not self._interceptor_public_key:
+            return True  # Open if no key pinned
+        if not auth_token:
+            return False
+        try:
+            import base64
+            sig = base64.b64decode(auth_token)
+            msg = f"status:{ticket_id}".encode("utf-8")
+            self._interceptor_public_key.verify(sig, msg)
+            return True
+        except Exception:
+            return False
+
     def process_payment(
         self,
         payer_vpa: str,
@@ -179,7 +194,12 @@ def create_app(
         return BalanceResponse(vpa=vpa, balance_paise=_gw.get_balance(vpa))
 
     @app.get("/ticket/{ticket_id}/status")
-    def ticket_status(ticket_id: str):
+    def ticket_status(
+        ticket_id: str,
+        x_kavach_interceptor_auth: str = Header(default=""),
+    ):
+        if not _gw.verify_reconciliation_auth(ticket_id, x_kavach_interceptor_auth):
+            raise HTTPException(status_code=403, detail="Unauthorized reconciliation status request")
         return {"ticket_id": ticket_id, "settled": _gw.is_ticket_settled(ticket_id)}
 
     return app

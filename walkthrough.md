@@ -2,16 +2,16 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `c457908719e4680f5e0681c5ba07c0ae9d9c05b6`  
+**Git Commit**: `580cbc983441cd545aabaf081a4638972dd228ca` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
-**Total Unit/Integration/Property Tests**: 134 passing  
+**Total Unit/Integration/Property Tests**: 137 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
 
 ---
 
 ## 1. Local Test Run (pytest)
 
-All 134 tests run automatically in the local environment across unit policy checks, property-based tests (Hypothesis), 
+All 137 tests run automatically in the local environment across unit policy checks, property-based tests (Hypothesis), 
 delegation attenuation, step-up consent, settlement crash recovery with gateway reconciliation, and red-team gateway bypass attacks (remote CI workflow configured in `.github/workflows/ci.yml`).
 
 ```text
@@ -23,7 +23,7 @@ rootdir: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach
 configfile: pyproject.toml
 plugins: anyio-4.15.1, hypothesis-6.170.14, langsmith-0.14.16, asyncio-1.4.0
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 134 items
+collecting ... collected 137 items
 
 tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_schemas PASSED [  0%]
 tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_function_source PASSED [  1%]
@@ -39,111 +39,114 @@ tests/test_audit.py::TestAuditLogIntegrity::test_hash_chain_continuity PASSED [ 
 tests/test_audit.py::TestAuditLogAppend::test_entries_have_sequential_seq PASSED [  8%]
 tests/test_audit.py::TestAuditLogAppend::test_denied_decisions_logged PASSED [  9%]
 tests/test_consent.py::TestConsentAndPreview::test_mandate_preview_formatting_and_fingerprint PASSED [ 10%]
-tests/test_consent.py::TestStepUpEscalation::test_valid_step_up_consent_flow PASSED [ 11%]
+tests/test_consent.py::TestStepUpEscalation::test_valid_step_up_consent_flow PASSED [ 10%]
 tests/test_consent.py::TestStepUpEscalation::test_payee_tampering_rejected PASSED [ 11%]
 tests/test_consent.py::TestStepUpEscalation::test_amount_tampering_rejected PASSED [ 12%]
 tests/test_consent.py::TestStepUpEscalation::test_expired_ticket_rejected PASSED [ 13%]
-tests/test_consent.py::TestStepUpEscalation::test_ticket_replay_explicit_rejection PASSED [ 14%]
+tests/test_consent.py::TestStepUpEscalation::test_ticket_replay_explicit_rejection PASSED [ 13%]
 tests/test_consent.py::TestStepUpEscalation::test_self_approval_prevention_unreachable_channel PASSED [ 14%]
 tests/test_consent.py::TestStepUpEscalation::test_exact_threshold_boundaries PASSED [ 15%]
 tests/test_delegation.py::TestDelegationAttenuation::test_valid_sub_mandate_issuance_and_verification PASSED [ 16%]
-tests/test_delegation.py::TestDelegationAttenuation::test_widening_payee_raises_attenuation_error PASSED [ 17%]
+tests/test_delegation.py::TestDelegationAttenuation::test_widening_payee_raises_attenuation_error PASSED [ 16%]
 tests/test_delegation.py::TestDelegationAttenuation::test_widening_category_raises_attenuation_error PASSED [ 17%]
 tests/test_delegation.py::TestDelegationAttenuation::test_raising_per_txn_limit_raises_attenuation_error PASSED [ 18%]
-tests/test_delegation.py::TestDelegationAttenuation::test_raising_total_budget_raises_attenuation_error PASSED [ 19%]
-tests/test_delegation.py::TestDelegationAttenuation::test_extending_validity_beyond_parent_raises_attenuation_error PASSED [ 20%]
+tests/test_delegation.py::TestDelegationAttenuation::test_raising_total_budget_raises_attenuation_error PASSED [ 18%]
+tests/test_delegation.py::TestDelegationAttenuation::test_extending_validity_beyond_parent_raises_attenuation_error PASSED [ 19%]
 tests/test_delegation.py::TestDelegationAttenuation::test_wrong_parent_signing_key_fails_verification PASSED [ 20%]
 tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_rejects_widened_child_mandate PASSED [ 21%]
-tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_dual_drawdown_deducts_from_child_and_parent PASSED [ 22%]
-tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_blocks_child_when_parent_budget_exhausted PASSED [ 23%]
+tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_dual_drawdown_deducts_from_child_and_parent PASSED [ 21%]
+tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_blocks_child_when_parent_budget_exhausted PASSED [ 22%]
 tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget PASSED [ 23%]
 tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved PASSED [ 24%]
-tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count PASSED [ 25%]
-tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries PASSED [ 26%]
+tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count PASSED [ 24%]
+tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries PASSED [ 25%]
 tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_revocation_immediately_blocks_all_spend PASSED [ 26%]
 tests/test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection PASSED [ 27%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_midflight_crash_rolls_back_reservation PASSED [ 28%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_client_fails_closed_when_interceptor_unreachable PASSED [ 29%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_midflight_crash_rolls_back_reservation PASSED [ 27%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_client_fails_closed_when_interceptor_unreachable PASSED [ 28%]
 tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_subprocess_crash_zero_leaked_budget PASSED [ 29%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_interceptor_service_process_crash_recovery PASSED [ 30%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_crash_after_settlement_reconciles_and_prevents_double_spend PASSED [ 31%]
-tests/test_issuer.py::TestKeypairGeneration::test_generate_keypair_types PASSED [ 32%]
-tests/test_issuer.py::TestKeypairGeneration::test_save_and_load_keypair PASSED [ 32%]
-tests/test_issuer.py::TestSignMandate::test_valid_token_structure PASSED [ 33%]
-tests/test_issuer.py::TestSignMandate::test_mandate_claims_are_integers PASSED [ 34%]
-tests/test_issuer.py::TestSignMandate::test_custom_jti PASSED            [ 35%]
-tests/test_issuer.py::TestSignMandate::test_algorithm_is_eddsa PASSED    [ 35%]
-tests/test_issuer.py::TestSignMandate::test_nbf_offset PASSED            [ 36%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_success PASSED      [ 37%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_without_approval_header PASSED [ 38%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_wrong_approval_header PASSED [ 38%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_insufficient_balance PASSED [ 39%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_balance_endpoint PASSED [ 40%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_balance_unknown_vpa PASSED [ 41%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_gateway_without_keys_refuses_pay PASSED [ 41%]
-tests/test_policy.py::TestValidPayment::test_valid_payment_approved PASSED [ 42%]
-tests/test_policy.py::TestPerTxnLimit::test_amount_over_per_txn_limit PASSED [ 43%]
-tests/test_policy.py::TestWrongPayee::test_wrong_payee_rejected PASSED   [ 44%]
-tests/test_policy.py::TestExpiredToken::test_expired_token_rejected PASSED [ 44%]
-tests/test_policy.py::TestNotYetValid::test_token_not_yet_valid PASSED   [ 45%]
-tests/test_policy.py::TestTamperedPayload::test_tampered_payload_rejected PASSED [ 46%]
-tests/test_policy.py::TestWrongKey::test_wrong_key_rejected PASSED       [ 47%]
-tests/test_policy.py::TestAlgNone::test_alg_none_rejected PASSED         [ 47%]
-tests/test_policy.py::TestAlgConfusion::test_hs256_with_public_key_rejected PASSED [ 48%]
-tests/test_policy.py::TestBudgetExhaustion::test_cumulative_budget_exceeded PASSED [ 49%]
-tests/test_policy.py::TestTxnCountLimit::test_txn_count_exceeded PASSED  [ 50%]
-tests/test_policy.py::TestReplay::test_replayed_nonce_rejected PASSED    [ 50%]
-tests/test_policy.py::TestRevocation::test_revoked_mandate_rejected PASSED [ 51%]
-tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[0] PASSED [ 52%]
-tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-100] PASSED [ 52%]
-tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-1] PASSED [ 53%]
-tests/test_policy.py::TestPaiseEdgeCases::test_exact_per_txn_limit_allowed PASSED [ 54%]
-tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_over_limit_rejected PASSED [ 55%]
-tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_payment PASSED  [ 55%]
-tests/test_policy.py::TestPaiseEdgeCases::test_exact_budget_boundary PASSED [ 56%]
-tests/test_policy.py::TestCategoryCheck::test_wrong_category_rejected PASSED [ 57%]
-tests/test_policy.py::TestCategoryCheck::test_correct_category_case_insensitive PASSED [ 58%]
-tests/test_policy.py::TestMultiReasonDenial::test_multiple_violations_reported PASSED [ 58%]
-tests/test_redteam.py::TestGatewaySecurity::test_direct_call_without_ticket_rejected PASSED [ 59%]
-tests/test_redteam.py::TestGatewaySecurity::test_legacy_shared_secret_rejected_when_keys_enabled PASSED [ 60%]
-tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected PASSED [ 61%]
-tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_amount_rejected PASSED [ 61%]
-tests/test_redteam.py::TestGatewaySecurity::test_single_use_replay_rejected PASSED [ 62%]
-tests/test_redteam.py::TestGatewaySecurity::test_expired_ticket_rejected PASSED [ 63%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_interceptor_service_process_crash_recovery PASSED [ 29%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_crash_after_settlement_reconciles_and_prevents_double_spend PASSED [ 30%]
+tests/test_invariants.py::test_i6_crash_between_ticket_generation_and_gateway_settlement PASSED [ 31%]
+tests/test_invariants.py::test_i6_gateway_offline_during_restart_fails_closed PASSED [ 32%]
+tests/test_invariants.py::test_ticket_status_endpoint_authentication PASSED [ 32%]
+tests/test_issuer.py::TestKeypairGeneration::test_generate_keypair_types PASSED [ 33%]
+tests/test_issuer.py::TestKeypairGeneration::test_save_and_load_keypair PASSED [ 34%]
+tests/test_issuer.py::TestSignMandate::test_valid_token_structure PASSED [ 35%]
+tests/test_issuer.py::TestSignMandate::test_mandate_claims_are_integers PASSED [ 35%]
+tests/test_issuer.py::TestSignMandate::test_custom_jti PASSED            [ 36%]
+tests/test_issuer.py::TestSignMandate::test_algorithm_is_eddsa PASSED    [ 37%]
+tests/test_issuer.py::TestSignMandate::test_nbf_offset PASSED            [ 37%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_success PASSED      [ 38%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_without_approval_header PASSED [ 39%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_wrong_approval_header PASSED [ 40%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_insufficient_balance PASSED [ 40%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_endpoint PASSED [ 41%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_unknown_vpa PASSED [ 42%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_gateway_without_keys_refuses_pay PASSED [ 43%]
+tests/test_policy.py::TestValidPayment::test_valid_payment_approved PASSED [ 43%]
+tests/test_policy.py::TestPerTxnLimit::test_amount_over_per_txn_limit PASSED [ 44%]
+tests/test_policy.py::TestWrongPayee::test_wrong_payee_rejected PASSED   [ 45%]
+tests/test_policy.py::TestExpiredToken::test_expired_token_rejected PASSED [ 45%]
+tests/test_policy.py::TestNotYetValid::test_token_not_yet_valid PASSED   [ 46%]
+tests/test_policy.py::TestTamperedPayload::test_tampered_payload_rejected PASSED [ 47%]
+tests/test_policy.py::TestWrongKey::test_wrong_key_rejected PASSED       [ 48%]
+tests/test_policy.py::TestAlgNone::test_alg_none_rejected PASSED         [ 48%]
+tests/test_policy.py::TestAlgConfusion::test_hs256_with_public_key_rejected PASSED [ 49%]
+tests/test_policy.py::TestBudgetExhaustion::test_cumulative_budget_exceeded PASSED [ 50%]
+tests/test_policy.py::TestTxnCountLimit::test_txn_count_exceeded PASSED  [ 51%]
+tests/test_policy.py::TestReplay::test_replayed_nonce_rejected PASSED    [ 51%]
+tests/test_policy.py::TestRevocation::test_revoked_mandate_rejected PASSED [ 52%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[0] PASSED [ 53%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-100] PASSED [ 54%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-1] PASSED [ 54%]
+tests/test_policy.py::TestPaiseEdgeCases::test_exact_per_txn_limit_allowed PASSED [ 55%]
+tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_over_limit_rejected PASSED [ 56%]
+tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_payment PASSED  [ 56%]
+tests/test_policy.py::TestPaiseEdgeCases::test_exact_budget_boundary PASSED [ 57%]
+tests/test_policy.py::TestCategoryCheck::test_wrong_category_rejected PASSED [ 58%]
+tests/test_policy.py::TestCategoryCheck::test_correct_category_case_insensitive PASSED [ 59%]
+tests/test_policy.py::TestMultiReasonDenial::test_multiple_violations_reported PASSED [ 59%]
+tests/test_redteam.py::TestGatewaySecurity::test_direct_call_without_ticket_rejected PASSED [ 60%]
+tests/test_redteam.py::TestGatewaySecurity::test_legacy_shared_secret_rejected_when_keys_enabled PASSED [ 61%]
+tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected PASSED [ 62%]
+tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_amount_rejected PASSED [ 62%]
+tests/test_redteam.py::TestGatewaySecurity::test_single_use_replay_rejected PASSED [ 63%]
+tests/test_redteam.py::TestGatewaySecurity::test_expired_ticket_rejected PASSED [ 64%]
 tests/test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected PASSED [ 64%]
-tests/test_redteam.py::TestToolSchemaHardening::test_kavach_token_argument_rejected PASSED [ 64%]
-tests/test_redteam.py::TestToolSchemaHardening::test_skip_checks_argument_rejected PASSED [ 65%]
-tests/test_redteam.py::TestInputSanitization::test_boolean_amount_rejected PASSED [ 66%]
+tests/test_redteam.py::TestToolSchemaHardening::test_kavach_token_argument_rejected PASSED [ 65%]
+tests/test_redteam.py::TestToolSchemaHardening::test_skip_checks_argument_rejected PASSED [ 66%]
+tests/test_redteam.py::TestInputSanitization::test_boolean_amount_rejected PASSED [ 67%]
 tests/test_redteam.py::TestInputSanitization::test_float_amount_rejected PASSED [ 67%]
-tests/test_redteam.py::TestInputSanitization::test_nan_amount_rejected PASSED [ 67%]
-tests/test_redteam.py::TestInputSanitization::test_inf_amount_rejected PASSED [ 68%]
-tests/test_redteam.py::TestInputSanitization::test_huge_integer_rejected PASSED [ 69%]
+tests/test_redteam.py::TestInputSanitization::test_nan_amount_rejected PASSED [ 68%]
+tests/test_redteam.py::TestInputSanitization::test_inf_amount_rejected PASSED [ 69%]
+tests/test_redteam.py::TestInputSanitization::test_huge_integer_rejected PASSED [ 70%]
 tests/test_redteam.py::TestPayeeLookalikes::test_trailing_space_rejected PASSED [ 70%]
-tests/test_redteam.py::TestPayeeLookalikes::test_double_at_symbol_rejected PASSED [ 70%]
-tests/test_redteam.py::TestPayeeLookalikes::test_domain_extension_spoof_rejected PASSED [ 71%]
+tests/test_redteam.py::TestPayeeLookalikes::test_double_at_symbol_rejected PASSED [ 71%]
+tests/test_redteam.py::TestPayeeLookalikes::test_domain_extension_spoof_rejected PASSED [ 72%]
 tests/test_redteam.py::TestPayeeLookalikes::test_casing_difference_rejected PASSED [ 72%]
 tests/test_redteam.py::TestConcurrencyAndLedger::test_atomic_concurrency_stress PASSED [ 73%]
-tests/test_redteam.py::TestConcurrencyAndLedger::test_reservation_rollback_on_failure PASSED [ 73%]
-tests/test_redteam.py::TestSalamiSlicing::test_salami_slicing_bounded PASSED [ 74%]
+tests/test_redteam.py::TestConcurrencyAndLedger::test_reservation_rollback_on_failure PASSED [ 74%]
+tests/test_redteam.py::TestSalamiSlicing::test_salami_slicing_bounded PASSED [ 75%]
 tests/test_redteam.py::TestProcessIsolation::test_agent_scope_contains_no_secrets PASSED [ 75%]
 tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_agent_facing_error_contains_no_sensitive_leaks PASSED [ 76%]
-tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_scene_3_multi_reason_regression PASSED [ 76%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_all_30_attack_rounds_fail_closed PASSED [ 77%]
+tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_scene_3_multi_reason_regression PASSED [ 77%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_all_30_attack_rounds_fail_closed PASSED [ 78%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[0] PASSED [ 78%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[1] PASSED [ 79%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[2] PASSED [ 79%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[3] PASSED [ 80%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[2] PASSED [ 80%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[3] PASSED [ 81%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[4] PASSED [ 81%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[5] PASSED [ 82%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[6] PASSED [ 82%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[6] PASSED [ 83%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[7] PASSED [ 83%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[8] PASSED [ 84%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[9] PASSED [ 85%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[10] PASSED [ 85%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[10] PASSED [ 86%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[11] PASSED [ 86%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[12] PASSED [ 87%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[13] PASSED [ 88%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[14] PASSED [ 88%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[14] PASSED [ 89%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[15] PASSED [ 89%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[16] PASSED [ 90%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[17] PASSED [ 91%]
@@ -167,7 +170,7 @@ tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_at
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 - generated xml file: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach\evidence\pytest_report.xml -
-======================= 134 passed, 1 warning in 21.33s =======================
+======================= 137 passed, 1 warning in 21.24s =======================
 ```
 
 ---
@@ -177,30 +180,19 @@ tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_at
 Deterministic property tests verify mathematical invariants I1–I6 across derandomized payment distributions, clock skew, and crash reconciliation:
 
 ```text
-Command: C:\Python314\python.exe -m pytest tests/test_invariants.py --hypothesis-profile=ci --hypothesis-show-statistics -v
-Exit Code: 0
-
 ============================= test session starts =============================
 platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- C:\Python314\python.exe
 cachedir: .pytest_cache
-hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
+hypothesis profile 'default'
 rootdir: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach
 configfile: pyproject.toml
 plugins: anyio-4.15.1, hypothesis-6.170.14, langsmith-0.14.16, asyncio-1.4.0
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 11 items
+collecting ... collected 14 items / 11 deselected / 3 selected
 
-tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget PASSED [  9%]
-tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved PASSED [ 18%]
-tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count PASSED [ 27%]
-tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries PASSED [ 36%]
-tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_revocation_immediately_blocks_all_spend PASSED [ 45%]
-tests/test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection PASSED [ 54%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_midflight_crash_rolls_back_reservation PASSED [ 63%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_client_fails_closed_when_interceptor_unreachable PASSED [ 72%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_subprocess_crash_zero_leaked_budget PASSED [ 81%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_interceptor_service_process_crash_recovery PASSED [ 90%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_crash_after_settlement_reconciles_and_prevents_double_spend PASSED [100%]
+tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget PASSED [ 33%]
+tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved PASSED [ 66%]
+tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count PASSED [100%]
 
 ============================== warnings summary ===============================
 ..\..\..\..\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
@@ -208,44 +200,30 @@ tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_crash_after_set
     _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-============================ Hypothesis Statistics ============================
-tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget:
-
-  - during generate phase (9.92 seconds):
-    - Typical runtimes: ~ 0-20 ms, of which < 1ms in data generation
-    - 1000 passing, 0 failing, and 125 invalid test cases
-
-  - Stopped because settings.max_examples=1000
+================ 3 passed, 11 deselected, 1 warning in 58.47s =================
 
 
-tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved:
+--- I4 RUN ---
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- C:\Python314\python.exe
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach
+configfile: pyproject.toml
+plugins: anyio-4.15.1, hypothesis-6.170.14, langsmith-0.14.16, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 14 items / 12 deselected / 2 selected
 
-  - during generate phase (2.30 seconds):
-    - Typical runtimes: ~ 1-3 ms, of which < 1ms in data generation
-    - 1000 passing, 0 failing, and 0 invalid test cases
+tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries PASSED [ 50%]
+tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_revocation_immediately_blocks_all_spend PASSED [100%]
 
-  - Stopped because settings.max_examples=1000
+============================== warnings summary ===============================
+..\..\..\..\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\Asus\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
 
-
-tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count:
-
-  - during generate phase (48.52 seconds):
-    - Typical runtimes: ~ 6-96 ms, of which < 1ms in data generation
-    - 1000 passing, 0 failing, and 0 invalid test cases
-
-  - Stopped because settings.max_examples=1000
-
-
-tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries:
-
-  - during generate phase (2.74 seconds):
-    - Typical runtimes: ~ 1-4 ms, of which < 1ms in data generation
-    - 1000 passing, 0 failing, and 0 invalid test cases
-
-  - Stopped because settings.max_examples=1000
-
-
-================== 11 passed, 1 warning in 73.08s (0:01:13) ===================
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 2 passed, 12 deselected, 1 warning in 5.10s =================
 ```
 
 ---
@@ -256,11 +234,9 @@ Recorded using `rich.console.Console(record=True)` exported directly to text and
 
 ### Timing & Wall-Clock Measurement (`evidence/demo_timing.txt`)
 ```text
-Command: python demo.py --video --record
-Wall-Clock Time: 105.422 seconds (01:45.422)
-Exit Code: 0
-Target Limit: <= 02:00 (for 3:00 total video including intro/outro)
-Status: MET
+Wall-clock runtime: 105.62s
+Mode: --video
+Return code: 0
 ```
 
 ### Full Transcript Output (`evidence/demo_output.txt`)
@@ -592,13 +568,13 @@ which is an order of magnitude faster than standard production UPI inter-bank la
 - Total Recorded Trials: 100 (50 OFF, 50 ON)
 - Attack Success Rate (Kavach ON): 0/50 (0.0% funds lost)
 - Injection Obeyed Rate by Model: 0/50 (0.0%)
-- Legitimate Task Completion: 27/50 (54.0%)
+- Legitimate Task Completion: 22/50 (44.0%)
 
 ### Adaptive Red-Team LLM Attacker (`llama3.1:latest`, 8B)
-- Total Probing Attempts: 50 across 5 rounds
-- Reached Policy Layer: 50/50 (100.0%)
-- Bypasses Achieved: 0/50 (0.0% Success Rate; 95% Clopper-Pearson CI upper bound: 7.1%)
-- Reason Codes Distributed: PAYEE_NOT_ALLOWED: 50
+- Total Probing Attempts: 70 across 7 rounds
+- Reached Policy Layer: 68/70 (97.1%)
+- Bypasses Achieved: 0/70 (0.0% Success Rate; 95% Clopper-Pearson CI upper bound: 5.1%)
+- Reason Codes Distributed: PAYEE_NOT_ALLOWED: 56, AMOUNT_EXCEEDS_PER_TXN_LIMIT: 2, APPROVED: 3, BUDGET_EXHAUSTED: 5, ERROR: 2, CATEGORY_NOT_ALLOWED: 2
 
 ---
 
@@ -606,148 +582,154 @@ which is an order of magnitude faster than standard production UPI inter-bank la
 
 Verified in a fresh, isolated directory and virtual environment:
 ```text
-[OK] Copied clean source tree to C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_zlnx9deq\Kavach
-[OK] Created isolated virtualenv at C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_zlnx9deq\venv
+[OK] git clone succeeded:
+
+Cloning into 'C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_oa07ndul\Kavach'...
+done.
+
+[OK] Created isolated virtualenv at C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_oa07ndul\venv
 [OK] pip install -e .[dev] succeeded
 [OK] Pytest passed:
 ============================= test session starts =============================
-platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_zlnx9deq\venv\Scripts\python.exe
+platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_oa07ndul\venv\Scripts\python.exe
 cachedir: .pytest_cache
 hypothesis profile 'default'
-rootdir: C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_zlnx9deq\Kavach
+rootdir: C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_oa07ndul\Kavach
 configfile: pyproject.toml
 plugins: anyio-4.15.1, hypothesis-6.170.14, langsmith-0.14.16, asyncio-1.4.1
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 132 items
+collecting ... collected 134 items
 
 tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_schemas PASSED [  0%]
 tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_function_source PASSED [  1%]
 tests/test_agent.py::TestScriptedCompromisedAgent::test_legitimate_purchase_approved PASSED [  2%]
-tests/test_agent.py::TestScriptedCompromisedAgent::test_injection_attack_blocked PASSED [  3%]
+tests/test_agent.py::TestScriptedCompromisedAgent::test_injection_attack_blocked PASSED [  2%]
 tests/test_agent.py::TestScriptedCompromisedAgent::test_full_scenario PASSED [  3%]
 tests/test_audit.py::TestAuditLogIntegrity::test_valid_log_passes_verification PASSED [  4%]
 tests/test_audit.py::TestAuditLogIntegrity::test_tampered_amount_detected PASSED [  5%]
-tests/test_audit.py::TestAuditLogIntegrity::test_deleted_entry_detected PASSED [  6%]
+tests/test_audit.py::TestAuditLogIntegrity::test_deleted_entry_detected PASSED [  5%]
 tests/test_audit.py::TestAuditLogIntegrity::test_reordered_entries_detected PASSED [  6%]
 tests/test_audit.py::TestAuditLogIntegrity::test_empty_log_valid PASSED  [  7%]
 tests/test_audit.py::TestAuditLogIntegrity::test_hash_chain_continuity PASSED [  8%]
-tests/test_audit.py::TestAuditLogAppend::test_entries_have_sequential_seq PASSED [  9%]
+tests/test_audit.py::TestAuditLogAppend::test_entries_have_sequential_seq PASSED [  8%]
 tests/test_audit.py::TestAuditLogAppend::test_denied_decisions_logged PASSED [  9%]
 tests/test_consent.py::TestConsentAndPreview::test_mandate_preview_formatting_and_fingerprint PASSED [ 10%]
 tests/test_consent.py::TestStepUpEscalation::test_valid_step_up_consent_flow PASSED [ 11%]
-tests/test_consent.py::TestStepUpEscalation::test_payee_tampering_rejected PASSED [ 12%]
+tests/test_consent.py::TestStepUpEscalation::test_payee_tampering_rejected PASSED [ 11%]
 tests/test_consent.py::TestStepUpEscalation::test_amount_tampering_rejected PASSED [ 12%]
 tests/test_consent.py::TestStepUpEscalation::test_expired_ticket_rejected PASSED [ 13%]
 tests/test_consent.py::TestStepUpEscalation::test_ticket_replay_explicit_rejection PASSED [ 14%]
-tests/test_consent.py::TestStepUpEscalation::test_self_approval_prevention_unreachable_channel PASSED [ 15%]
+tests/test_consent.py::TestStepUpEscalation::test_self_approval_prevention_unreachable_channel PASSED [ 14%]
 tests/test_consent.py::TestStepUpEscalation::test_exact_threshold_boundaries PASSED [ 15%]
 tests/test_delegation.py::TestDelegationAttenuation::test_valid_sub_mandate_issuance_and_verification PASSED [ 16%]
 tests/test_delegation.py::TestDelegationAttenuation::test_widening_payee_raises_attenuation_error PASSED [ 17%]
-tests/test_delegation.py::TestDelegationAttenuation::test_widening_category_raises_attenuation_error PASSED [ 18%]
+tests/test_delegation.py::TestDelegationAttenuation::test_widening_category_raises_attenuation_error PASSED [ 17%]
 tests/test_delegation.py::TestDelegationAttenuation::test_raising_per_txn_limit_raises_attenuation_error PASSED [ 18%]
 tests/test_delegation.py::TestDelegationAttenuation::test_raising_total_budget_raises_attenuation_error PASSED [ 19%]
 tests/test_delegation.py::TestDelegationAttenuation::test_extending_validity_beyond_parent_raises_attenuation_error PASSED [ 20%]
-tests/test_delegation.py::TestDelegationAttenuation::test_wrong_parent_signing_key_fails_verification PASSED [ 21%]
+tests/test_delegation.py::TestDelegationAttenuation::test_wrong_parent_signing_key_fails_verification PASSED [ 20%]
 tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_rejects_widened_child_mandate PASSED [ 21%]
 tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_dual_drawdown_deducts_from_child_and_parent PASSED [ 22%]
 tests/test_delegation.py::TestInterceptorDelegationEnforcement::test_interceptor_blocks_child_when_parent_budget_exhausted PASSED [ 23%]
-tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget PASSED [ 24%]
-tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved PASSED [ 25%]
+tests/test_invariants.py::TestInvariant1Budget::test_i1_cumulative_spend_never_exceeds_total_budget PASSED [ 23%]
+tests/test_invariants.py::TestInvariant2PayeeContainment::test_i2_no_unauthorized_payee_can_ever_be_approved PASSED [ 24%]
 tests/test_invariants.py::TestInvariant3TxnCountCeiling::test_i3_approved_count_never_exceeds_max_txn_count PASSED [ 25%]
 tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_temporal_validity_boundaries PASSED [ 26%]
-tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_revocation_immediately_blocks_all_spend PASSED [ 27%]
-tests/test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection PASSED [ 28%]
+tests/test_invariants.py::TestInvariant4TemporalValidity::test_i4_revocation_immediately_blocks_all_spend PASSED [ 26%]
+tests/test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection PASSED [ 27%]
 tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_midflight_crash_rolls_back_reservation PASSED [ 28%]
 tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_client_fails_closed_when_interceptor_unreachable PASSED [ 29%]
-tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_subprocess_crash_zero_leaked_budget PASSED [ 30%]
-tests/test_issuer.py::TestKeypairGeneration::test_generate_keypair_types PASSED [ 31%]
-tests/test_issuer.py::TestKeypairGeneration::test_save_and_load_keypair PASSED [ 31%]
-tests/test_issuer.py::TestSignMandate::test_valid_token_structure PASSED [ 32%]
-tests/test_issuer.py::TestSignMandate::test_mandate_claims_are_integers PASSED [ 33%]
-tests/test_issuer.py::TestSignMandate::test_custom_jti PASSED            [ 34%]
-tests/test_issuer.py::TestSignMandate::test_algorithm_is_eddsa PASSED    [ 34%]
-tests/test_issuer.py::TestSignMandate::test_nbf_offset PASSED            [ 35%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_success PASSED      [ 36%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_without_approval_header PASSED [ 37%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_wrong_approval_header PASSED [ 37%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_pay_insufficient_balance PASSED [ 38%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_balance_endpoint PASSED [ 39%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_balance_unknown_vpa PASSED [ 40%]
-tests/test_mock_upi.py::TestMockUPIGateway::test_gateway_without_keys_refuses_pay PASSED [ 40%]
-tests/test_policy.py::TestValidPayment::test_valid_payment_approved PASSED [ 41%]
-tests/test_policy.py::TestPerTxnLimit::test_amount_over_per_txn_limit PASSED [ 42%]
-tests/test_policy.py::TestWrongPayee::test_wrong_payee_rejected PASSED   [ 43%]
-tests/test_policy.py::TestExpiredToken::test_expired_token_rejected PASSED [ 43%]
-tests/test_policy.py::TestNotYetValid::test_token_not_yet_valid PASSED   [ 44%]
-tests/test_policy.py::TestTamperedPayload::test_tampered_payload_rejected PASSED [ 45%]
-tests/test_policy.py::TestWrongKey::test_wrong_key_rejected PASSED       [ 46%]
-tests/test_policy.py::TestAlgNone::test_alg_none_rejected PASSED         [ 46%]
-tests/test_policy.py::TestAlgConfusion::test_hs256_with_public_key_rejected PASSED [ 47%]
-tests/test_policy.py::TestBudgetExhaustion::test_cumulative_budget_exceeded PASSED [ 48%]
-tests/test_policy.py::TestTxnCountLimit::test_txn_count_exceeded PASSED  [ 49%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_subprocess_crash_zero_leaked_budget PASSED [ 29%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_real_interceptor_service_process_crash_recovery PASSED [ 30%]
+tests/test_invariants.py::TestInvariant6CrashResilience::test_i6_crash_after_settlement_reconciles_and_prevents_double_spend PASSED [ 31%]
+tests/test_issuer.py::TestKeypairGeneration::test_generate_keypair_types PASSED [ 32%]
+tests/test_issuer.py::TestKeypairGeneration::test_save_and_load_keypair PASSED [ 32%]
+tests/test_issuer.py::TestSignMandate::test_valid_token_structure PASSED [ 33%]
+tests/test_issuer.py::TestSignMandate::test_mandate_claims_are_integers PASSED [ 34%]
+tests/test_issuer.py::TestSignMandate::test_custom_jti PASSED            [ 35%]
+tests/test_issuer.py::TestSignMandate::test_algorithm_is_eddsa PASSED    [ 35%]
+tests/test_issuer.py::TestSignMandate::test_nbf_offset PASSED            [ 36%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_success PASSED      [ 37%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_without_approval_header PASSED [ 38%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_wrong_approval_header PASSED [ 38%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_insufficient_balance PASSED [ 39%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_endpoint PASSED [ 40%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_unknown_vpa PASSED [ 41%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_gateway_without_keys_refuses_pay PASSED [ 41%]
+tests/test_policy.py::TestValidPayment::test_valid_payment_approved PASSED [ 42%]
+tests/test_policy.py::TestPerTxnLimit::test_amount_over_per_txn_limit PASSED [ 43%]
+tests/test_policy.py::TestWrongPayee::test_wrong_payee_rejected PASSED   [ 44%]
+tests/test_policy.py::TestExpiredToken::test_expired_token_rejected PASSED [ 44%]
+tests/test_policy.py::TestNotYetValid::test_token_not_yet_valid PASSED   [ 45%]
+tests/test_policy.py::TestTamperedPayload::test_tampered_payload_rejected PASSED [ 46%]
+tests/test_policy.py::TestWrongKey::test_wrong_key_rejected PASSED       [ 47%]
+tests/test_policy.py::TestAlgNone::test_alg_none_rejected PASSED         [ 47%]
+tests/test_policy.py::TestAlgConfusion::test_hs256_with_public_key_rejected PASSED [ 48%]
+tests/test_policy.py::TestBudgetExhaustion::test_cumulative_budget_exceeded PASSED [ 49%]
+tests/test_policy.py::TestTxnCountLimit::test_txn_count_exceeded PASSED  [ 50%]
 tests/test_policy.py::TestReplay::test_replayed_nonce_rejected PASSED    [ 50%]
-tests/test_policy.py::TestRevocation::test_revoked_mandate_rejected PASSED [ 50%]
-tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[0] PASSED [ 51%]
+tests/test_policy.py::TestRevocation::test_revoked_mandate_rejected PASSED [ 51%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[0] PASSED [ 52%]
 tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-100] PASSED [ 52%]
 tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-1] PASSED [ 53%]
-tests/test_policy.py::TestPaiseEdgeCases::test_exact_per_txn_limit_allowed PASSED [ 53%]
-tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_over_limit_rejected PASSED [ 54%]
+tests/test_policy.py::TestPaiseEdgeCases::test_exact_per_txn_limit_allowed PASSED [ 54%]
+tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_over_limit_rejected PASSED [ 55%]
 tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_payment PASSED  [ 55%]
 tests/test_policy.py::TestPaiseEdgeCases::test_exact_budget_boundary PASSED [ 56%]
-tests/test_policy.py::TestCategoryCheck::test_wrong_category_rejected PASSED [ 56%]
-tests/test_policy.py::TestCategoryCheck::test_correct_category_case_insensitive PASSED [ 57%]
+tests/test_policy.py::TestCategoryCheck::test_wrong_category_rejected PASSED [ 57%]
+tests/test_policy.py::TestCategoryCheck::test_correct_category_case_insensitive PASSED [ 58%]
 tests/test_policy.py::TestMultiReasonDenial::test_multiple_violations_reported PASSED [ 58%]
 tests/test_redteam.py::TestGatewaySecurity::test_direct_call_without_ticket_rejected PASSED [ 59%]
-tests/test_redteam.py::TestGatewaySecurity::test_legacy_shared_secret_rejected_when_keys_enabled PASSED [ 59%]
-tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected PASSED [ 60%]
+tests/test_redteam.py::TestGatewaySecurity::test_legacy_shared_secret_rejected_when_keys_enabled PASSED [ 60%]
+tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected PASSED [ 61%]
 tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_amount_rejected PASSED [ 61%]
 tests/test_redteam.py::TestGatewaySecurity::test_single_use_replay_rejected PASSED [ 62%]
-tests/test_redteam.py::TestGatewaySecurity::test_expired_ticket_rejected PASSED [ 62%]
-tests/test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected PASSED [ 63%]
+tests/test_redteam.py::TestGatewaySecurity::test_expired_ticket_rejected PASSED [ 63%]
+tests/test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected PASSED [ 64%]
 tests/test_redteam.py::TestToolSchemaHardening::test_kavach_token_argument_rejected PASSED [ 64%]
 tests/test_redteam.py::TestToolSchemaHardening::test_skip_checks_argument_rejected PASSED [ 65%]
-tests/test_redteam.py::TestInputSanitization::test_boolean_amount_rejected PASSED [ 65%]
-tests/test_redteam.py::TestInputSanitization::test_float_amount_rejected PASSED [ 66%]
+tests/test_redteam.py::TestInputSanitization::test_boolean_amount_rejected PASSED [ 66%]
+tests/test_redteam.py::TestInputSanitization::test_float_amount_rejected PASSED [ 67%]
 tests/test_redteam.py::TestInputSanitization::test_nan_amount_rejected PASSED [ 67%]
 tests/test_redteam.py::TestInputSanitization::test_inf_amount_rejected PASSED [ 68%]
-tests/test_redteam.py::TestInputSanitization::test_huge_integer_rejected PASSED [ 68%]
-tests/test_redteam.py::TestPayeeLookalikes::test_trailing_space_rejected PASSED [ 69%]
+tests/test_redteam.py::TestInputSanitization::test_huge_integer_rejected PASSED [ 69%]
+tests/test_redteam.py::TestPayeeLookalikes::test_trailing_space_rejected PASSED [ 70%]
 tests/test_redteam.py::TestPayeeLookalikes::test_double_at_symbol_rejected PASSED [ 70%]
 tests/test_redteam.py::TestPayeeLookalikes::test_domain_extension_spoof_rejected PASSED [ 71%]
-tests/test_redteam.py::TestPayeeLookalikes::test_casing_difference_rejected PASSED [ 71%]
-tests/test_redteam.py::TestConcurrencyAndLedger::test_atomic_concurrency_stress PASSED [ 72%]
+tests/test_redteam.py::TestPayeeLookalikes::test_casing_difference_rejected PASSED [ 72%]
+tests/test_redteam.py::TestConcurrencyAndLedger::test_atomic_concurrency_stress PASSED [ 73%]
 tests/test_redteam.py::TestConcurrencyAndLedger::test_reservation_rollback_on_failure PASSED [ 73%]
 tests/test_redteam.py::TestSalamiSlicing::test_salami_slicing_bounded PASSED [ 74%]
 tests/test_redteam.py::TestProcessIsolation::test_agent_scope_contains_no_secrets PASSED [ 75%]
-tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_agent_facing_error_contains_no_sensitive_leaks PASSED [ 75%]
+tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_agent_facing_error_contains_no_sensitive_leaks PASSED [ 76%]
 tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_scene_3_multi_reason_regression PASSED [ 76%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_all_30_attack_rounds_fail_closed PASSED [ 77%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[0] PASSED [ 78%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[1] PASSED [ 78%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[1] PASSED [ 79%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[2] PASSED [ 79%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[3] PASSED [ 80%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[4] PASSED [ 81%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[5] PASSED [ 81%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[5] PASSED [ 82%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[6] PASSED [ 82%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[7] PASSED [ 83%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[8] PASSED [ 84%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[9] PASSED [ 84%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[9] PASSED [ 85%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[10] PASSED [ 85%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[11] PASSED [ 86%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[12] PASSED [ 87%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[13] PASSED [ 87%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[13] PASSED [ 88%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[14] PASSED [ 88%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[15] PASSED [ 89%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[16] PASSED [ 90%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[17] PASSED [ 90%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[17] PASSED [ 91%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[18] PASSED [ 91%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[19] PASSED [ 92%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[20] PASSED [ 93%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[21] PASSED [ 93%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[21] PASSED [ 94%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[22] PASSED [ 94%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[23] PASSED [ 95%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[24] PASSED [ 96%]
-tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[25] PASSED [ 96%]
+tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[25] PASSED [ 97%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[26] PASSED [ 97%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[27] PASSED [ 98%]
 tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_attack_strategy_blocked[28] PASSED [ 99%]
@@ -755,11 +737,11 @@ tests/test_static_attack_catalog.py::TestStaticAttackCatalog::test_individual_at
 
 ============================== warnings summary ===============================
 ..\venv\Lib\site-packages\langsmith\_internal\_beta_decorator.py:92: 13 warnings
-  C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_zlnx9deq\venv\Lib\site-packages\langsmith\_internal\_beta_decorator.py:92: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
+  C:\Users\Asus\AppData\Local\Temp\kavach_fresh_clone_oa07ndul\venv\Lib\site-packages\langsmith\_internal\_beta_decorator.py:92: DeprecationWarning: 'asyncio.iscoroutinefunction' is deprecated and slated for removal in Python 3.16; use inspect.iscoroutinefunction() instead
     if asyncio.iscoroutinefunction(func):
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-====================== 132 passed, 13 warnings in 10.01s ======================
+====================== 134 passed, 13 warnings in 23.16s ======================
 
 [OK] Demo passed:
 ┌───────────────────────── 🛡️ KAVACH ─────────────────────────┐
@@ -820,10 +802,10 @@ Agent reads the ONDC store listings...
 ├───────────────────────────────┼──────────────────────────────────────┤
 │ iss                           │ user@kavach                          │
 │ sub                           │ agent_001                            │
-│ jti                           │ ba81414a-8133-494f-9480-86b4653ca763 │
-│ iat                           │ 1793436734 (14:22:14)                │
-│ nbf                           │ 1793436734 (14:22:14)                │
-│ exp                           │ 1793437634 (14:37:14)                │
+│ jti                           │ e4edb91f-7c3b-4a02-9e71-596769830508 │
+│ iat                           │ 1793457370 (20:06:10)                │
+│ nbf                           │ 1793457370 (20:06:10)                │
+│ exp                           │ 1793458270 (20:21:10)                │
 │   mandate.purpose             │ grocery shopping                     │
 │   mandate.allowed_payees      │ ['ondc-grocer@upi']                  │
 │   mandate.allowed_categories  │ ['groceries', 'essentials']          │
@@ -909,12 +891,12 @@ Payment request: ₹5,000.00 → attacker_wallet@upi
 └─────────────────────┴───────────┘
 ┌──────────────────────────── 📋 Audit Log Entry ─────────────────────────────┐
 │ seq: 1                                                                      │
-│ mandate_jti: ba81414a-8133-494f-9480-86b4653ca763                           │
+│ mandate_jti: e4edb91f-7c3b-4a02-9e71-596769830508                           │
 │ payee: attacker_wallet@upi                                                  │
 │ amount: ₹5,000.00                                                           │
 │ decision: PAYEE_NOT_ALLOWED                                                 │
-│ entry_hash: e264e525ad6986c448765afcb9a34727...                             │
-│ prev_hash: d064b335b4039e44251c06b4f208356d...                              │
+│ entry_hash: 977589bf5467e210fb223996057a2864...                             │
+│ prev_hash: cfadaeb652cd8b9cfd5aef4a7672dee1...                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ──────────────── SCENE 4 — HIERARCHICAL MULTI-AGENT DELEGATION ────────────────
@@ -1041,21 +1023,24 @@ In accordance with strict truth-in-auditing standards, the following capabilitie
 
 Every piece of evidence in this repository is cryptographically anchored:
 ```text
-a8b475c1e7dd78ca5e4d3557b10d4c23f8ec664980568a94953834fff8b2202e  adaptive/llm_attacker_log.jsonl
-b09ed19d735aaa9a68e5fce41f3b6510c558f75ccf1a2c29b0fddaf6f4c9cf4d  adaptive/llm_attacker_summary.json
+c501c5d7743f97105eeaa7b034b063454cc995017dcfda76f40cbe5960f72cbd  adaptive/llm_attacker_log.jsonl
+a8b475c1e7dd78ca5e4d3557b10d4c23f8ec664980568a94953834fff8b2202e  adaptive/llm_attacker_prior_regression.jsonl
+b297a8433ee99e8aa88cb2c08948c0d72732c3a72d5ec6627fc51caf34e590ee  adaptive/llm_attacker_summary.json
 66929a43663a02b152702432f0f4f8c4a1c4d92caec59adaa7cb3a47ac3f8e85  adaptive_attacker.txt
 49cbbe081cce708e4ff9fd58deb34b7e81f67264a03b2ea9aeda911748cc1b06  demo_output.svg
 5dc3da92d4a85d7675e8db2e805c76e5a66d1d898601f2b0ec86051e26260b7c  demo_output.txt
-1fc508298e2b06392e829ee64758b46672e38922361d223a821dcbcada496e08  demo_timing.txt
+c2d9b5ea41b2a526dd49bcd7741729cd3669ef3023135033119006aa155a6245  demo_timing.txt
 624510a6d8b043770420eba0f4581054e811dc4acabcd769ac37a0839fa7a283  eval_benchmark.json
 c588dbdb81c8bf47a53ec8036549655f1b23ab61c1eaf9c56c81070f6bc4ee5e  eval_summary.txt
-bd41c8ad2dca00bae644724037d6a9ad5174b6e653d650f43d7b1976473461bd  fresh_clone.txt
-b7f44e28f95d70ca32983fe50f527a2aab20aaa9856c190af4cbba0ac7057406  hypothesis_ci_run.txt
+8ed3127b7776bf6845a90c99c2a8fa73ad779f9b6073ee91c10a48f52c03d98c  fresh_clone.txt
+f8e0fb52e73d3547868aa8d4aa2a0650dc08a42d955cc268a2d3fe21d59a0f42  hypothesis_ci_run.txt
 986d794227e788c3d36289a972c9d69e2e570f3ac6ade71ff4a5a8326b1dfec0  latency.txt
 7f7f62d75ddd015338004b792a8a7844e34d281ca156db389e9cfcc5f8b5d23d  latency_rpc.txt
 503215bbbbf972c3ab94d876643193abbf5ae5525c135c6bdd0d0e54c12fe0ea  latency_rpc_log.txt
-f7809f93ed878585c1fdd3dd72b373f4b2dfc081cb72ef65c8ab14356f34591f  live/llama3.1_trials.jsonl
-49a2f3faf5aaa5e3248598ad436e8706e4c1c7acb979faf0bab6a5344f327ead  pytest_output.txt
-355f22cdb1801d3c709ea5ceeafb6bfaa96aa6c7b05960b597960ffb2231fb65  pytest_report.xml
-d0bb0d6b72ea092119b609c79bfa86682a37f169882338b83f894e8206b7b499  secret_scan.txt
+c45917fac0e16e078d59e4b5666731002df182c192925d1576e3b72de6758b45  live/llama3.1_trials.jsonl
+c8ff8ff1cbdc7cc61c550e01aefb49fecf93c105ac495ee16811456c640b2553  live/positive_control_transcripts.jsonl
+95d07aee8cc21e7b2e37b99cbca530a130644eff3bf2093e4951ddc9085a4a1d  live/weakened_guard_trials.jsonl
+f8d6ad702add18fbcba424e8728fa0aff94b4b3b4b57fc5c3ed5e674a21ca3a1  pytest_output.txt
+81c71fcabc8c509e5d98c843c1745f4327cd3501c078d588a534e1dbed4f5709  pytest_report.xml
+b88b10a2223ee8638c6e97441f8cc9c4cb4ab3646f719f32e3045240b18375a8  secret_scan.txt
 ```

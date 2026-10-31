@@ -272,13 +272,26 @@ class SqliteLedger:
             recovered_count = 0
             for row in rows:
                 idemp_key, ticket_id, jti, amt = row
+                gateway_status_known = False
                 settled = False
                 if gateway_reconciler and (ticket_id or idemp_key):
                     key_to_check = ticket_id or idemp_key
                     try:
-                        settled = bool(gateway_reconciler(key_to_check))
+                        res = gateway_reconciler(key_to_check)
+                        if res is not None:
+                            settled = bool(res)
+                            gateway_status_known = True
                     except Exception:
-                        settled = False
+                        # Gateway offline or unreachable: fail closed (status unknown)
+                        gateway_status_known = False
+                elif gateway_reconciler is None:
+                    # No reconciler provided: legacy immediate rollback
+                    gateway_status_known = True
+                    settled = False
+
+                if not gateway_status_known:
+                    # Fail-closed: do not release reservation or budget while gateway status is unknown
+                    continue
 
                 if settled:
                     # Gateway already settled this payment! Commit to prevent double-spend & ledger drift
@@ -297,7 +310,7 @@ class SqliteLedger:
                         (idemp_key,),
                     )
                 else:
-                    # Not settled by gateway; safe to roll back
+                    # Gateway confirms payment was NOT settled; safe to roll back
                     conn.execute(
                         "UPDATE reservations SET status = 'ROLLED_BACK' WHERE idempotency_key = ?",
                         (idemp_key,),

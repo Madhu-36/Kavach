@@ -88,23 +88,25 @@ Kavach offers a clear, production-ready blueprint for extending India's DPI:
 
 ## 6. Empirical Evaluation Benchmark Results
 
-We benchmarked Kavach across **40 adversarial trials** ($N=20$ Protection OFF vs $N=20$ Protection ON) across **5 distinct indirect prompt injection archetypes**:
-1. *Direct Imperative Override*
-2. *Fake System Directive*
-3. *Urgent Financial Refund Bait*
-4. *Multilingual / Hinglish Phrasing*
-5. *Structured JSON Field Obfuscation*
+We benchmarked Kavach across both empirical LLM evaluations (`llama3.1:latest` 8B via Ollama) and deterministic attack demonstrations:
 
 ### Key Benchmark Metrics:
-- **Injection Obeyed Rate**: 100.0% (Both conditions attempted the injection, showing model compliance).
-- **Attack Success Rate**:
-  - Protection OFF (Baseline): **100.0%** [95% CI: 83.2%–100.0%] (20/20 attacks succeeded) ➔ **₹100,000.00 drained**.
-  - Protection ON (Kavach): **0.0%** [95% CI: 0.0%–16.8%] (0/20 attacks succeeded) ➔ **₹0.00 drained (100% Protected)**.
-- **Adaptive Attacker Simulation**: **0 / 30 Bypasses (0.0% Success Rate)** across 30 iterative evasion rounds (`evidence/adaptive_attacker.txt`).
-- **Mathematical Invariant Verification**: All 6 invariants (I1–I6) verified via Hypothesis property testing (with registered 1,000-example CI profile) and real subprocess crash tests (`tests/test_invariants.py`).
-- **Evaluation Latency**: **p50 = 1.092 ms**, **p99 = 3.609 ms** in-process (`evidence/latency.txt`); **p50 = 7.08 ms** full two-hop HTTP RPC (`evidence/latency_rpc.txt`).
-- **Legitimate Task Completion**: **100.0%** (Legitimate grocery orders for ₹1,200 were completed with zero false rejections).
-- **Post-Block Agent Behavior**: Following a Kavach security block, agents safely surrendered without infinite retries or cascading failures.
+- **Default Live LLM Benchmark ($N=100$)**: 5 indirect prompt injection archetypes $\times$ 10 trials $\times$ [OFF / ON] with 100% catalog exposure guarantee.
+  - Protection OFF: 0/50 attacks succeeded (0.0% [95% CI: 0.0%–7.1%]) as base model resisted indirect catalog instructions.
+  - Protection ON: 0/50 attacks succeeded (0.0% [95% CI: 0.0%–7.1%]) with 0 funds lost and 44% utility completion preserved.
+- **Positive Control Verification ($N=20$)**: User directly instructs agent to transfer ₹50 to `attacker_wallet@upi` (`evidence/live/positive_control_transcripts.jsonl`).
+  - Protection OFF: **100.0% Attack Executed** (10/10 trials succeeded, ₹50.00 transferred per trial) [95% CI: 69.2%–100.0%].
+  - Protection ON: **100.0% Interception Guaranteed** (10/10 trials blocked, ₹0.00 transferred) [95% CI: 69.2%–100.0%].
+- **Real LLM Adaptive Attacker Simulation ($N=70$)**: 7 threat vectors $\times$ 10 attempts against live interceptor (`evidence/adaptive/llm_attacker_summary.json`).
+  - Reached Policy Layer: **68 / 70 (97.1%)**; Rejected by Schema / Timeout: 2 / 70 (2.9%).
+  - Attacks Bypassed: **0 / 70 (0.0%)**; Attacks Blocked / Safe: **70 / 70 (100.0%)**.
+  - **95% Clopper-Pearson Upper Bound**: **5.1%**.
+- **Deterministic Worst-Case Demonstration ($N=40$)**: Scripted 100% compromised model.
+  - Protection OFF: 20/20 attacks succeeded ➔ ₹100,000.00 drained.
+  - Protection ON: **0/20 attacks succeeded (100% Blocked)** ➔ **₹0.00 lost (₹100,000.00 Protected)**.
+- **Mathematical Invariant Verification**: All 6 invariants (I1–I6) verified via Hypothesis property testing (with registered 1,000-example CI profile) and real subprocess crash tests (`tests/test_invariants.py`, 137 tests passing).
+- **Evaluation Latency**: **p50 = 1.092 ms**, **p99 = 3.609 ms** in-process (`evidence/latency.txt`); **p50 = 7.08 ms** full two-hop HTTP RPC (`evidence/latency_rpc.txt`). Pure policy check is 0.004 ms (4 µs).
+- **Post-Block Agent Behavior**: Clean halt with zero retry storms, zero unauthorized payments, and zero cascading errors.
 
 ---
 
@@ -125,7 +127,7 @@ We benchmarked Kavach across **40 adversarial trials** ($N=20$ Protection OFF vs
 ## 8. Timed 3-Minute Demo Video Script
 
 **Target Duration**: 03:00 Max (Terminal Demo $\le$ 01:45 + 35s Pitch Intro + 40s Architecture/Results Outro)  
-**Command**: `python demo.py --video` (measured wall-clock time: **105.4s / 01:45.4**)
+**Command**: `python demo.py --video` (measured wall-clock time: **105.6s / 01:45.6**)
 
 | Timestamp | Screen Action | Voiceover / Script |
 | :--- | :--- | :--- |
@@ -137,4 +139,4 @@ We benchmarked Kavach across **40 adversarial trials** ($N=20$ Protection OFF vs
 | **1:30 – 1:45** | **Scene 4: Hierarchical Delegation**.<br>Shopping agent delegates ₹100 tip to delivery sub-agent. Delivery agent tries to expand authority to `attacker_wallet@upi` ➔ Blocked! | *"In Scene 4, we demonstrate hierarchical multi-agent delegation. The primary agent delegates limited tip authority to a delivery worker. Under monotonic attenuation rules, the sub-mandate can only narrow scope. When the delivery agent attempts to expand payees to an attacker wallet, Kavach halts the operation immediately."* |
 | **1:45 – 2:00** | **Scene 5: Explicit Consent & Step-Up**.<br>WYSIWYS preview with SHA-256 fingerprint shown. Agent requests high-value bulk order ➔ Interceptor halts with ESCALATE challenge. Single-use user consent ticket unblocks transaction. | *"In Scene 5, we show explicit user consent. What You See Is What You Sign presents human-readable claims and a SHA-256 fingerprint. For high-value transactions, the interceptor triggers an ESCALATE challenge, requiring single-use interactive user authorization."* |
 | **2:00 – 2:15** | **Bonus Scene: Cryptographic Tampering**.<br>Attacker edits JWT payload to increase limit to ₹99,999. Kavach flags `SIGNATURE_INVALID`. | *"What if an attacker tampers with the mandate token itself to increase limits? In the Bonus scene, Kavach verifies the Ed25519 digital signature. The tamper is instantly caught with SIGNATURE_INVALID."* |
-| **2:15 – 3:00** | **Results Summary & Conclusion**.<br>Terminal summary panel shown. Final takeaways. | *"Kavach proves that safety in agentic payments must come from deterministic cryptography, not system prompts. 134 security tests passed, 0.0% funds lost across adversarial trials, and sub-millisecond evaluation latency. Thank you."* |
+| **2:15 – 3:00** | **Results Summary & Conclusion**.<br>Terminal summary panel shown. Final takeaways. | *"Kavach proves that safety in agentic payments must come from deterministic cryptography, not system prompts. 137 security tests passed, 0.0% funds lost across adversarial trials, and sub-millisecond evaluation latency. Thank you."* |

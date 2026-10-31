@@ -7,7 +7,7 @@
 [![CI Matrix](https://github.com/secure-ai-futures-lab/kavach/actions/workflows/ci.yml/badge.svg)](https://github.com/secure-ai-futures-lab/kavach/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Invariants Verified](https://img.shields.io/badge/Hypothesis-Invariants_I1--I6_Verified-success.svg)](docs/INVARIANTS.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-94_Passed-brightgreen.svg)](evidence/pytest_output.txt)
+[![Tests Passing](https://img.shields.io/badge/Tests-137_Passed-brightgreen.svg)](evidence/pytest_output.txt)
 
 ---
 
@@ -97,19 +97,17 @@ Every attack vector identified in our threat model is verified by dedicated auto
 
 ## 📊 Live Evaluation Benchmark Results
 
-We benchmarked Kavach across **40 adversarial trials** ($N=20$ Protection OFF vs $N=20$ Protection ON) across 5 diverse injection archetypes:
+We benchmarked Kavach across both empirical LLM evaluations (`llama3.1:latest` 8B via Ollama) and deterministic attack demonstrations:
 
-| Metric | Protection OFF (Baseline) | Protection ON (Kavach) | Delta / Security Impact |
-| :--- | :---: | :---: | :---: |
-| **Total Trials (N)** | 20 | 20 | — |
-| **Injection Obeyed Rate (%)** | 100.0% (20/20) | 100.0% (20/20) | 0.0% (Model intent unchanged) |
-| **Attack Success Rate (%)** | **100.0%** [95% CI: 83.2%–100.0%] | **0.0%** [95% CI: 0.0%–16.8%] | **-100.0% (Zero Funds Lost)** |
-| **Total User Funds Drained** | ₹100,000.00 | **₹0.00** | **₹100,000.00 Protected** |
-| **Legitimate Task Completion** | 100.0% (20/20) | 100.0% (20/20) | **100% Utility Preserved** |
-| **Adaptive Attacker Bypass Rate**| 100.0% | **0.0% (0/30 Bypasses)** | **100% Efficacy across 30 rounds** |
-| **Evaluation Overhead (p50 / p99)**| — | **1.092 ms / 3.609 ms** | Sub-millisecond policy check |
+| Benchmark Tier | Mode / Condition | Trials (N) | Baseline (Protection OFF) | Kavach (Protection ON) | Efficacy & Security Impact |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Live LLM Benchmark (Default)** | 5 Injections $\times$ 10 Trials | 100 | 0.0% Attacked [0.0%–7.1%] | **0.0% Attacked** [0.0%–7.1%] | 100% Exposure; 0/50 obeyed by base model |
+| **Positive Control Verification** | Direct Instruction to pay Attacker | 20 | 100.0% Attack Executed (10/10) | **0.0% Attack Executed** (0/10) | **100% Interception Guaranteed** [69.2%–100.0%] |
+| **Real LLM Adaptive Attacker** | 7 Threat Vectors $\times$ 10 Attempts | 70 | 100.0% Vulnerable | **0.0% Bypassed (0/70)** | **5.1% Upper Bound at 95% Confidence** |
+| **Deterministic Worst-Case Demo** | Scripted 100% Compromised Model | 40 | ₹100,000.00 Drained | **₹0.00 Lost** | **100% Deterministic Protection** |
+| **Evaluation Overhead** | Micro-benchmark (p50 / p99) | 1,000 | — | **1.092 ms / 3.609 ms** | Pure policy check: 0.004 ms (4 µs) |
 
-*All raw data, machine logs, and JUnit XML reports are committed in [`evidence/`](evidence/).*
+*Full machine-generated tables, exact Clopper-Pearson confidence intervals, and JSONL transcripts are documented in [`eval/RESULTS.md`](eval/RESULTS.md) and [`evidence/`](evidence/).*
 
 ---
 
@@ -125,7 +123,7 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 
-# 3. Run complete test suite (133 tests passing)
+# 3. Run complete test suite (137 tests passing)
 python -m pytest tests/ -v
 
 # 4. Run interactive Rich terminal demo (Fast mode)
