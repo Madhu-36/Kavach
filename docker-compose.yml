@@ -1,0 +1,72 @@
+version: "3.8"
+
+networks:
+  # Tier 1 Network: Only the agent and the interceptor can communicate
+  agent_net:
+    driver: bridge
+    internal: true
+
+  # Tier 2 Network: Only the interceptor and the UPI gateway can communicate
+  gateway_net:
+    driver: bridge
+    internal: true
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. Untrusted Agent Runtime (Compromised LLM / Process Boundary)
+  # ----------------------------------------------------------------------------
+  agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.agent
+    networks:
+      - agent_net
+    read_only: true
+    user: "10001:10001"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - INTERCEPTOR_URL=http://interceptor:8100
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - interceptor
+
+  # ----------------------------------------------------------------------------
+  # 2. Kavach Security Interceptor (Enforcement Layer)
+  # ----------------------------------------------------------------------------
+  interceptor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.interceptor
+    networks:
+      - agent_net
+      - gateway_net
+    user: "10002:10002"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - gateway
+
+  # ----------------------------------------------------------------------------
+  # 3. Mock UPI Gateway (Simulated Banking Rail)
+  # ----------------------------------------------------------------------------
+  gateway:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.gateway
+    networks:
+      - gateway_net
+    user: "10003:10003"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - PYTHONUNBUFFERED=1

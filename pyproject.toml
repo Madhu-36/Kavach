@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kavach"
+version = "0.1.0"
+description = "Cryptographic Micro-Mandates for Agentic AI — UPI-style spending controls"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Kavach Team"}]
+
+dependencies = [
+    "PyJWT[crypto]>=2.8",
+    "cryptography>=41.0",
+    "fastapi>=0.100",
+    "uvicorn>=0.20",
+    "langchain>=0.2",
+    "langchain-core>=0.2",
+    "typer>=0.9",
+    "rich>=13.0",
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+    "httpx>=0.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "hypothesis>=6.0",
+]
+gemini = ["langchain-google-genai"]
+openai = ["langchain-openai"]
+anthropic = ["langchain-anthropic"]
+ollama = ["langchain-ollama"]
+
+[project.scripts]
+kavach = "kavach.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

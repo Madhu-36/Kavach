@@ -1,0 +1,21 @@
+# Dockerfile for Untrusted Agent Runtime (Hardened Non-Root Container)
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY pyproject.toml .
+RUN pip install --no-cache-dir .
+
+COPY src/ ./src/
+RUN pip install --no-cache-dir -e .
+
+# Security hardening: Unprivileged non-root user
+RUN useradd -u 10001 -m kavach-agent
+USER 10001:10001
+
+# Agent only talks to Interceptor stub
+ENV INTERCEPTOR_URL="http://interceptor:8100"
+ENV PYTHONUNBUFFERED=1
+
+CMD ["python", "-m", "kavach.agent"]

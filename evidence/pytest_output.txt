@@ -1,0 +1,99 @@
+Command: C:\Python314\python.exe -m pytest tests/ -v --junitxml=C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach\evidence\pytest_report.xml
+Exit Code: 0
+
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- C:\Python314\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach
+configfile: pyproject.toml
+plugins: anyio-4.15.1, langsmith-0.14.16, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 74 items
+
+tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_schemas PASSED [  1%]
+tests/test_agent.py::TestTokenNotInPrompt::test_token_not_in_tool_function_source PASSED [  2%]
+tests/test_agent.py::TestScriptedCompromisedAgent::test_legitimate_purchase_approved PASSED [  4%]
+tests/test_agent.py::TestScriptedCompromisedAgent::test_injection_attack_blocked PASSED [  5%]
+tests/test_agent.py::TestScriptedCompromisedAgent::test_full_scenario PASSED [  6%]
+tests/test_audit.py::TestAuditLogIntegrity::test_valid_log_passes_verification PASSED [  8%]
+tests/test_audit.py::TestAuditLogIntegrity::test_tampered_amount_detected PASSED [  9%]
+tests/test_audit.py::TestAuditLogIntegrity::test_deleted_entry_detected PASSED [ 10%]
+tests/test_audit.py::TestAuditLogIntegrity::test_reordered_entries_detected PASSED [ 12%]
+tests/test_audit.py::TestAuditLogIntegrity::test_empty_log_valid PASSED  [ 13%]
+tests/test_audit.py::TestAuditLogIntegrity::test_hash_chain_continuity PASSED [ 14%]
+tests/test_audit.py::TestAuditLogAppend::test_entries_have_sequential_seq PASSED [ 16%]
+tests/test_audit.py::TestAuditLogAppend::test_denied_decisions_logged PASSED [ 17%]
+tests/test_issuer.py::TestKeypairGeneration::test_generate_keypair_types PASSED [ 18%]
+tests/test_issuer.py::TestKeypairGeneration::test_save_and_load_keypair PASSED [ 20%]
+tests/test_issuer.py::TestSignMandate::test_valid_token_structure PASSED [ 21%]
+tests/test_issuer.py::TestSignMandate::test_mandate_claims_are_integers PASSED [ 22%]
+tests/test_issuer.py::TestSignMandate::test_custom_jti PASSED            [ 24%]
+tests/test_issuer.py::TestSignMandate::test_algorithm_is_eddsa PASSED    [ 25%]
+tests/test_issuer.py::TestSignMandate::test_nbf_offset PASSED            [ 27%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_success PASSED      [ 28%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_without_approval_header PASSED [ 29%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_wrong_approval_header PASSED [ 31%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_pay_insufficient_balance PASSED [ 32%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_endpoint PASSED [ 33%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_balance_unknown_vpa PASSED [ 35%]
+tests/test_mock_upi.py::TestMockUPIGateway::test_gateway_without_keys_refuses_pay PASSED [ 36%]
+tests/test_policy.py::TestValidPayment::test_valid_payment_approved PASSED [ 37%]
+tests/test_policy.py::TestPerTxnLimit::test_amount_over_per_txn_limit PASSED [ 39%]
+tests/test_policy.py::TestWrongPayee::test_wrong_payee_rejected PASSED   [ 40%]
+tests/test_policy.py::TestExpiredToken::test_expired_token_rejected PASSED [ 41%]
+tests/test_policy.py::TestNotYetValid::test_token_not_yet_valid PASSED   [ 43%]
+tests/test_policy.py::TestTamperedPayload::test_tampered_payload_rejected PASSED [ 44%]
+tests/test_policy.py::TestWrongKey::test_wrong_key_rejected PASSED       [ 45%]
+tests/test_policy.py::TestAlgNone::test_alg_none_rejected PASSED         [ 47%]
+tests/test_policy.py::TestAlgConfusion::test_hs256_with_public_key_rejected PASSED [ 48%]
+tests/test_policy.py::TestBudgetExhaustion::test_cumulative_budget_exceeded PASSED [ 50%]
+tests/test_policy.py::TestTxnCountLimit::test_txn_count_exceeded PASSED  [ 51%]
+tests/test_policy.py::TestReplay::test_replayed_nonce_rejected PASSED    [ 52%]
+tests/test_policy.py::TestRevocation::test_revoked_mandate_rejected PASSED [ 54%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[0] PASSED [ 55%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-100] PASSED [ 56%]
+tests/test_policy.py::TestInvalidAmounts::test_zero_and_negative_amounts_rejected[-1] PASSED [ 58%]
+tests/test_policy.py::TestPaiseEdgeCases::test_exact_per_txn_limit_allowed PASSED [ 59%]
+tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_over_limit_rejected PASSED [ 60%]
+tests/test_policy.py::TestPaiseEdgeCases::test_one_paisa_payment PASSED  [ 62%]
+tests/test_policy.py::TestPaiseEdgeCases::test_exact_budget_boundary PASSED [ 63%]
+tests/test_policy.py::TestCategoryCheck::test_wrong_category_rejected PASSED [ 64%]
+tests/test_policy.py::TestCategoryCheck::test_correct_category_case_insensitive PASSED [ 66%]
+tests/test_policy.py::TestMultiReasonDenial::test_multiple_violations_reported PASSED [ 67%]
+tests/test_redteam.py::TestGatewaySecurity::test_direct_call_without_ticket_rejected PASSED [ 68%]
+tests/test_redteam.py::TestGatewaySecurity::test_legacy_shared_secret_rejected_when_keys_enabled PASSED [ 70%]
+tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected PASSED [ 71%]
+tests/test_redteam.py::TestGatewaySecurity::test_tampered_ticket_amount_rejected PASSED [ 72%]
+tests/test_redteam.py::TestGatewaySecurity::test_single_use_replay_rejected PASSED [ 74%]
+tests/test_redteam.py::TestGatewaySecurity::test_expired_ticket_rejected PASSED [ 75%]
+tests/test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected PASSED [ 77%]
+tests/test_redteam.py::TestToolSchemaHardening::test_kavach_token_argument_rejected PASSED [ 78%]
+tests/test_redteam.py::TestToolSchemaHardening::test_skip_checks_argument_rejected PASSED [ 79%]
+tests/test_redteam.py::TestInputSanitization::test_boolean_amount_rejected PASSED [ 81%]
+tests/test_redteam.py::TestInputSanitization::test_float_amount_rejected PASSED [ 82%]
+tests/test_redteam.py::TestInputSanitization::test_nan_amount_rejected PASSED [ 83%]
+tests/test_redteam.py::TestInputSanitization::test_inf_amount_rejected PASSED [ 85%]
+tests/test_redteam.py::TestInputSanitization::test_huge_integer_rejected PASSED [ 86%]
+tests/test_redteam.py::TestPayeeLookalikes::test_trailing_space_rejected PASSED [ 87%]
+tests/test_redteam.py::TestPayeeLookalikes::test_double_at_symbol_rejected PASSED [ 89%]
+tests/test_redteam.py::TestPayeeLookalikes::test_domain_extension_spoof_rejected PASSED [ 90%]
+tests/test_redteam.py::TestPayeeLookalikes::test_casing_difference_rejected PASSED [ 91%]
+tests/test_redteam.py::TestConcurrencyAndLedger::test_atomic_concurrency_stress PASSED [ 93%]
+tests/test_redteam.py::TestConcurrencyAndLedger::test_reservation_rollback_on_failure PASSED [ 94%]
+tests/test_redteam.py::TestSalamiSlicing::test_salami_slicing_bounded PASSED [ 95%]
+tests/test_redteam.py::TestProcessIsolation::test_agent_scope_contains_no_secrets PASSED [ 97%]
+tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_agent_facing_error_contains_no_sensitive_leaks PASSED [ 98%]
+tests/test_redteam.py::TestInformationLeakageAndReasonCodes::test_scene_3_multi_reason_regression PASSED [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\Asus\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\Asus\OneDrive\Desktop\PROJECTS\Kavach\evidence\pytest_report.xml -
+======================== 74 passed, 1 warning in 2.64s ========================
+
+
+STDERR:

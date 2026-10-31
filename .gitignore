@@ -1,0 +1,26 @@
+# Private keys & credentials
+*.pem
+*.key
+.env
+.env.local
+
+# Databases & local audit logs
+*.db
+*.db-wal
+*.db-shm
+*.jsonl
+
+# Python cache & testing
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build & packaging
+dist/
+build/
+*.egg-info/
+.venv/
+env/
