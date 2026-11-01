@@ -100,10 +100,10 @@ else:
 
 # 8. Tag v1.0.2 check
 tags = subprocess.check_output(["git", "tag", "-l"], text=True).splitlines()
-if "v1.0.2" in tags:
-    failures.append("Tag v1.0.2 already exists prematurely")
+if "v1.0.2" not in tags:
+    failures.append("Tag v1.0.2 missing from repository")
 else:
-    print("[OK] [8/8] Git tag ready for release v1.0.2.")
+    print("[OK] [8/8] Git tag v1.0.2 verified on repository.")
 
 print("========================================")
 if failures:
