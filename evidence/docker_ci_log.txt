@@ -1,0 +1,543 @@
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	ï»¿2026-10-31T18:51:39.4783710Z Current runner version: '2.338.2'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4818279Z ##[group]Runner Image Provisioner
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4819634Z Hosted Compute Agent
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4820582Z Version: 20261021.618
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4821785Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4823419Z Build Date: 2026-10-21T00:45:21Z
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4824647Z Worker ID: {557e993a-ea25-4293-9ddd-e2adcf647e2c}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4825888Z Region: eastus
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4826785Z Cloud: Azure
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4827753Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4830141Z ##[group]Operating System
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4831235Z Ubuntu
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4832152Z 24.04.5
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4833734Z LTS
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4834819Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4835788Z ##[group]Runner Image
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4836881Z Image: ubuntu-24.04
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4837798Z Version: 20261025.353.1
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4840104Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4843202Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4844990Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4846983Z ##[group]GITHUB_TOKEN Permissions
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4850011Z Contents: read
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4851014Z Metadata: read
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4852008Z Packages: read
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4853273Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4856485Z Secret source: Actions
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4858279Z Cache mode: write
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.4859691Z Prepare workflow directory
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.5346594Z Prepare all required actions
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.5418512Z Getting action download info
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:39.7453984Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.0442088Z Complete job name: Docker Network & Containment Isolation (Ubuntu)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1365794Z ##[group]Run actions/checkout@v4
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1366704Z with:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1367190Z   repository: Madhu-36/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1371365Z   token: ***
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1371815Z   ssh-strict: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1372257Z   ssh-user: git
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1373377Z   persist-credentials: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1374214Z   clean: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1374871Z   sparse-checkout-cone-mode: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1375402Z   fetch-depth: 1
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1375834Z   fetch-tags: false
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1376292Z   show-progress: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1376861Z   lfs: false
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1377281Z   submodules: false
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1377996Z   set-safe-directory: true
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1378510Z   allow-unsafe-pr-checkout: false
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.1379400Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7160024Z Syncing repository: Madhu-36/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7161966Z ##[group]Getting Git version info
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7163147Z Working directory is '/home/runner/work/Kavach/Kavach'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7281083Z [command]/usr/bin/git version
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7408995Z git version 2.56.0
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7432315Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7450554Z Temporarily overriding HOME='/home/runner/work/_temp/699290a7-1763-44e5-9ba5-3b277c50bcde' before making global git config changes
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7454520Z Adding repository directory to the temporary git global config as a safe directory
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7457681Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Kavach/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7688300Z Deleting the contents of '/home/runner/work/Kavach/Kavach'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7694941Z ##[group]Initializing the repository
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7701232Z [command]/usr/bin/git init /home/runner/work/Kavach/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7815141Z hint: Using 'master' as the name for the initial branch. This default branch name
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7816798Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7818142Z hint: to use in all of your new repositories, which will suppress this warning,
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7819532Z hint: call:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7820092Z hint:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7820832Z hint: 	git config --global init.defaultBranch <name>
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7821702Z hint:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7822820Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7824560Z hint: 'development'. The just-created branch can be renamed via this command:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7825468Z hint:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7825961Z hint: 	git branch -m <name>
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7826549Z hint:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7827288Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7841224Z Initialized empty Git repository in /home/runner/work/Kavach/Kavach/.git/
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7854733Z [command]/usr/bin/git remote add origin https://github.com/Madhu-36/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7930557Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7932373Z ##[group]Disabling automatic garbage collection
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.7933977Z [command]/usr/bin/git config --local gc.auto 0
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8213635Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8215495Z ##[group]Setting up auth
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8222283Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8282038Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8857454Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.8904130Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9157508Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9201990Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9461182Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9635321Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9637348Z ##[group]Fetching the repository
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:40.9651008Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2647b1f5764bad0b9a797852d1b5b896e07b6a23:refs/remotes/origin/main
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2786256Z From https://github.com/Madhu-36/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2787621Z  * [new ref]         2647b1f5764bad0b9a797852d1b5b896e07b6a23 -> origin/main
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2792867Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2794628Z ##[group]Determining the checkout info
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2796445Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2800056Z [command]/usr/bin/git sparse-checkout disable
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2860875Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2900248Z ##[group]Checking out the ref
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.2906683Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3041533Z Switched to a new branch 'main'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3047420Z branch 'main' set up to track 'origin/main'.
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3054917Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3103731Z [command]/usr/bin/git log -1 --format=%H
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3137451Z 2647b1f5764bad0b9a797852d1b5b896e07b6a23
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3428822Z ##[group]Run docker compose build
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3430260Z ^[[36;1mdocker compose build^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3431566Z ^[[36;1mdocker compose up -d^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3432999Z ^[[36;1msleep 5^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3458082Z shell: /usr/bin/bash -e {0}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.3459311Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.6429341Z time="2026-10-31T18:51:41Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.8884345Z #1 [internal] load local bake definitions
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.9980347Z #1 reading from stdin 980B done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:41.9983368Z #1 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2102023Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2102988Z #2 [gateway internal] load build definition from Dockerfile.gateway
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2103760Z #2 transferring dockerfile: 397B done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2104152Z #2 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2104323Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2104648Z #3 [agent internal] load build definition from Dockerfile.agent
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2105155Z #3 transferring dockerfile: 527B done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2105535Z #3 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2105699Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2106011Z #4 [interceptor internal] load build definition from Dockerfile.interceptor
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2106577Z #4 transferring dockerfile: 415B done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2106948Z #4 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2107129Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2107378Z #5 [auth] library/python:pull token for registry-1.docker.io
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2107860Z #5 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2108090Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.2108445Z #6 [interceptor internal] load metadata for docker.io/library/python:3.11-slim
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.4998444Z #6 DONE 0.4s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.4998906Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.4999123Z #7 [agent internal] load .dockerignore
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.4999838Z #7 transferring context: 2B done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5000270Z #7 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5000484Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5000743Z #8 [agent internal] load build context
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5001220Z #8 transferring context: 117.94kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5001663Z #8 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5001856Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5002798Z #9 [interceptor 1/6] FROM docker.io/library/python:3.11-slim@sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5004688Z #9 resolve docker.io/library/python:3.11-slim@sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60 done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5005961Z #9 sha256:361db81715472ecba5e656c314c299bd945309020483159596a8d123c2b1d580 251B / 251B 0.1s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5006939Z #9 sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60 10.37kB / 10.37kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.5007829Z #9 sha256:6d10e720318bd84cc3d88af92bb5a47189222e17620a2fd214da6445e4afb679 1.75kB / 1.75kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6488135Z #9 sha256:361db81715472ecba5e656c314c299bd945309020483159596a8d123c2b1d580 251B / 251B 0.1s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6490512Z #9 sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60 10.37kB / 10.37kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6493187Z #9 sha256:6d10e720318bd84cc3d88af92bb5a47189222e17620a2fd214da6445e4afb679 1.75kB / 1.75kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6494832Z #9 sha256:de8d79606beff46114d4abd5c392116c62142cbe582f8ede92cf4a64e1a10ff5 5.49kB / 5.49kB done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6496948Z #9 sha256:6fc242d221a673263eabd14a9ad9584d3177c96e5cb504c891497338e2f912f5 29.86MB / 29.86MB 0.1s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6498491Z #9 sha256:ee5aaeba9945927662bea2702989dfd74d9273796415b896363e6a9c44d9a8ce 1.29MB / 1.29MB 0.0s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6500009Z #9 sha256:24ff04c921070df4f4dc987278926d5dabde59d57b55ae3665439331f79af932 14.46MB / 14.46MB 0.1s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:42.6501864Z #9 extracting sha256:6fc242d221a673263eabd14a9ad9584d3177c96e5cb504c891497338e2f912f5 0.1s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:43.5115168Z #9 extracting sha256:6fc242d221a673263eabd14a9ad9584d3177c96e5cb504c891497338e2f912f5 0.9s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:43.5117850Z #9 extracting sha256:ee5aaeba9945927662bea2702989dfd74d9273796415b896363e6a9c44d9a8ce
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:43.7608004Z #9 extracting sha256:ee5aaeba9945927662bea2702989dfd74d9273796415b896363e6a9c44d9a8ce 0.1s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:43.9730711Z #9 extracting sha256:24ff04c921070df4f4dc987278926d5dabde59d57b55ae3665439331f79af932
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.7370854Z #9 extracting sha256:24ff04c921070df4f4dc987278926d5dabde59d57b55ae3665439331f79af932 0.7s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.7372780Z #9 extracting sha256:361db81715472ecba5e656c314c299bd945309020483159596a8d123c2b1d580
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9479347Z #9 extracting sha256:361db81715472ecba5e656c314c299bd945309020483159596a8d123c2b1d580 done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9480285Z #9 DONE 2.4s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9480491Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9480671Z #10 [interceptor 2/6] WORKDIR /app
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9481146Z #10 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9481403Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9481695Z #11 [interceptor 3/6] COPY pyproject.toml README.md ./
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9482346Z #11 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9483019Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9483267Z #12 [agent 4/6] COPY src/ ./src/
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9483933Z #12 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9484213Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:44.9484499Z #13 [gateway 5/6] RUN pip install --no-cache-dir .
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:46.2662829Z #13 1.469 Processing /app
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:46.4191996Z #13 1.472   Installing build dependencies: started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:47.9750017Z #13 3.027   Installing build dependencies: finished with status 'done'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:47.9750938Z #13 3.027   Getting requirements to build wheel: started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.1773796Z #13 3.229   Getting requirements to build wheel: finished with status 'done'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.1774592Z #13 3.230   Preparing metadata (pyproject.toml): started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.2030841Z #13 3.406   Preparing metadata (pyproject.toml): finished with status 'done'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.3138309Z #13 3.482 Collecting PyJWT>=2.8 (from PyJWT[crypto]>=2.8->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.4643604Z #13 3.517   Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.7046600Z #13 3.792 Collecting cryptography>=41.0 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.7047704Z #13 3.802   Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.7048736Z #13 3.908 Collecting fastapi>=0.100 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.9225796Z #13 3.917   Downloading fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.9226676Z #13 3.966 Collecting uvicorn>=0.20 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:48.9227476Z #13 3.975   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.0720617Z #13 4.156 Collecting langchain>=0.2 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.0721490Z #13 4.165   Downloading langchain-1.4.7-py3-none-any.whl.metadata (6.2 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.2047271Z #13 4.275 Collecting langchain-core>=0.2 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.2048272Z #13 4.284   Downloading langchain_core-1.7.3-py3-none-any.whl.metadata (4.8 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.2049062Z #13 4.325 Collecting typer>=0.9 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.2049749Z #13 4.334   Downloading typer-0.27.3-py3-none-any.whl.metadata (16 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.2050420Z #13 4.408 Collecting rich>=13.0 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.3640953Z #13 4.417   Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.3670227Z #13 4.570 Collecting pydantic>=2.0 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.4712009Z #13 4.580   Downloading pydantic-2.14.2-py3-none-any.whl.metadata (137 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.4713938Z #13 4.590      â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 137.6/137.6 kB 16.0 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.4715063Z #13 4.619 Collecting python-dotenv>=1.0 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.4716149Z #13 4.628   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.4717243Z #13 4.665 Collecting httpx>=0.24 (from kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.5962301Z #13 4.674   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.7174878Z #13 4.799 Collecting cffi>=2.0.0 (from cryptography>=41.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.7176093Z #13 4.809   Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8204145Z #13 4.918 Collecting starlette>=0.46.0 (from fastapi>=0.100->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8205268Z #13 4.927   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8206327Z #13 4.969 Collecting typing-extensions>=4.8.0 (from fastapi>=0.100->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8208060Z #13 4.978   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8209488Z #13 4.996 Collecting typing-inspection>=0.4.2 (from fastapi>=0.100->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.8210896Z #13 5.005   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.9239639Z #13 5.024 Collecting annotated-doc>=0.0.2 (from fastapi>=0.100->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.9240711Z #13 5.032   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.9242051Z #13 5.068 Collecting opentelemetry-api>=1.44.0 (from fastapi>=0.100->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.9243543Z #13 5.077   Downloading opentelemetry_api-1.45.2-py3-none-any.whl.metadata (1.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:49.9244760Z #13 5.118 Collecting anyio (from httpx>=0.24->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.0278153Z #13 5.127   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.0279246Z #13 5.157 Collecting certifi (from httpx>=0.24->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.0280075Z #13 5.166   Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.0280953Z #13 5.197 Collecting httpcore==1.* (from httpx>=0.24->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.0281799Z #13 5.206   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.2050493Z #13 5.231 Collecting idna (from httpx>=0.24->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.2051313Z #13 5.239   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.2052215Z #13 5.264 Collecting h11>=0.16 (from httpcore==1.*->httpx>=0.24->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.2053478Z #13 5.273   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.3089236Z #13 5.408 Collecting langgraph<1.3.0,>=1.2.12 (from langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.3090708Z #13 5.417   Downloading langgraph-1.2.19-py3-none-any.whl.metadata (4.9 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.3092307Z #13 5.472 Collecting jsonpatch>=1.33.0 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.3093888Z #13 5.481   Downloading jsonpatch-1.38-py3-none-any.whl.metadata (3.7 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.3095307Z #13 5.503 Collecting langchain-protocol>=0.0.20 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.4594366Z #13 5.512   Downloading langchain_protocol-0.0.20-py3-none-any.whl.metadata (2.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5817338Z #13 5.680 Collecting langsmith<1.0.0,>=0.14.9 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5818386Z #13 5.689   Downloading langsmith-0.14.16-py3-none-any.whl.metadata (39 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5819620Z #13 5.694 Requirement already satisfied: packaging>=23.2.0 in /usr/local/lib/python3.11/site-packages (from langchain-core>=0.2->kavach==0.1.0) (26.3)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5820812Z #13 5.740 Collecting pyyaml>=5.3.0 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5821925Z #13 5.749   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5823723Z #13 5.776 Collecting tenacity!=8.4.0,>=8.1.0 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.5824917Z #13 5.785   Downloading tenacity-9.2.1-py3-none-any.whl.metadata (1.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.9841269Z #13 5.991 Collecting uuid-utils>=0.12.0 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.9843217Z #13 6.000   Downloading uuid_utils-1.2.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.9844447Z #13 6.028 Collecting annotated-types>=0.6.0 (from pydantic>=2.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:50.9845405Z #13 6.037   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:51.8466968Z #13 6.890 Collecting pydantic-core==2.50.2 (from pydantic>=2.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:51.8468430Z #13 6.899   Downloading pydantic_core-2.50.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0108488Z #13 7.071 Collecting markdown-it-py>=2.2.0 (from rich>=13.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0109736Z #13 7.080   Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0110889Z #13 7.114 Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0112002Z #13 7.123   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0113171Z #13 7.153 Collecting shellingham>=1.3.0 (from typer>=0.9->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.0114044Z #13 7.162   Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1753192Z #13 7.214 Collecting click>=7.0 (from uvicorn>=0.20->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1754105Z #13 7.223   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1755033Z #13 7.256 Collecting pycparser (from cffi>=2.0.0->cryptography>=41.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1755972Z #13 7.265   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1831621Z #13 7.298 Collecting jsonpointer>=3.2 (from jsonpatch>=1.33.0->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.1832343Z #13 7.307   Downloading jsonpointer-3.6-py3-none-any.whl.metadata (2.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.2918692Z #13 7.378 Collecting langgraph-checkpoint<5.0.0,>=4.3.0 (from langgraph<1.3.0,>=1.2.12->langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.2920353Z #13 7.388   Downloading langgraph_checkpoint-4.3.1-py3-none-any.whl.metadata (6.7 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.2921718Z #13 7.417 Collecting langgraph-prebuilt<1.2.0,>=1.1.0 (from langgraph<1.3.0,>=1.2.12->langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.2923463Z #13 7.426   Downloading langgraph_prebuilt-1.1.1-py3-none-any.whl.metadata (6.9 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.2924707Z #13 7.473 Collecting langgraph-sdk<0.5.0,>=0.4.6 (from langgraph<1.3.0,>=1.2.12->langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.4424957Z #13 7.495   Downloading langgraph_sdk-0.4.11-py3-none-any.whl.metadata (5.1 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.6089272Z #13 7.711 Collecting xxhash>=3.5.0 (from langgraph<1.3.0,>=1.2.12->langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.6091027Z #13 7.720   Downloading xxhash-4.0.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (17 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.6092961Z #13 7.780 Collecting distro<2,>=1.7.0 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.6093962Z #13 7.788   Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.7682220Z #13 7.812 Collecting httpx2<3,>=2 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:52.7683782Z #13 7.821   Downloading httpx2-2.16.0-py3-none-any.whl.metadata (10 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.0507535Z #13 8.113 Collecting orjson>=3.9.14 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.0510289Z #13 8.122   Downloading orjson-3.13.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (42 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.0512376Z #13 8.125      â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 42.2/42.2 kB 247.9 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1522069Z #13 8.254 Collecting requests-toolbelt>=1.0.0 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1524189Z #13 8.263   Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1525760Z #13 8.307 Collecting requests>=2.0.0 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1526824Z #13 8.316   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1527830Z #13 8.333 Collecting sniffio (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.1528816Z #13 8.342   Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.3119123Z #13 8.355 Collecting uuid-utils>=0.12.0 (from langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.3120251Z #13 8.364   Downloading uuid_utils-0.19.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.4198732Z #13 8.521 Collecting websockets>=15.0 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.4201282Z #13 8.530   Downloading websockets-17.4-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.4203454Z #13 8.613 Collecting zstandard>=0.23.0 (from langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.6034353Z #13 8.623   Downloading zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.6035500Z #13 8.679 Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.0->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.6036342Z #13 8.688   Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.7626747Z #13 8.806 Collecting httpcore2==2.16.0 (from httpx2<3,>=2->langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.7627941Z #13 8.816   Downloading httpcore2-2.16.0-py3-none-any.whl.metadata (27 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.7629220Z #13 8.840 Collecting truststore>=0.10 (from httpx2<3,>=2->langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.7630312Z #13 8.849   Downloading truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.9221848Z #13 8.966 Collecting ormsgpack>=1.12.0 (from langgraph-checkpoint<5.0.0,>=4.3.0->langgraph<1.3.0,>=1.2.12->langchain>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:53.9223620Z #13 8.975   Downloading ormsgpack-1.13.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.2 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.0366409Z #13 9.239 Collecting charset_normalizer<4,>=2 (from requests>=2.0.0->langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.2394821Z #13 9.249   Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.2397023Z #13 9.251      â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 46.4/46.4 kB 257.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.2398703Z #13 9.305 Collecting urllib3<3,>=1.26 (from requests>=2.0.0->langsmith<1.0.0,>=0.14.9->langchain-core>=0.2->kavach==0.1.0)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.2400365Z #13 9.323   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3445962Z #13 9.442 Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3447253Z #13 9.480    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 4.8/4.8 MB 135.1 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3447843Z #13 9.489 Downloading fastapi-0.162.0-py3-none-any.whl (148 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3448517Z #13 9.491    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 148.9/148.9 kB 286.8 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3449071Z #13 9.500 Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3449699Z #13 9.502    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 73.5/73.5 kB 295.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3450266Z #13 9.512 Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3450909Z #13 9.514    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 78.8/78.8 kB 282.2 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3451464Z #13 9.523 Downloading langchain-1.4.7-py3-none-any.whl (170 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3452101Z #13 9.525    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 170.5/170.5 kB 287.0 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3453276Z #13 9.534 Downloading langchain_core-1.7.3-py3-none-any.whl (577 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3454015Z #13 9.538    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 577.1/577.1 kB 300.0 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.3454591Z #13 9.548 Downloading pydantic-2.14.2-py3-none-any.whl (490 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4449532Z #13 9.551    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 490.4/490.4 kB 308.6 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4450760Z #13 9.561 Downloading pydantic_core-2.50.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.2 MB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4452637Z #13 9.570    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 2.2/2.2 MB 345.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4453441Z #13 9.579 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4454202Z #13 9.588 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4454960Z #13 9.597 Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4456039Z #13 9.600    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 310.7/310.7 kB 321.8 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4456820Z #13 9.609 Downloading typer-0.27.3-py3-none-any.whl (123 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4457811Z #13 9.611    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 123.3/123.3 kB 317.9 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4458600Z #13 9.620 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4459582Z #13 9.622    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 87.4/87.4 kB 301.2 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4460447Z #13 9.630 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.4461268Z #13 9.639 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5463159Z #13 9.648 Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5464578Z #13 9.651    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 135.1/135.1 kB 193.8 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5465986Z #13 9.660 Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (217 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5467018Z #13 9.662    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 217.8/217.8 kB 304.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5468022Z #13 9.671 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5469084Z #13 9.673    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 125.3/125.3 kB 287.8 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5470184Z #13 9.682 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5471114Z #13 9.692 Downloading jsonpatch-1.38-py3-none-any.whl (17 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5472202Z #13 9.701 Downloading langchain_protocol-0.0.20-py3-none-any.whl (7.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5473235Z #13 9.710 Downloading langgraph-1.2.19-py3-none-any.whl (262 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5474161Z #13 9.713    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 262.3/262.3 kB 309.4 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5474894Z #13 9.722 Downloading langsmith-0.14.16-py3-none-any.whl (933 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5475775Z #13 9.727    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 933.7/933.7 kB 356.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5476552Z #13 9.736 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5477080Z #13 9.738    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 132.1/132.1 kB 276.2 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.5477484Z #13 9.747 Downloading idna-3.20-py3-none-any.whl (69 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6501195Z #13 9.749    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 69.6/69.6 kB 224.0 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6502261Z #13 9.759 Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6503605Z #13 9.761    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 91.7/91.7 kB 304.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6504665Z #13 9.775 Downloading opentelemetry_api-1.45.2-py3-none-any.whl (60 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6505538Z #13 9.777    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 60.3/60.3 kB 270.1 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6506594Z #13 9.786 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6507975Z #13 9.792    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 1.3/1.3 MB 314.4 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6509195Z #13 9.801 Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6510373Z #13 9.805    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 806.6/806.6 kB 337.0 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6511108Z #13 9.814 Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6511819Z #13 9.823 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6512933Z #13 9.825    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 80.6/80.6 kB 307.2 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6513611Z #13 9.834 Downloading tenacity-9.2.1-py3-none-any.whl (32 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6514127Z #13 9.843 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.6514732Z #13 9.844    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 45.6/45.6 kB 254.9 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7555019Z #13 9.853 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7556705Z #13 9.862 Downloading uuid_utils-0.19.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (330 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7558112Z #13 9.865    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 330.3/330.3 kB 288.9 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7558818Z #13 9.875 Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7560629Z #13 9.884 Downloading httpx2-2.16.0-py3-none-any.whl (97 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7562033Z #13 9.886    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 97.9/97.9 kB 234.6 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7563124Z #13 9.895 Downloading httpcore2-2.16.0-py3-none-any.whl (85 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7563959Z #13 9.897    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 85.1/85.1 kB 253.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7564668Z #13 9.906 Downloading jsonpointer-3.6-py3-none-any.whl (9.3 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7565397Z #13 9.915 Downloading langgraph_checkpoint-4.3.1-py3-none-any.whl (58 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7566339Z #13 9.917    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 58.1/58.1 kB 205.9 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7566902Z #13 9.926 Downloading langgraph_prebuilt-1.1.1-py3-none-any.whl (42 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7567538Z #13 9.928    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 42.3/42.3 kB 235.4 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7568064Z #13 9.937 Downloading langgraph_sdk-0.4.11-py3-none-any.whl (169 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7568688Z #13 9.940    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 169.3/169.3 kB 327.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.7569186Z #13 9.949 Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8618668Z #13 9.958 Downloading orjson-3.13.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (130 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8620077Z #13 9.961    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 130.5/130.5 kB 218.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8620790Z #13 9.970 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8621627Z #13 9.971    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 73.1/73.1 kB 283.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8622665Z #13 9.980 Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8623683Z #13 9.982    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 54.5/54.5 kB 280.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8624693Z #13 9.992 Downloading websockets-17.4-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (226 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8625838Z #13 9.995    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 226.0/226.0 kB 288.7 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8626871Z #13 10.00 Downloading xxhash-4.0.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (260 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8627877Z #13 10.01    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 261.0/261.0 kB 299.1 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8628550Z #13 10.02 Downloading zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.6 MB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8629351Z #13 10.04    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 5.6/5.6 MB 325.5 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8629871Z #13 10.04 Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8630474Z #13 10.05    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 62.6/62.6 kB 271.3 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:54.8630991Z #13 10.06 Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1094929Z #13 10.06 Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (269 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1096655Z #13 10.07    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 270.0/270.0 kB 313.3 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1097763Z #13 10.08 Downloading ormsgpack-1.13.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (251 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1098995Z #13 10.08    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 251.1/251.1 kB 343.4 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1099809Z #13 10.09 Downloading truststore-0.10.5-py3-none-any.whl (19 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1100865Z #13 10.10 Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1101867Z #13 10.10    â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”�â”� 135.7/135.7 kB 270.4 MB/s eta 0:00:00
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1102879Z #13 10.16 Building wheels for collected packages: kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1103568Z #13 10.16   Building wheel for kavach (pyproject.toml): started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.1614608Z #13 10.36   Building wheel for kavach (pyproject.toml): finished with status 'done'
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.3153009Z #13 10.37   Created wheel for kavach: filename=kavach-0.1.0-py3-none-any.whl size=40663 sha256=b70129a6a2c67b446c5225a0663a9d9aab6dd012fe61a5e0b89519beb5991fcc
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.3155383Z #13 10.37   Stored in directory: /tmp/pip-ephem-wheel-cache-jvkeisbj/wheels/57/0f/98/bb57b2b57b95807699b822a35c022f139d38a02c27922f27ce
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.3156503Z #13 10.37 Successfully built kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:55.5570016Z #13 10.61 Installing collected packages: zstandard, xxhash, websockets, uuid-utils, urllib3, typing-extensions, truststore, tenacity, sniffio, shellingham, pyyaml, python-dotenv, PyJWT, pygments, pycparser, ormsgpack, orjson, mdurl, jsonpointer, idna, h11, distro, click, charset_normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, requests, pydantic-core, opentelemetry-api, markdown-it-py, langchain-protocol, jsonpatch, httpcore2, httpcore, cffi, anyio, starlette, rich, requests-toolbelt, pydantic, httpx2, httpx, cryptography, typer, langsmith, fastapi, langchain-core, langgraph-sdk, langgraph-checkpoint, langgraph-prebuilt, langgraph, langchain, kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:51:59.7966832Z #13 15.00 Successfully installed PyJWT-2.15.1 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.10.23 cffi-2.1.1 charset_normalizer-3.5.2 click-8.5.0 cryptography-50.0.2 distro-1.9.0 fastapi-0.162.0 h11-0.16.0 httpcore-1.0.9 httpcore2-2.16.0 httpx-0.28.1 httpx2-2.16.0 idna-3.20 jsonpatch-1.38 jsonpointer-3.6 kavach-0.1.0 langchain-1.4.7 langchain-core-1.7.3 langchain-protocol-0.0.20 langgraph-1.2.19 langgraph-checkpoint-4.3.1 langgraph-prebuilt-1.1.1 langgraph-sdk-0.4.11 langsmith-0.14.16 markdown-it-py-4.2.0 mdurl-0.1.2 opentelemetry-api-1.45.2 orjson-3.13.0 ormsgpack-1.13.0 pycparser-3.12 pydantic-2.14.2 pydantic-core-2.50.2 pygments-2.21.0 python-dotenv-1.2.4 pyyaml-6.0.3 requests-2.34.2 requests-toolbelt-1.0.0 rich-15.0.0 shellingham-1.5.4 sniffio-1.3.1 starlette-1.10.0 tenacity-9.2.1 truststore-0.10.5 typer-0.27.3 typing-extensions-4.16.0 typing-inspection-0.4.4 urllib3-2.8.0 uuid-utils-0.19.0 uvicorn-0.54.0 websockets-17.4 xxhash-4.0.2 zstandard-0.25.0
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:00.0222878Z #13 15.00 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:00.0224539Z #13 15.07 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:00.0224992Z #13 15.07 [notice] A new release of pip is available: 24.0 -> 26.2.2
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:00.0225662Z #13 15.07 [notice] To update, run: pip install --upgrade pip
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.0924379Z #13 DONE 16.1s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.0924804Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.0925358Z #14 [agent 6/6] RUN useradd -u 10001 -m kavach-agent
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.1648273Z #14 ...
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.1648904Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.1649698Z #15 [gateway 6/6] RUN useradd -u 10003 -m kavach-gateway
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.1650638Z #15 DONE 0.2s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2813717Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2814644Z #14 [agent 6/6] RUN useradd -u 10001 -m kavach-agent
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2815545Z #14 DONE 0.3s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2815995Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2816554Z #16 [interceptor 6/6] RUN useradd -u 10002 -m kavach-interceptor
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2817368Z #16 DONE 0.3s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2817755Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2818123Z #17 [interceptor] exporting to image
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:01.2818763Z #17 exporting layers
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7936596Z #17 exporting layers 1.5s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7937215Z #17 writing image sha256:da35b2eda317f2c6f4f6228bfeb08404e7367076eeda68bd859daba8eb750e32 done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7938450Z #17 naming to docker.io/library/kavach-interceptor done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7939020Z  interceptor  Built
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7939357Z  gateway  Built
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7939693Z  agent  Built
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7940021Z #17 DONE 1.5s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7943447Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7943714Z #18 [gateway] exporting to image
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7944174Z #18 exporting layers 1.6s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7944899Z #18 writing image sha256:df7f81bb86939fd7e271d33d8274f0fc67a7356ce1f16184b2dcdd9488661a3f done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7945715Z #18 naming to docker.io/library/kavach-gateway done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7946046Z #18 DONE 1.6s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7946172Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7946270Z #19 [agent] exporting to image
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7946536Z #19 exporting layers 1.5s done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7946994Z #19 writing image sha256:1e71fc6f97ccc299d6a0dd94d0f3c247ba7154bbd55cacef8d28f19271f7cb0d done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7947546Z #19 naming to docker.io/library/kavach-agent done
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7947868Z #19 DONE 1.5s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7947988Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7948132Z #20 [gateway] resolving provenance for metadata file
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7948439Z #20 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7948552Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7948672Z #21 [agent] resolving provenance for metadata file
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7948971Z #21 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7949084Z 
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7949226Z #22 [interceptor] resolving provenance for metadata file
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.7949554Z #22 DONE 0.0s
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.8781975Z time="2026-10-31T18:52:02Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.8853454Z  Network kavach_gateway_net  Creating
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9026071Z  Network kavach_gateway_net  Created
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9037259Z  Network kavach_agent_net  Creating
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9206157Z  Network kavach_agent_net  Created
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9215765Z  Container kavach-gateway-1  Creating
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9417466Z  Container kavach-gateway-1  Created
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9418230Z  Container kavach-interceptor-1  Creating
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9512791Z  Container kavach-interceptor-1  Created
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9513338Z  Container kavach-agent-1  Creating
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9605242Z  Container kavach-agent-1  Created
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:02.9617946Z  Container kavach-gateway-1  Starting
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:03.1035964Z  Container kavach-gateway-1  Started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:03.1036403Z  Container kavach-interceptor-1  Starting
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:03.2428333Z  Container kavach-interceptor-1  Started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:03.2428973Z  Container kavach-agent-1  Starting
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:03.3806008Z  Container kavach-agent-1  Started
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3949160Z ##[group]Run docker compose exec -T agent python -c "
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3949645Z ^[[36;1mdocker compose exec -T agent python -c "^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3950013Z ^[[36;1mimport urllib.request^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3950455Z ^[[36;1mreq = urllib.request.Request('http://interceptor:8100/health')^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3950997Z ^[[36;1mwith urllib.request.urlopen(req, timeout=10) as resp:^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3951544Z ^[[36;1m    assert resp.status == 200, f'Interceptor health check failed: {resp.status}'^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3952078Z ^[[36;1mprint('âœ“ Agent -> Interceptor (:8100) reachable')^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3952730Z ^[[36;1m"^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3973118Z shell: /usr/bin/bash -e {0}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.3973383Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.4756853Z time="2026-10-31T18:52:08Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.5790523Z âœ“ Agent -> Interceptor (:8100) reachable
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6027068Z ##[group]Run docker compose exec -T agent python -c "
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6027541Z ^[[36;1mdocker compose exec -T agent python -c "^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6027888Z ^[[36;1mimport socket^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6028128Z ^[[36;1mtry:^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6028351Z ^[[36;1m    s = socket.socket()^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6028640Z ^[[36;1m    s.settimeout(2)^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6028941Z ^[[36;1m    res = s.connect_ex(('gateway', 8000))^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6029552Z ^[[36;1m    assert res != 0, 'SECURITY VIOLATION: Agent container established direct TCP connection to UPI Gateway!'^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6030163Z ^[[36;1mexcept (socket.gaierror, OSError):^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6030717Z ^[[36;1m    # Expected: DNS resolution fails or connection is unreachable across isolated bridge networks^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6031444Z ^[[36;1m    pass^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6032020Z ^[[36;1mprint('âœ“ Physical network isolation enforced: Gateway is completely unreachable from Agent container.')^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6032954Z ^[[36;1m"^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6054010Z shell: /usr/bin/bash -e {0}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6054274Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.6860400Z time="2026-10-31T18:52:08Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7433803Z âœ“ Physical network isolation enforced: Gateway is completely unreachable from Agent container.
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7543424Z ##[group]Run docker compose exec -T agent python -c "
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7543899Z ^[[36;1mdocker compose exec -T agent python -c "^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7544225Z ^[[36;1mimport os^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7544470Z ^[[36;1mfor k, v in os.environ.items():^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7544920Z ^[[36;1m    assert 'PRIVATE KEY' not in v, f'Found private key in agent env: {k}'^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7545495Z ^[[36;1mprint('âœ“ Process containment verified: Zero keys in agent environment.')^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7545936Z ^[[36;1m"^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7567001Z shell: /usr/bin/bash -e {0}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.7567256Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.8414786Z time="2026-10-31T18:52:08Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.8894429Z âœ“ Process containment verified: Zero keys in agent environment.
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9017333Z ##[group]Run docker compose down -v
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9017675Z ^[[36;1mdocker compose down -v^[[0m
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9038195Z shell: /usr/bin/bash -e {0}
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9038455Z ##[endgroup]
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9835051Z time="2026-10-31T18:52:08Z" level=warning msg="/home/runner/work/Kavach/Kavach/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:08.9876639Z  Container kavach-agent-1  Stopping
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.0622878Z  Container kavach-agent-1  Stopped
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.0625014Z  Container kavach-agent-1  Removing
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.0686303Z  Container kavach-agent-1  Removed
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.0686842Z  Container kavach-interceptor-1  Stopping
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.3895125Z  Container kavach-interceptor-1  Stopped
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.3895835Z  Container kavach-interceptor-1  Removing
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.3963938Z  Container kavach-interceptor-1  Removed
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.3964598Z  Container kavach-gateway-1  Stopping
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.6673815Z  Container kavach-gateway-1  Stopped
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.6674799Z  Container kavach-gateway-1  Removing
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.6724447Z  Container kavach-gateway-1  Removed
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.6736453Z  Network kavach_gateway_net  Removing
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.6737145Z  Network kavach_agent_net  Removing
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.7124656Z  Network kavach_gateway_net  Removed
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.7478040Z  Network kavach_agent_net  Removed
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.7672950Z Post job cleanup.
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8603211Z [command]/usr/bin/git version
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8651120Z git version 2.56.0
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8691668Z Temporarily overriding HOME='/home/runner/work/_temp/0d3c5678-1225-407a-a371-276223f02d8f' before making global git config changes
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8693226Z Adding repository directory to the temporary git global config as a safe directory
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8698307Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Kavach/Kavach
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8742823Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.8782843Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9057189Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9090994Z http.https://github.com/.extraheader
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9104624Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9143834Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9413510Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9461769Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:19.9905540Z Cleaning up orphan processes
+Docker Network & Containment Isolation (Ubuntu)	UNKNOWN STEP	2026-10-31T18:52:20.0401225Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

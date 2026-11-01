@@ -2,7 +2,7 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `2647b1f5764bad0b9a797852d1b5b896e07b6a23` (DIRTY working tree)  
+**Git Commit**: `fbe9328e4a3f01f2cd796158738572a3891fb9a6` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
 **Total Unit/Integration/Property Tests**: 137 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
@@ -1034,6 +1034,7 @@ d712ae240e82e8d84f77a3727580b213f4ae458ac47fcfd3f903455e6777a215  ci_run.txt
 49cbbe081cce708e4ff9fd58deb34b7e81f67264a03b2ea9aeda911748cc1b06  demo_output.svg
 5dc3da92d4a85d7675e8db2e805c76e5a66d1d898601f2b0ec86051e26260b7c  demo_output.txt
 c2d9b5ea41b2a526dd49bcd7741729cd3669ef3023135033119006aa155a6245  demo_timing.txt
+f1bc98ea7a1a95496e174e2333cd0ad16d8c6475d9cbcb50d5cca9a5a51d0c1b  docker_ci_log.txt
 624510a6d8b043770420eba0f4581054e811dc4acabcd769ac37a0839fa7a283  eval_benchmark.json
 c588dbdb81c8bf47a53ec8036549655f1b23ab61c1eaf9c56c81070f6bc4ee5e  eval_summary.txt
 3cf61bacdcf6ed431d958f5f982fdd3b0d519ab8002a0eb88445b18a8d7887ca  fresh_clone.txt
@@ -1044,7 +1045,9 @@ f8e0fb52e73d3547868aa8d4aa2a0650dc08a42d955cc268a2d3fe21d59a0f42  hypothesis_ci_
 c45917fac0e16e078d59e4b5666731002df182c192925d1576e3b72de6758b45  live/llama3.1_trials.jsonl
 c8ff8ff1cbdc7cc61c550e01aefb49fecf93c105ac495ee16811456c640b2553  live/positive_control_transcripts.jsonl
 95d07aee8cc21e7b2e37b99cbca530a130644eff3bf2093e4951ddc9085a4a1d  live/weakened_guard_trials.jsonl
+e05e9ed8a3ad4906d9622380c7614eeedc9307fdfd769ceda3f23ec971ffde27  narrative_grep.txt
 f8d6ad702add18fbcba424e8728fa0aff94b4b3b4b57fc5c3ed5e674a21ca3a1  pytest_output.txt
 81c71fcabc8c509e5d98c843c1745f4327cd3501c078d588a534e1dbed4f5709  pytest_report.xml
 b88b10a2223ee8638c6e97441f8cc9c4cb4ab3646f719f32e3045240b18375a8  secret_scan.txt
+a17b8f2d8a1a0a323473844d31742fc34b94de06017b6c3d71c72ba4976c44af  url_grep.txt
 ```

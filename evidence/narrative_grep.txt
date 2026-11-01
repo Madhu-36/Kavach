@@ -1,0 +1,9 @@
+Zero narrative phrase hits found across generate_eval_tables.py and eval/RESULTS.md.
+  - 'Model intent unchanged': 0 hits
+  - 'Preserved utility': 0 hits
+  - 'Clean halt': 0 hits
+  - 'Interception Guaranteed': 0 hits
+  - 'Attack Prevented': 0 hits
+  - 'Zero funds lost': 0 hits
+  - '100% BLOCKED': 0 hits
+  - 'Funds Drained': 0 hits

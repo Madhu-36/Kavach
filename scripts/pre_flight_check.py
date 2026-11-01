@@ -98,12 +98,12 @@ if res_pytest.returncode != 0 or "137 passed" not in res_pytest.stdout:
 else:
     print("[OK] [7/8] Local test suite verified: 137 passed in pytest.")
 
-# 8. Tag v1.0.0 check
+# 8. Tag v1.0.1 check
 tags = subprocess.check_output(["git", "tag", "-l"], text=True).splitlines()
-if "v1.0.0" in tags:
-    failures.append("Tag v1.0.0 already exists prematurely")
+if "v1.0.1" in tags:
+    failures.append("Tag v1.0.1 already exists prematurely")
 else:
-    print("[OK] [8/8] Git tag ready for release.")
+    print("[OK] [8/8] Git tag ready for release v1.0.1.")
 
 print("========================================")
 if failures:
@@ -112,4 +112,4 @@ if failures:
         print(f" - {f}")
     sys.exit(1)
 else:
-    print("PRE-FLIGHT AUDIT PASSED: 100% READY FOR RELEASE v1.0.0")
+    print("PRE-FLIGHT AUDIT PASSED: 100% READY FOR RELEASE v1.0.1")
