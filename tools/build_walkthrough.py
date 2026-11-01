@@ -197,8 +197,9 @@ The complete Kavach demonstration is recorded and verifiable across multiple mac
 ### Video & Visual Demo Artifacts
 - **Animated GIF Terminal Recording**:
   
-  [![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4)
+  [![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://youtu.be/2q6kAZHDG0k)
 
+- 📺 **Watch Demo Video on YouTube**: [**https://youtu.be/2q6kAZHDG0k**](https://youtu.be/2q6kAZHDG0k) (Official 38s terminal demonstration for SAFL Hackathon)
 - **High-Definition MP4 Video**: [`evidence/demo_video.mp4`](evidence/demo_video.mp4) • [Direct Download from Release v1.0.2](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4) (H.264, 1280×720, 10 fps, 38.0s)
   ```html
   <video src="evidence/demo_video.mp4" width="100%" controls poster="evidence/demo_output.svg">

@@ -2,7 +2,7 @@
 
 **Project Title**: Kavach: Cryptographic Micro-Mandates for Agentic AI  
 **Track**: Trust, Consent & Delegation  
-**Team**: Aaryash (@Madhu-36)  
+**Team**: Root Coders (Madhu S — @Madhu-36)  
 
 ---
 
@@ -139,6 +139,7 @@ We benchmarked Kavach across empirical LLM evaluations (`llama3.1:latest` 8B via
 
 ## 8. Timed Demo Video Script (Total Duration $\le$ 2:50)
 
+**YouTube Video URL**: [https://youtu.be/2q6kAZHDG0k](https://youtu.be/2q6kAZHDG0k) (Official 38s Demo)  
 **Target Duration**: 02:45 Max (Terminal Demo $\le$ 01:45 + 20s Context + 20s Results Slide + 20s Outro)  
 **Command**: `python demo.py --video` (measured wall-clock time: **105.6s / 01:45.6**)
 

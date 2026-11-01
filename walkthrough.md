@@ -2,7 +2,7 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `534d3214def1037f6d2bcd739caee110a7b5fa3b` (DIRTY working tree)  
+**Git Commit**: `b458143556222b250dcbbf20946dbeb8704f73b9` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
 **Total Unit/Integration/Property Tests**: 137 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
@@ -235,8 +235,9 @@ The complete Kavach demonstration is recorded and verifiable across multiple mac
 ### Video & Visual Demo Artifacts
 - **Animated GIF Terminal Recording**:
   
-  [![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4)
+  [![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://youtu.be/2q6kAZHDG0k)
 
+- 📺 **Watch Demo Video on YouTube**: [**https://youtu.be/2q6kAZHDG0k**](https://youtu.be/2q6kAZHDG0k) (Official 38s terminal demonstration for SAFL Hackathon)
 - **High-Definition MP4 Video**: [`evidence/demo_video.mp4`](evidence/demo_video.mp4) • [Direct Download from Release v1.0.2](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4) (H.264, 1280×720, 10 fps, 38.0s)
   ```html
   <video src="evidence/demo_video.mp4" width="100%" controls poster="evidence/demo_output.svg">
@@ -1057,7 +1058,7 @@ c501c5d7743f97105eeaa7b034b063454cc995017dcfda76f40cbe5960f72cbd  adaptive/llm_a
 a8b475c1e7dd78ca5e4d3557b10d4c23f8ec664980568a94953834fff8b2202e  adaptive/llm_attacker_prior_regression.jsonl
 b297a8433ee99e8aa88cb2c08948c0d72732c3a72d5ec6627fc51caf34e590ee  adaptive/llm_attacker_summary.json
 66929a43663a02b152702432f0f4f8c4a1c4d92caec59adaa7cb3a47ac3f8e85  adaptive_attacker.txt
-a3e3bef9506dcc463a80145911df8391e490fc04db823ddec030458e21afbb78  ci_run.txt
+fcedfb1b6d0ab4cac93eaf52f4d3fc4f21946fd4b05026e6e7c56d9f3d38d37c  ci_run.txt
 8b7bc5f6b8a09a266f890ab3384fbcc8672ba3cd308c706015ab8b205bfaa138  demo_output.svg
 7a6ca06e7691dd83bce71522ab55ece19dbf9705628eee894739e8faa92ca076  demo_output.txt
 7d87dd767441c677d25124438144f9b0a4ffd667c9378f21bf67b1c94eda2181  demo_recording.gif
