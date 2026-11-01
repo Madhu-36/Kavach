@@ -2,7 +2,7 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `87acabd4eb8d0d5df8bc06ad5acbe62a5ba34e04` (DIRTY working tree)  
+**Git Commit**: `344823d627bfd81c26937d80dafcef3fefeacea9` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
 **Total Unit/Integration/Property Tests**: 137 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
@@ -1028,7 +1028,7 @@ c501c5d7743f97105eeaa7b034b063454cc995017dcfda76f40cbe5960f72cbd  adaptive/llm_a
 a8b475c1e7dd78ca5e4d3557b10d4c23f8ec664980568a94953834fff8b2202e  adaptive/llm_attacker_prior_regression.jsonl
 b297a8433ee99e8aa88cb2c08948c0d72732c3a72d5ec6627fc51caf34e590ee  adaptive/llm_attacker_summary.json
 66929a43663a02b152702432f0f4f8c4a1c4d92caec59adaa7cb3a47ac3f8e85  adaptive_attacker.txt
-25a80a29f34eec1322a643d34a2c1b03bffc80880cfae1b065f8540ebc632701  ci_run.txt
+a3e3bef9506dcc463a80145911df8391e490fc04db823ddec030458e21afbb78  ci_run.txt
 49cbbe081cce708e4ff9fd58deb34b7e81f67264a03b2ea9aeda911748cc1b06  demo_output.svg
 5dc3da92d4a85d7675e8db2e805c76e5a66d1d898601f2b0ec86051e26260b7c  demo_output.txt
 c2d9b5ea41b2a526dd49bcd7741729cd3669ef3023135033119006aa155a6245  demo_timing.txt
