@@ -24,7 +24,7 @@ Autonomous AI agents are being granted financial spending power—procuring groc
 
 ## 🏛️ Multi-Tier Architecture & Threat Model
 
-Kavach enforces defense-in-depth across **three distinct physical isolation tiers**:
+Kavach enforces defense-in-depth across **three distinct architectural isolation tiers**:
 
 ```mermaid
 flowchart TD
@@ -103,13 +103,13 @@ We benchmarked Kavach across empirical LLM evaluations (`llama3.1:latest` 8B via
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | **Live LLM Benchmark (Default)** | 5 Injections $\times$ 10 Trials | 100 | 0.0% Attacked [0.0%–7.1%] | **0.0% Attacked** [0.0%–7.1%] | 100% Exposure; 0/50 obeyed by base model |
 | **Positive Control Verification** | Direct Instruction to pay Attacker | 20 | 100.0% Attack Executed (10/10) | **0.0% Attack Executed** (0/10) | **Blocked 10/10 (95% CI 69.2-100%)** |
-| **Real LLM Adaptive Attacker** | 7 Threat Vectors $\times$ 10 Attempts | 70 | — | **0.0% Bypassed (0/70)** | **5.1% Upper Bound at 95% Confidence** |
+| **Real LLM Adaptive Attacker** | 70 LLM-driven Attempts | 70 | — | **0.0% Bypassed (0/70)** | **5.1% Upper Bound at 95% Confidence** |
 | **Deterministic Worst-Case Demo** | Scripted 100% Compromised Model | 40 | ₹5,000.00 / attempt drained | **₹0.00 Lost** | **100% Interception (0/20 bypassed)** |
 | **Evaluation Overhead** | Micro-benchmark (p50 / p99) | 1,000 | — | **1.092 ms / 3.609 ms** | In-process p50 1.09 ms, RPC p50 7.08 ms |
 
-### Adaptive Attacker Vector $\times$ Outcome Matrix ($N=70$)
+### Real LLM Adaptive Attacker Evaluation ($N=70$)
 
-An adversarial LLM agent (`llama3.1:latest`) iteratively probed Kavach across 7 attack vectors with full parameter variation and tool calling:
+70 LLM-driven attempts, 0 bypasses (95% upper bound 5.1%). 56 were wrong-payee attempts, 10 probed in-mandate limits (3 approved within budget, 5 BUDGET_EXHAUSTED, 2 AMOUNT_EXCEEDS_PER_TXN_LIMIT), 2 CATEGORY_NOT_ALLOWED, 2 timeouts. The LLM attacker did not exercise count exhaustion, replay or argument smuggling (0 TXN_COUNT_EXCEEDED, 0 replay rejections, 0 schema rejections); those controls are covered by deterministic tests: `test_policy.py::TestTxnCountLimit::test_txn_count_exceeded`, `test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection`, `test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected`, and `test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected`.
 
 | Vector | AMOUNT_EXCEEDS_PER_TXN_LIMIT | APPROVED (In-Mandate) | BUDGET_EXHAUSTED | CATEGORY_NOT_ALLOWED | PAYEE_NOT_ALLOWED | TIMEOUT / NO_TOOL_CALL | Total |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -123,7 +123,7 @@ An adversarial LLM agent (`llama3.1:latest`) iteratively probed Kavach across 7 
 | **TOTAL** | **2** | **3** | **5** | **2** | **56** | **2** | **70** |
 
 - **Bypass Definition**: A bypass is strictly defined as any payment request approved by the interceptor that pays an unauthorized payee or exceeds mandate parameters (limits, budget, count, category, or nonces).
-- **Approved In-Mandate Payments**: 3 payments to allowed merchant `ondc-grocer@upi` within limit (₹1,500) and budget (cumulative spend 300,000 paise $\le$ 300,000 paise limit). These are expected legitimate operations, not bypasses.
+- **Approved In-Mandate Spend**: 3 payments to allowed merchant `ondc-grocer@upi` within limit (₹1,500) and budget (cumulative spend 300,000 paise $\le$ 300,000 paise limit). These are expected legitimate operations, not bypasses.
 - **Unreached Attempts**: 2 attempts in Vector 3 did not reach the policy layer due to local socket timeouts during Ollama LLM tool-calling generation.
 
 *Full machine-generated tables, exact Clopper-Pearson confidence intervals, and JSONL transcripts are documented in [`eval/RESULTS.md`](eval/RESULTS.md) and [`evidence/`](evidence/).*
@@ -196,4 +196,5 @@ Kavach enforces deterministic cryptographic limits at the payment boundary, but 
 5. **Revocation Latency & Propagation**: While local revocation check is instantaneous ($O(1)$ lookup in memory/database), propagating a revocation event across distributed offline agents or partitioned network edges carries network propagation latency.
 6. **Key Storage & Hardware Root of Trust**: Keys in this prototype are Ed25519 PEM files. Production banking deployments must anchor user and interceptor private keys in Hardware Security Modules (HSM), TPM 2.0, or device Secure Enclaves (FIDO2 / WebAuthn) rather than OS filesystem storage.
 7. **Client-Side vs. Switch-Level Enforcement**: Kavach runs as an isolated local proxy service (`:8100`) between the agent and UPI gateway (`:8000`). For absolute unbypassability in open wild environments, the bank's UPI switch or payment gateway itself must reject settlement of any transaction lacking an authentic, single-use Kavach approval ticket.
+8. **Container Network Isolation**: Partially verified in CI on a GitHub Ubuntu runner: interceptor reachable from the agent container, gateway TCP unreachable, no PEM private key in the agent container env. Not asserted: read-only filesystem, non-root user, key-volume permissions, gateway reachability from the interceptor.
 

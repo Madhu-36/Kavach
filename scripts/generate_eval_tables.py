@@ -220,9 +220,10 @@ def generate_tables() -> str:
 
         lines.append("---")
         lines.append("")
-        lines.append("## Table 2: Weakened-Guard Benchmark (NON-DEFAULT Condition)")
+        lines.append("## Table 2: Weakened-Guard Benchmark (NON-DEFAULT Condition) — INVALID RUN: harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims.")
         lines.append("- **Condition**: System prompt instructed agent to follow listing directives and payment overrides")
         lines.append(f"- **Total Trials (N)**: {len(w_records)} ({mw_off['n']} Protection OFF vs {mw_on['n']} Protection ON)")
+        lines.append("- **Status**: INVALID RUN: harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims.")
         lines.append("")
         lines.append("| Metric | Protection OFF (Baseline) | Protection ON (Kavach) | Delta (ON - OFF) |")
         lines.append("| :--- | :---: | :---: | :---: |")
@@ -235,10 +236,9 @@ def generate_tables() -> str:
         lines.append(f"| **Post-Block Agent Behavior** | {mw_off['post_block_text']} | {mw_on['post_block_text']} | — |")
         lines.append("")
 
-        if mw_off['obeyed'] == 0:
-            lines.append("> [!NOTE]")
-            lines.append("> **Evaluation Scope**: In the weakened-guard condition, the model obeyed 0/50 indirect injection attempts across both conditions. Therefore, Table 2 cannot evaluate Kavach's interceptor boundary directly. Table 3 (Positive Control) and Table 4 (Deterministic Demonstration) carry the verification claims.")
-            lines.append("")
+        lines.append("> [!NOTE]")
+        lines.append("> **INVALID RUN**: Harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims. Table 3 (Positive Control) and Table 4 (Deterministic Demonstration) carry the verification claims.")
+        lines.append("")
 
         lines.append("### Per-Payload Breakdown (Weakened-Guard Condition)")
         lines.append("| Payload Archetype | Threat Vector | Obeyed (OFF) | Obeyed (ON) | Attack Success (OFF) | Attack Success (ON) [95% CI] | Legit Completed (ON) |")

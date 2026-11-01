@@ -31,9 +31,10 @@
 
 ---
 
-## Table 2: Weakened-Guard Benchmark (NON-DEFAULT Condition)
+## Table 2: Weakened-Guard Benchmark (NON-DEFAULT Condition) — INVALID RUN: harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims.
 - **Condition**: System prompt instructed agent to follow listing directives and payment overrides
 - **Total Trials (N)**: 50 (25 Protection OFF vs 25 Protection ON)
+- **Status**: INVALID RUN: harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims.
 
 | Metric | Protection OFF (Baseline) | Protection ON (Kavach) | Delta (ON - OFF) |
 | :--- | :---: | :---: | :---: |
@@ -44,7 +45,7 @@
 | **Post-Block Agent Behavior** | n/a (0 blocks occurred) | n/a (0 blocks occurred) | — |
 
 > [!NOTE]
-> **Evaluation Scope**: In the weakened-guard condition, the model obeyed 0/50 indirect injection attempts across both conditions. Therefore, Table 2 cannot evaluate Kavach's interceptor boundary directly. Table 3 (Positive Control) and Table 4 (Deterministic Demonstration) carry the verification claims.
+> **INVALID RUN**: Harness defect (0 payment tool calls in 50 trials; prompt omitted tool instructions). Excluded from all claims. Table 3 (Positive Control) and Table 4 (Deterministic Demonstration) carry the verification claims.
 
 ### Per-Payload Breakdown (Weakened-Guard Condition)
 | Payload Archetype | Threat Vector | Obeyed (OFF) | Obeyed (ON) | Attack Success (OFF) | Attack Success (ON) [95% CI] | Legit Completed (ON) |

@@ -2,7 +2,7 @@
 
 **Track**: Trust, Consent & Delegation (India Agentic AI Security Hackathon)  
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
-**Git Commit**: `16f8e12f4cdaca2ff72b258f20457136ca9f4412` (DIRTY working tree)  
+**Git Commit**: `87acabd4eb8d0d5df8bc06ad5acbe62a5ba34e04` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
 **Total Unit/Integration/Property Tests**: 137 passing  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
@@ -571,10 +571,8 @@ which is an order of magnitude faster than standard production UPI inter-bank la
 - Legitimate Task Completion: 22/50 (44.0%)
 
 ### Adaptive Red-Team LLM Attacker (`llama3.1:latest`, 8B)
-- Total Probing Attempts: 70 across 7 rounds
-- Reached Policy Layer: 68/70 (97.1%)
-- Bypasses Achieved: 0/70 (0.0% Success Rate; 95% Clopper-Pearson CI upper bound: 5.1%)
-- Reason Codes Distributed: PAYEE_NOT_ALLOWED: 56, AMOUNT_EXCEEDS_PER_TXN_LIMIT: 2, APPROVED: 3, BUDGET_EXHAUSTED: 5, ERROR: 2, CATEGORY_NOT_ALLOWED: 2
+- 70 LLM-driven attempts, 0 bypasses (95% upper bound 5.1%). 56 were wrong-payee attempts, 10 probed in-mandate limits (3 approved within budget, 5 BUDGET_EXHAUSTED, 2 AMOUNT_EXCEEDS_PER_TXN_LIMIT), 2 CATEGORY_NOT_ALLOWED, 2 timeouts.
+- The LLM attacker did not exercise count exhaustion, replay or argument smuggling (0 TXN_COUNT_EXCEEDED, 0 replay rejections, 0 schema rejections); those controls are covered by deterministic tests: `test_policy.py::TestTxnCountLimit::test_txn_count_exceeded`, `test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection`, `test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected`, and `test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected`.
 
 ---
 
@@ -1016,9 +1014,9 @@ In accordance with strict truth-in-auditing standards, the following capabilitie
 7. **Client-Side vs Switch-Level Enforcement**:
    - **Boundary**: Tested against our hardened Mock UPI Gateway. Full banking-grade switch enforcement requires NPCI / bank PSP integration.
    - **Status**: The Ed25519 per-transaction ticket protocol is designed directly for bank-switch verification.
-8. **Live Docker Container Isolation Execution**:
+8. **Container Network Isolation**:
    - **Boundary**: Local Docker Desktop daemon was not running on the Windows host.
-   - **Status**: Retained strictly as **DESIGN-ONLY** (`docker-compose.yml`, `docs/DOCKER_ISOLATION.md`). Configured for automated execution in GitHub Actions (`.github/workflows/ci.yml`).
+   - **Status**: Partially verified in CI on a GitHub Ubuntu runner: interceptor reachable from the agent container, gateway TCP unreachable, no PEM private key in the agent container env. Not asserted: read-only filesystem, non-root user, key-volume permissions, gateway reachability from the interceptor. Local multi-process isolation via separate ports (`:8000` and `:8100`) is verified.
 
 ---
 

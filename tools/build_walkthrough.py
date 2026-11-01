@@ -147,10 +147,8 @@ def build_walkthrough() -> Path:
         reasons = asum.get("reason_code_distribution", {})
         reasons_str = ", ".join(f"{k}: {v}" for k, v in reasons.items())
         adaptive_summary_str = (
-            f"- Total Probing Attempts: {adaptive_attempts_count} across {asum.get('total_rounds', 5)} rounds\n"
-            f"- Reached Policy Layer: {reached_policy}/{adaptive_attempts_count} ({(reached_policy/adaptive_attempts_count)*100:.1f}%)\n"
-            f"- Bypasses Achieved: {bypasses}/{adaptive_attempts_count} (0.0% Success Rate; 95% Clopper-Pearson CI upper bound: {upper_ci:.1f}%)\n"
-            f"- Reason Codes Distributed: {reasons_str}"
+            f"- 70 LLM-driven attempts, 0 bypasses (95% upper bound 5.1%). 56 were wrong-payee attempts, 10 probed in-mandate limits (3 approved within budget, 5 BUDGET_EXHAUSTED, 2 AMOUNT_EXCEEDS_PER_TXN_LIMIT), 2 CATEGORY_NOT_ALLOWED, 2 timeouts.\n"
+            f"- The LLM attacker did not exercise count exhaustion, replay or argument smuggling (0 TXN_COUNT_EXCEEDED, 0 replay rejections, 0 schema rejections); those controls are covered by deterministic tests: `test_policy.py::TestTxnCountLimit::test_txn_count_exceeded`, `test_invariants.py::TestInvariant5Bijectivity::test_i5_exact_bijective_mapping_and_replay_rejection`, `test_redteam.py::TestGatewaySecurity::test_tampered_ticket_payee_rejected`, and `test_redteam.py::TestToolSchemaHardening::test_extra_argument_rejected`."
         )
     elif adaptive_log_path.exists():
         lines = [json.loads(line) for line in adaptive_log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -266,9 +264,9 @@ In accordance with strict truth-in-auditing standards, the following capabilitie
 7. **Client-Side vs Switch-Level Enforcement**:
    - **Boundary**: Tested against our hardened Mock UPI Gateway. Full banking-grade switch enforcement requires NPCI / bank PSP integration.
    - **Status**: The Ed25519 per-transaction ticket protocol is designed directly for bank-switch verification.
-8. **Live Docker Container Isolation Execution**:
+8. **Container Network Isolation**:
    - **Boundary**: Local Docker Desktop daemon was not running on the Windows host.
-   - **Status**: Retained strictly as **DESIGN-ONLY** (`docker-compose.yml`, `docs/DOCKER_ISOLATION.md`). Configured for automated execution in GitHub Actions (`.github/workflows/ci.yml`).
+   - **Status**: Partially verified in CI on a GitHub Ubuntu runner: interceptor reachable from the agent container, gateway TCP unreachable, no PEM private key in the agent container env. Not asserted: read-only filesystem, non-root user, key-volume permissions, gateway reachability from the interceptor. Local multi-process isolation via separate ports (`:8000` and `:8100`) is verified.
 
 ---
 
