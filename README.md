@@ -8,6 +8,18 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Invariants Verified](https://img.shields.io/badge/Invariants-I1--I4_Hypothesis,_I5--I6_Crash_Tests-success.svg)](docs/INVARIANTS.md)
 [![Tests Passing](https://img.shields.io/badge/Tests-137_Passed-brightgreen.svg)](evidence/pytest_output.txt)
+[![Demo Video](https://img.shields.io/badge/Demo_Video-MP4_Attached-orange.svg)](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4)
+
+---
+
+## 🎬 Live Terminal Demo Video
+
+[![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4)
+
+- 🎥 **Watch / Download Video (MP4)**: [`evidence/demo_video.mp4`](evidence/demo_video.mp4) or [Direct Download from Release v1.0.2](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4) (H.264, 1280×720, 10 fps, 38.0s)
+- 🌐 **Interactive Browser Player**: [`evidence/demo_video.html`](evidence/demo_video.html) (standalone web simulator with scene navigation & voiceover captions)
+- 📜 **Full Vector Terminal SVG**: [`evidence/demo_output.svg`](evidence/demo_output.svg) (171 KB vector graphic)
+- 📖 **Timed Script & Voiceover**: See Section 3 of [`walkthrough.md`](walkthrough.md#3-real-rich-terminal-demo-execution--video-artifacts) for the timed 10-scene script and voiceover narration.
 
 ---
 

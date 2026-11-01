@@ -190,9 +190,38 @@ Deterministic property tests verify mathematical invariants I1–I6 across deran
 
 ---
 
-## 3. Real Rich Terminal Demo Execution
+## 3. Real Rich Terminal Demo Execution & Video Artifacts
 
-Recorded using `rich.console.Console(record=True)` exported directly to text and SVG.
+The complete Kavach demonstration is recorded and verifiable across multiple machine-generated formats:
+
+### Video & Visual Demo Artifacts
+- **Animated GIF Terminal Recording**:
+  
+  [![Kavach Terminal Demo Recording](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_recording.gif)](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4)
+
+- **High-Definition MP4 Video**: [`evidence/demo_video.mp4`](evidence/demo_video.mp4) • [Direct Download from Release v1.0.2](https://github.com/Madhu-36/Kavach/releases/download/v1.0.2/demo_video.mp4) (H.264, 1280×720, 10 fps, 38.0s)
+  ```html
+  <video src="evidence/demo_video.mp4" width="100%" controls poster="evidence/demo_output.svg">
+    Your browser does not support the video tag.
+  </video>
+  ```
+- **Interactive Browser Player**: [`evidence/demo_video.html`](evidence/demo_video.html) (standalone interactive player with scene jumping, timeline scrubber, and voiceover captions).
+- **High-Resolution Vector Terminal Graphic**: [`evidence/demo_output.svg`](evidence/demo_output.svg) (171 KB full-color SVG with syntax highlighting and styling).
+
+### Timed Demo Video Script (Total Duration ≤ 2:50)
+
+| Timestamp | Screen Action | Voiceover / Script |
+| :--- | :--- | :--- |
+| **0:00 – 0:20** | Title Slide & Architecture Context | *"Welcome to Kavach. Autonomous AI agents will soon shop for us on ONDC and pay via UPI. But when an agent encounters an indirect prompt injection, probabilistic system prompts fail. We need deterministic cryptographic boundaries."* |
+| **0:20 – 0:35** | **Scene 0: Baseline (Kavach OFF)**.<br>Agent searches ONDC, reads poisoned listing. Executes payment of ₹5,000 to `attacker_wallet@upi`. Balance table shows attacker received ₹5,000. | *"In Scene 0, Kavach is disabled. Note that here the agent is a scripted worst-case model simulating a fully compromised LLM. It encounters a poisoned listing demanding ₹5,000 to attacker_wallet. With direct payment access, the attack succeeds, draining ₹5,000."* |
+| **0:35 – 0:50** | **Scene 1: Issuing a Micro-Mandate**.<br>CLI generates Ed25519 keypair and issues signed mandate JWT. Rich table displays decoded claims (`ondc-grocer@upi`, ₹1,500 per-txn, ₹3,000 budget, 15m exp). | *"Now we enable Kavach. In Scene 1, the user signs a cryptographic micro-mandate with their private key. We cap transactions at ₹1,500, set a ₹3,000 budget, and restrict payees strictly to `ondc-grocer@upi`. The user private key never leaves their device."* |
+| **0:50 – 1:05** | **Scene 2: Legitimate Purchase**.<br>Agent buys rice and oil for ₹1,200. Kavach prints Green **APPROVED** panel. Interceptor issues a signed approval ticket. UPI Gateway settles payment; user balance updates to ₹8,800. | *"In Scene 2, the agent makes a legitimate ₹1,200 purchase. The Kavach Interceptor verifies the signature, validates the payee, atomically reserves the budget in SQLite, and signs an ephemeral approval ticket. Approved! The UPI gateway settles payment seamlessly."* |
+| **1:05 – 1:20** | **Scene 3: Injection Attack Blocked**.<br>Agent reads the poisoned spice listing again and tries to transfer ₹5,000 to `attacker_wallet@upi`. Kavach triggers Red **SECURITY BLOCK** panel. Attacker balance remains ₹0.00. Audit entry shown. | *"In Scene 3, the agent—again running as our scripted worst-case model—reads the poisoned listing and attempts to transfer ₹5,000 to attacker_wallet. Kavach intercepts it immediately. Security Block! Dual violations caught: Payee Not Allowed and Limit Exceeded. Zero funds lost."* |
+| **1:20 – 1:35** | **Scene 4: Hierarchical Delegation**.<br>Shopping agent delegates ₹100 tip to delivery sub-agent. Delivery agent tries to expand authority to `attacker_wallet@upi` ➔ Blocked! | *"In Scene 4, we demonstrate hierarchical delegation. The primary agent delegates limited tip authority to a delivery worker. Under monotonic attenuation, sub-mandates can only narrow scope. When the sub-agent attempts to expand payees, Kavach halts it."* |
+| **1:35 – 1:50** | **Scene 5: Explicit Consent & Step-Up**.<br>WYSIWYS preview with SHA-256 fingerprint shown. Agent requests high-value bulk order ➔ Interceptor halts with ESCALATE challenge. Single-use user consent ticket unblocks transaction. | *"In Scene 5, we show explicit user consent. What You See Is What You Sign presents human-readable claims and a SHA-256 fingerprint. For high-value transactions, the interceptor triggers an ESCALATE challenge, requiring single-use interactive user authorization."* |
+| **1:50 – 2:05** | **Bonus Scene: Cryptographic Tampering**.<br>Attacker edits JWT payload to increase limit to ₹99,999. Kavach flags `SIGNATURE_INVALID`. | *"What if an attacker tampers with the mandate token to increase limits? In the Bonus scene, Kavach verifies the Ed25519 signature. The tamper is instantly caught with SIGNATURE_INVALID."* |
+| **2:05 – 2:25** | **Empirical Results Slide**.<br>Table showing empirical benchmark outcomes across all tiers. | *"Here are our empirical results: Across 100 live LLM trials, 0 of 100 live trials obeyed the injection (50 OFF, 50 ON). In our positive control, Kavach blocked 10/10 direct attacks (95% CI 69.2–100%). In our adaptive attacker: 70 attempts, mostly wrong payee, 0 bypasses (95% upper bound 5.1%). CI is 11/11 green."* |
+| **2:25 – 2:45** | **Conclusion & Architectural Impact**.<br>Terminal summary panel shown. Final takeaways. | *"Kavach proves that spending safety for agentic AI must come from deterministic cryptography, not probabilistic prompts. With an in-process p50 of 1.09 ms and RPC p50 of 7.08 ms, Kavach provides an extensible blueprint for securing autonomous payments across India's Digital Public Infrastructure. Thank you."* |
 
 ### Timing & Wall-Clock Measurement (`evidence/demo_timing.txt`)
 ```text

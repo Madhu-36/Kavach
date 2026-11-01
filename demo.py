@@ -619,7 +619,7 @@ def main(
         out_dir.mkdir(parents=True, exist_ok=True)
         txt_path = out_dir / "demo_output.txt"
         svg_path = out_dir / "demo_output.svg"
-        console.save_text(str(txt_path))
+        console.save_text(str(txt_path), clear=False)
         try:
             console.save_svg(str(svg_path), title="Kavach Terminal Demo")
         except Exception as e:
