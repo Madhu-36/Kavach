@@ -4,7 +4,7 @@
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
 **Git Commit**: `b458143556222b250dcbbf20946dbeb8704f73b9` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
-**Total Unit/Integration/Property Tests**: 137 passing  
+**Total Unit/Integration/Property Tests**: 158 passing (including 21 Voice Listener & Semantic Intent tests)  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
 
 ---
@@ -1050,7 +1050,57 @@ In accordance with strict truth-in-auditing standards, the following capabilitie
 
 ---
 
-## 8. Cryptographic Evidence Manifest (`evidence/MANIFEST.sha256`)
+## 9. Voice Listener & Semantic Action Extractor
+
+Kavach features a zero-cloud-leakage, acoustic speech recognition and semantic action extractor enabling users to authorize payments, check balances, or search catalogs using natural spoken instructions.
+
+### Architecture Highlights
+1. **Acoustic Front-End**:
+   - 16 kHz Mono PCM audio recording via `sounddevice`.
+   - Butterworth 80 Hz high-pass IIR filter (SOS formulation) eliminating ground hum, AC rumble, and breath thumps.
+   - 400ms rolling circular ring buffer (`collections.deque(maxlen=6)`) that captures and prepends the audio immediately prior to speech threshold triggering, preventing word-onset consonant truncation ('P', 'T', 'K', 'S').
+2. **Adaptive Dynamic VAD**:
+   - 1.0-second ambient noise calibration measuring room energy floor.
+   - Dynamic Signal-to-Noise Ratio (SNR) thresholding.
+   - 1.3-second trailing silence hangover to accommodate natural pauses between words.
+   - Real-time ASCII terminal VU-meter (`🎙️ [████████░░░░░░░░░░░░] Speaking...`).
+3. **Signal Normalization**:
+   - High-pass DC offset subtraction and peak normalization to -1.0 dBFS (0.89 in float32) ensuring optimal Whisper acoustic representation.
+4. **ASR Inference with Domain Biasing**:
+   - Primary Engine: Local OpenAI Whisper (`base.en` / `base`) running offline on CPU with zero cloud leakage.
+   - Domain acoustic prompt biasing (`initial_prompt`) steers vocabulary towards UPI, paise, rupees, VPAs, and merchants.
+   - Secondary Fallback: Google Cloud Web Speech API (`en-IN` accent model).
+5. **Compound Numeral & VPA Engine**:
+   - Full English and Hindi/Hinglish compound word numeral parsing ("two thousand five hundred", "paanch sau", "do hazaar", "three lakh").
+   - Explicit paise and sub-rupee parsing ("fifty rupees and fifty paise" -> 50.50).
+   - Spoken VPA phonetic resolution ("rahul at okaxis" -> `rahul@okaxis`).
+   - Known merchant alias mappings (`ondc-grocer@upi`, `delivery-rider@upi`, `bescom-utility@upi`).
+6. **Kavach Security Gateway Authorization**:
+   - Translates `SpokenPaymentIntent` into `MandateSpec` and `PaymentRequest`.
+   - Evaluates policy (per-transaction limits, allowable payees, budget, velocity).
+   - Signs Ed25519 approval tickets and appends to SHA-256 hash-chained audit log.
+
+### Test Verification
+All 21 dedicated unit tests for the Voice Listener pass cleanly:
+```bash
+python -m pytest tests/test_voice_listener.py -v
+```
+
+### Running the Voice Interface
+```bash
+# 1. Interactive terminal voice capture with live VU-meter
+python -m kavach.cli voice --execute
+
+# 2. Standalone voice demo
+python examples/demo_voice_listener.py
+
+# 3. Synthetic phrase benchmark
+python examples/demo_voice_listener.py --test-phrases
+```
+
+---
+
+## 10. Cryptographic Evidence Manifest (`evidence/MANIFEST.sha256`)
 
 Every piece of evidence in this repository is cryptographically anchored:
 ```text

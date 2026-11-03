@@ -153,5 +153,65 @@ def verify_log(
         raise typer.Exit(1)
 
 
+@app.command(name="voice")
+def voice_listen(
+    engine: str = typer.Option("auto", "--engine", "-e", help="ASR engine: 'whisper', 'google', or 'auto'"),
+    model: str = typer.Option("base.en", "--model", "-m", help="Whisper model size (e.g. tiny.en, base.en)"),
+    timeout: float = typer.Option(10.0, "--timeout", "-t", help="Listening timeout in seconds"),
+    execute: bool = typer.Option(False, "--execute", "-x", help="Authorize payment through Kavach security gateway"),
+) -> None:
+    """Listen to spoken payment commands via microphone and extract structured Kavach intents."""
+    from kavach.voice_listener import VoiceListener
+
+    rprint(Panel.fit(
+        "[bold cyan]Kavach Voice Listener & Semantic Intent Extractor[/bold cyan]\n"
+        "[dim]Dynamic Noise Calibration • 80Hz Rumble Filter • 400ms Ring Buffer • Whisper ASR[/dim]\n\n"
+        f"• Engine: [bold]{engine}[/bold] (Whisper model: [green]{model}[/green])\n"
+        f"• Timeout: [bold]{timeout}s[/bold] | Gateway Execution: [bold]{execute}[/bold]",
+        title="🎙️ Voice Interface",
+        border_style="cyan",
+    ))
+
+    listener = VoiceListener(model_size=model)
+    intent = listener.listen_and_extract(engine=engine, timeout_sec=timeout)
+
+    # Format extracted claims into rich table
+    table = Table(title="🎯 Extracted Spoken Intent", show_header=True)
+    table.add_column("Field", style="cyan")
+    table.add_column("Value", style="green")
+
+    table.add_row("Action", intent.action)
+    table.add_row("Raw Transcript", f'"{intent.raw_transcript}"')
+    table.add_row("Payee VPA", str(intent.payee_vpa))
+    table.add_row("Amount (Rupees)", f"₹{intent.amount_rupees:,.2f}")
+    table.add_row("Amount (Paise)", f"{intent.amount_paise} paise")
+    table.add_row("Note / Purpose", intent.note or "N/A")
+    table.add_row("Confidence", f"{intent.confidence * 100:.1f}%")
+    console.print(table)
+
+    if execute and intent.action == "make_payment":
+        rprint("\n[bold yellow]🔐 Authorizing payment intent via Kavach Security Gateway...[/bold yellow]")
+        auth_result = listener.authorize_with_kavach(intent)
+
+        if auth_result["allowed"]:
+            rprint(Panel.fit(
+                f"[green]✓ PAYMENT APPROVED[/green]\n"
+                f"  Reason Code:     [bold]{auth_result['reason_code']}[/bold]\n"
+                f"  Message:         [dim]{auth_result['message']}[/dim]\n"
+                f"  Approval Ticket: [bold cyan]{auth_result['approval_ticket'][:40]}...[/bold cyan]\n"
+                f"  Mandate Token:   [dim]{auth_result['mandate_token'][:40]}...[/dim]",
+                title="🛡️ Kavach Gateway Decision",
+                border_style="green",
+            ))
+        else:
+            rprint(Panel.fit(
+                f"[red]✗ PAYMENT DENIED[/red]\n"
+                f"  Reason Code: [bold]{auth_result['reason_code']}[/bold]\n"
+                f"  Message:     [yellow]{auth_result['message']}[/yellow]",
+                title="🛡️ Kavach Gateway Decision",
+                border_style="red",
+            ))
+
+
 if __name__ == "__main__":
     app()
