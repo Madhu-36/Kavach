@@ -253,6 +253,27 @@ class TestAdvancedDSPAndDiagnostics:
             assert "recommendation" in diag
             assert diag["is_clipping"] is False
 
+    def test_despike_transients(self, listener):
+        # Audio with sudden spike at index 100
+        sig = np.sin(np.linspace(0, 10, 500)).astype(np.float32)
+        sig[100] = 50.0  # Keystroke click / pop
+        cleaned = listener.despike_transients(sig)
+        assert cleaned[100] < 2.0  # Pop should be smoothed out
+
+    def test_apply_noise_gate(self, listener):
+        sr = 16000
+        t = np.linspace(0, 1.0, sr, endpoint=False)
+        # Speech frame (high energy) and pause frame (noise only)
+        speech = np.sin(2 * np.pi * 400 * t) * 0.8
+        noise = np.random.normal(0, 0.05, sr).astype(np.float32)
+        composite = speech + noise
+
+        # Gate on pause-only audio
+        pause_gated = listener.apply_noise_gate(noise, ambient_rms=0.05)
+        # Pause frame should be attenuated by ~22 dB
+        assert np.sqrt(np.mean(pause_gated**2)) < np.sqrt(np.mean(noise**2)) * 0.2
+
+
 
 
 class TestKavachAuthorization:

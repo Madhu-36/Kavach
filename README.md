@@ -7,7 +7,7 @@
 [![CI Matrix](https://github.com/Madhu-36/Kavach/actions/workflows/ci.yml/badge.svg)](https://github.com/Madhu-36/Kavach/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Invariants Verified](https://img.shields.io/badge/Invariants-I1--I4_Hypothesis,_I5--I6_Crash_Tests-success.svg)](docs/INVARIANTS.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-163_Passed-brightgreen.svg)](evidence/pytest_output.txt)
+[![Tests Passing](https://img.shields.io/badge/Tests-165_Passed-brightgreen.svg)](evidence/pytest_output.txt)
 [![Demo Video](https://img.shields.io/badge/Demo_Video-YouTube-red.svg)](https://youtu.be/2q6kAZHDG0k)
 
 ---
@@ -191,24 +191,27 @@ Kavach includes an advanced, studio-grade **Voice Listener and Semantic Action E
 +-----------------------------------------------------------------------------------------+
 |                               KAVACH VOICE ARCHITECTURE                                 |
 +-----------------------------------------------------------------------------------------+
-|  1. Advanced Acoustic Front-End:                                                        |
+|  1. Advanced Acoustic Front-End & Surrounding Noise Rejection:                          |
 |     * 16 kHz 16-bit Mono PCM stream via sounddevice (with auto-device resolution)        |
-|     * 85-7500 Hz 4th-Order Butterworth Bandpass Filter (cuts hum, thumps & hiss)        |
-|     * Spectral Subtraction Noise Reduction (Wiener Filtering via STFT/ISTFT)            |
+|     * 85-7500 Hz 4th-Order Butterworth Bandpass Filter (cuts AC hum, thumps & hiss)      |
+|     * Transient Keystroke / Click Despiker (removes typing clatter and desk pops)        |
+|     * Continuous Ambient Noise Tracking: Adapts baseline continuously while listening    |
+|     * Multi-Band Spectral Subtraction: Adaptive SNR oversubtraction (alpha in [1.1, 2.2])|
+|     * Frequency-Domain Gain Smoothing (eradicates musical noise chirping)               |
 |     * Consonant Formant Pre-Emphasis Filter (alpha=0.95 for speech clarity)             |
 |     * 500ms Circular Ring Buffer (preserves initial plosive/fricative consonants)       |
 |                                                                                         |
-|  2. Dual-Feature VAD & Adaptive Energy Threshold:                                       |
-|     * 1.0s Ambient noise floor calibration (RMS baseline + noise profile)               |
+|  2. Active Dual-Feature VAD & Inter-Word Noise Gate:                                    |
 |     * Dual-metric speech detection: Short-Time RMS (vowels) + Zero-Crossing Rate (ZCR)  |
 |     * Hysteresis state machine (high onset threshold, lower sustain threshold)          |
+|     * Active Inter-Word Noise Gate: -22 dB downward expansion on pauses & background    |
 |     * 1.4s Hangover silence buffer (tolerates natural pauses between words)             |
 |     * Real-time ASCII terminal VU-meter with live RMS & ZCR energy indicators           |
 |                                                                                         |
-|  3. Signal Normalization & Conditioning:                                                |
+|  3. Signal Normalization & Audio Export:                                                |
 |     * DC offset subtraction (zero-centering)                                            |
 |     * Peak amplitude normalization to -1.0 dBFS (0.89 float32)                          |
-|     * Automatic export of clean 16-bit PCM WAV to recordings/clean_processed.wav        |
+|     * Dual WAV Persistence: recordings/raw_capture.wav vs clean_processed.wav           |
 |                                                                                         |
 |  4. Dual-Engine ASR with Domain Prompt Biasing:                                         |
 |     * Primary: Local OpenAI Whisper (base.en / base) with multi-temperature ladder      |

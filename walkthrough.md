@@ -4,7 +4,7 @@
 **Verification Level**: Machine-Generated Truth Audit (Zero Simulated Claims)  
 **Git Commit**: `b458143556222b250dcbbf20946dbeb8704f73b9` (DIRTY working tree)  
 **Environment**: win32 (nt) | Python 3.14.6  
-**Total Unit/Integration/Property Tests**: 163 passing (including 26 Voice Listener, Advanced DSP & Semantic Intent tests)  
+**Total Unit/Integration/Property Tests**: 165 passing (including 28 Voice Listener, Noise Rejection & Semantic Intent tests)  
 **Manifest Hash**: SHA-256 Verified (`evidence/MANIFEST.sha256`)
 
 ---
