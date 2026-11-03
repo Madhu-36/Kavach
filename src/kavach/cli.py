@@ -158,21 +158,25 @@ def voice_listen(
     engine: str = typer.Option("auto", "--engine", "-e", help="ASR engine: 'whisper', 'google', or 'auto'"),
     model: str = typer.Option("base.en", "--model", "-m", help="Whisper model size (e.g. tiny.en, base.en)"),
     timeout: float = typer.Option(10.0, "--timeout", "-t", help="Listening timeout in seconds"),
+    device: Optional[str] = typer.Option(None, "--device", "-d", help="Microphone device name or index (e.g. 'realtek' or '1')"),
     execute: bool = typer.Option(False, "--execute", "-x", help="Authorize payment through Kavach security gateway"),
 ) -> None:
     """Listen to spoken payment commands via microphone and extract structured Kavach intents."""
-    from kavach.voice_listener import VoiceListener
+    from kavach.voice_listener import AudioConfig, VoiceListener
+
+    config = AudioConfig(input_device=device)
+    listener = VoiceListener(model_size=model, config=config)
 
     rprint(Panel.fit(
-        "[bold cyan]Kavach Voice Listener & Semantic Intent Extractor[/bold cyan]\n"
-        "[dim]Dynamic Noise Calibration • 80Hz Rumble Filter • 400ms Ring Buffer • Whisper ASR[/dim]\n\n"
+        "[bold cyan]Kavach Voice Listener & Semantic Intent Extractor (Advanced DSP)[/bold cyan]\n"
+        "[dim]85-7500Hz Bandpass • Spectral Denoising • Dual VAD (RMS+ZCR) • 500ms Ring Buffer • Whisper ASR[/dim]\n\n"
         f"• Engine: [bold]{engine}[/bold] (Whisper model: [green]{model}[/green])\n"
+        f"• Device: [bold]{device or 'Default Microphone'}[/bold]\n"
         f"• Timeout: [bold]{timeout}s[/bold] | Gateway Execution: [bold]{execute}[/bold]",
         title="🎙️ Voice Interface",
         border_style="cyan",
     ))
 
-    listener = VoiceListener(model_size=model)
     intent = listener.listen_and_extract(engine=engine, timeout_sec=timeout)
 
     # Format extracted claims into rich table
@@ -211,6 +215,42 @@ def voice_listen(
                 title="🛡️ Kavach Gateway Decision",
                 border_style="red",
             ))
+
+
+@app.command(name="voice-check")
+def voice_check(
+    duration: float = typer.Option(3.0, "--duration", "-d", help="Calibration recording duration in seconds"),
+    device: Optional[str] = typer.Option(None, "--device", help="Specific microphone device name or index"),
+) -> None:
+    """Diagnose microphone acoustics: measure noise floor, speech peak, SNR, and clipping risk."""
+    from kavach.voice_listener import AudioConfig, VoiceListener
+
+    config = AudioConfig(input_device=device)
+    listener = VoiceListener(config=config)
+
+    rprint(Panel.fit(
+        "[bold cyan]Kavach Acoustic Microphone Diagnostic[/bold cyan]\n"
+        "[dim]Measuring Noise Floor, Headroom, Signal-to-Noise Ratio (SNR), and Clipping Risk[/dim]",
+        title="🔍 Acoustic Diagnostic",
+        border_style="cyan",
+    ))
+
+    print("Measuring ambient room noise for 1s...")
+    listener.calibrate_ambient_noise(duration_sec=1.0)
+    diag = listener.diagnose_microphone(duration_sec=duration)
+
+    table = Table(title="📊 Microphone Acoustic Metrics", show_header=True)
+    table.add_column("Metric", style="cyan")
+    table.add_column("Measurement", style="white")
+
+    table.add_row("Device Index", str(diag["device_index"] if diag["device_index"] is not None else "Default [1]"))
+    table.add_row("Noise Floor", f"{diag['ambient_noise_db']} dBFS")
+    table.add_row("Speech Peak", f"{diag['peak_db']} dBFS")
+    table.add_row("Signal-to-Noise Ratio (SNR)", f"[bold green]{diag['snr_db']} dB[/bold green]")
+    table.add_row("Clipping Risk", "[red]YES - CLIPPING DETECTED[/red]" if diag["is_clipping"] else "[green]NO (Safe Headroom)[/green]")
+    table.add_row("Acoustic Status", diag["recommendation"])
+
+    console.print(table)
 
 
 if __name__ == "__main__":

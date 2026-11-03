@@ -66,21 +66,50 @@ def run_synthetic_benchmark():
     print("\n✓ All benchmark phrases parsed successfully with 100% precision!")
 
 
-def run_live_microphone():
+def run_acoustic_diagnostics(device: str | None = None):
+    """Run interactive acoustic diagnostics measuring SNR, noise floor, and speech peak headroom."""
+    print("\n" + "=" * 70)
+    print("🔍 KAVACH ACOUSTIC MICROPHONE DIAGNOSTICS")
+    print("=" * 70)
+
+    config = AudioConfig(input_device=device)
+    listener = VoiceListener(config=config)
+
+    print("Measuring ambient room noise for 1s...")
+    listener.calibrate_ambient_noise(duration_sec=1.0)
+    diag = listener.diagnose_microphone(duration_sec=3.0)
+
+    print("\n" + "-" * 70)
+    print("📊 ACOUSTIC MEASUREMENTS")
+    print("-" * 70)
+    print(f"Device Index:          {diag['device_index'] if diag['device_index'] is not None else 'Default [1]'}")
+    print(f"Ambient Noise Floor:   {diag['ambient_noise_db']} dBFS")
+    print(f"Speech Peak:           {diag['peak_db']} dBFS")
+    print(f"Signal-to-Noise Ratio: {diag['snr_db']} dB")
+    print(f"Clipping Risk:         {'⚠️ CLIPPING' if diag['is_clipping'] else '✓ SAFE HEADROOM'}")
+    print(f"Recommendation:        {diag['recommendation']}")
+    print("-" * 70)
+
+
+def run_live_microphone(device: str | None = None):
     """Run live interactive microphone capture and Kavach gateway authorization."""
     print("\n" + "=" * 70)
-    print("🎙️ KAVACH VOICE LISTENER — INTERACTIVE DEMO")
+    print("🎙️ KAVACH VOICE LISTENER — INTERACTIVE ADVANCED DEMO")
     print("=" * 70)
-    print("Features:")
-    print(" • 16kHz Mono Stream via sounddevice")
-    print(" • 80Hz Butterworth High-Pass Rumble Filter")
-    print(" • 400ms Circular Ring Buffer (Zero Initial-Consonant Clipping)")
-    print(" • Adaptive Noise Floor Calibration & Dynamic VAD")
-    print(" • Local Whisper ASR with UPI Domain Prompt Biasing")
+    print("Advanced Acoustic Features:")
+    print(" • 16kHz Mono Stream via sounddevice (Target device: " + (str(device) if device else "Default") + ")")
+    print(" • 85-7500Hz 4th-Order Butterworth Bandpass Filter")
+    print(" • Spectral Subtraction Noise Reduction (Wiener Filtering)")
+    print(" • Consonant Formant Pre-Emphasis Filter (alpha=0.95)")
+    print(" • Dual-Feature VAD (Short-Time RMS + Zero-Crossing Rate)")
+    print(" • 500ms Circular Ring Buffer (Zero Initial-Consonant Clipping)")
+    print(" • 1.4s Hangover Trailing Silence Buffer")
+    print(" • Local Whisper ASR with Multi-Temperature Ladder & Prompt Biasing")
     print(" • Kavach Cryptographic Micro-Mandate Policy Verification")
     print("=" * 70)
 
-    listener = VoiceListener(model_size="base.en")
+    config = AudioConfig(input_device=device)
+    listener = VoiceListener(model_size="base.en", config=config)
 
     try:
         intent = listener.listen_and_extract(engine="auto", timeout_sec=10.0)
@@ -99,6 +128,7 @@ def run_live_microphone():
     print(f"Amount:          ₹{intent.amount_rupees:,.2f} ({intent.amount_paise} paise)")
     print(f"Note / Purpose:  {intent.note or 'N/A'}")
     print(f"Confidence:      {intent.confidence * 100:.1f}%")
+    print("Clean Audio:     recordings/clean_processed.wav (16-bit PCM)")
     print("-" * 70)
 
     if intent.action == "make_payment" and intent.amount_paise > 0:
@@ -121,11 +151,15 @@ def run_live_microphone():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Kavach Voice Listener Demo")
+    parser = argparse.ArgumentParser(description="Kavach Advanced Voice Listener Demo")
     parser.add_argument("--test-phrases", action="store_true", help="Run synthetic phrase benchmark")
+    parser.add_argument("--diagnose", action="store_true", help="Run microphone acoustic SNR diagnostic")
+    parser.add_argument("--device", type=str, default=None, help="Target microphone device name or index")
     args = parser.parse_args()
 
     if args.test_phrases:
         run_synthetic_benchmark()
+    elif args.diagnose:
+        run_acoustic_diagnostics(device=args.device)
     else:
-        run_live_microphone()
+        run_live_microphone(device=args.device)

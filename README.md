@@ -7,7 +7,7 @@
 [![CI Matrix](https://github.com/Madhu-36/Kavach/actions/workflows/ci.yml/badge.svg)](https://github.com/Madhu-36/Kavach/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Invariants Verified](https://img.shields.io/badge/Invariants-I1--I4_Hypothesis,_I5--I6_Crash_Tests-success.svg)](docs/INVARIANTS.md)
-[![Tests Passing](https://img.shields.io/badge/Tests-158_Passed-brightgreen.svg)](evidence/pytest_output.txt)
+[![Tests Passing](https://img.shields.io/badge/Tests-163_Passed-brightgreen.svg)](evidence/pytest_output.txt)
 [![Demo Video](https://img.shields.io/badge/Demo_Video-YouTube-red.svg)](https://youtu.be/2q6kAZHDG0k)
 
 ---
@@ -183,31 +183,35 @@ def buy_groceries(amount_paise: int, payee_vpa: str, note: str = ""):
 
 ---
 
-## 🎙️ Voice Interface: Acoustic Capture & Semantic Intent Extractor
+## 🎙️ Advanced Voice Interface: DSP Acoustic Front-End & Semantic Intent Extractor
 
-Kavach includes an offline, privacy-first **Voice Listener and Semantic Action Extractor** (`kavach voice`) designed to clearly capture spoken user payment instructions, parse compound currencies and colloquial numerals, and enforce micro-mandates without speech leakage.
+Kavach includes an advanced, studio-grade **Voice Listener and Semantic Action Extractor** (`kavach voice`) designed to clearly capture spoken user payment instructions, eliminate room background noise via spectral subtraction, parse compound currencies and colloquial numerals, and enforce micro-mandates without speech leakage.
 
 ```
 +-----------------------------------------------------------------------------------------+
 |                               KAVACH VOICE ARCHITECTURE                                 |
 +-----------------------------------------------------------------------------------------+
-|  1. Acoustic Front-End:                                                                 |
-|     * 16 kHz 16-bit Mono PCM stream via sounddevice                                     |
-|     * 80 Hz Butterworth High-Pass IIR filter (eliminates AC hum & mic rumble)           |
-|     * 400ms Circular Ring Buffer (preserves initial plosive/fricative consonants)       |
+|  1. Advanced Acoustic Front-End:                                                        |
+|     * 16 kHz 16-bit Mono PCM stream via sounddevice (with auto-device resolution)        |
+|     * 85-7500 Hz 4th-Order Butterworth Bandpass Filter (cuts hum, thumps & hiss)        |
+|     * Spectral Subtraction Noise Reduction (Wiener Filtering via STFT/ISTFT)            |
+|     * Consonant Formant Pre-Emphasis Filter (alpha=0.95 for speech clarity)             |
+|     * 500ms Circular Ring Buffer (preserves initial plosive/fricative consonants)       |
 |                                                                                         |
-|  2. Dynamic VAD & Adaptive Energy Threshold:                                            |
-|     * 1.0s Ambient noise floor calibration (RMS baseline)                              |
-|     * Dynamic SNR threshold adapting to room acoustics                                  |
-|     * 1.3s Hangover silence buffer (tolerates natural pauses between words)             |
-|     * Real-time ASCII terminal VU-meter: [████████░░░░░░░░░░░░] Speaking...             |
+|  2. Dual-Feature VAD & Adaptive Energy Threshold:                                       |
+|     * 1.0s Ambient noise floor calibration (RMS baseline + noise profile)               |
+|     * Dual-metric speech detection: Short-Time RMS (vowels) + Zero-Crossing Rate (ZCR)  |
+|     * Hysteresis state machine (high onset threshold, lower sustain threshold)          |
+|     * 1.4s Hangover silence buffer (tolerates natural pauses between words)             |
+|     * Real-time ASCII terminal VU-meter with live RMS & ZCR energy indicators           |
 |                                                                                         |
 |  3. Signal Normalization & Conditioning:                                                |
 |     * DC offset subtraction (zero-centering)                                            |
 |     * Peak amplitude normalization to -1.0 dBFS (0.89 float32)                          |
+|     * Automatic export of clean 16-bit PCM WAV to recordings/clean_processed.wav        |
 |                                                                                         |
 |  4. Dual-Engine ASR with Domain Prompt Biasing:                                         |
-|     * Primary: Local OpenAI Whisper (base.en / base) offline, zero cloud leakage        |
+|     * Primary: Local OpenAI Whisper (base.en / base) with multi-temperature ladder      |
 |     * Acoustic Biasing Prompt: UPI, rupees, paise, VPA handles, merchant entities       |
 |     * Secondary Fallback: Google Cloud Web Speech API (en-IN Indian English)            |
 |                                                                                         |
@@ -230,10 +234,13 @@ Kavach includes an offline, privacy-first **Voice Listener and Semantic Action E
 # 1. Run live interactive microphone capture
 python -m kavach.cli voice --execute
 
-# 2. Run standalone interactive voice demo
+# 2. Run acoustic microphone diagnostics (SNR, noise floor, clipping risk)
+python -m kavach.cli voice-check
+
+# 3. Run standalone interactive voice demo
 python examples/demo_voice_listener.py
 
-# 3. Run synthetic spoken benchmark (zero mic dependency)
+# 4. Run synthetic spoken benchmark (zero mic dependency)
 python examples/demo_voice_listener.py --test-phrases
 ```
 
